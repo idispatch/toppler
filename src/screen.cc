@@ -125,9 +125,12 @@ void scr_color_ramp(int *r, int *g, int *b) {
     color_ramp1(b, &color_ramp_badj, 1, 255);
 }
 
+#ifdef __PLAYBOOK__
+#else
 void scr_savedisplaybmp(char *fname) {
     SDL_SaveBMP(display, fname);
 }
+#endif
 
 /*
  * Set the pixel at (x, y) to the given value
@@ -1031,6 +1034,8 @@ static void draw_tower(long vert, long angle) {
     }
 }
 
+#ifdef __PLAYBOOK__
+#else
 static void draw_tower_editor(long vert, long angle, int state) {
 
     puttower(angle, vert, lev_towerrows());
@@ -1073,6 +1078,7 @@ static void draw_tower_editor(long vert, long angle, int state) {
         ypos -= SPRITE_SLICE_HEIGHT;
     }
 }
+#endif
 
 /* draws something of the environment */
 static void putcase(unsigned char w, long x, long h) {
@@ -1562,6 +1568,8 @@ static void putthings(long vert, long a, long angle) {
     }
 }
 
+#ifdef __PLAYBOOK__
+#else
 static void putthings_editor(long vert, long a, long angle, int state) {
 
     /* ok, at first lets check if there is a column right at the
@@ -1588,7 +1596,7 @@ static void putthings_editor(long vert, long a, long angle, int state) {
         }
     }
 }
-
+#endif
 /* draws everything behind the tower */
 static void draw_behind(long vert, long angle) {
     for (int a = 0; a < 16; a++) {
@@ -1599,12 +1607,15 @@ static void draw_behind(long vert, long angle) {
     }
 }
 
+#ifdef __PLAYBOOK__
+#else
 static void draw_behind_editor(long vert, long angle, int state) {
     for (int a = 0; a < 16; a++) {
         putthings_editor(vert, 48 - a, angle, state);
         putthings_editor(vert, 80 + a, angle, state);
     }
 }
+#endif
 
 /* draws everything in front of the tower */
 static void draw_before(long vert, long angle) {
@@ -1615,6 +1626,8 @@ static void draw_before(long vert, long angle) {
     putthings(vert, 0, angle);
 }
 
+#ifdef __PLAYBOOK__
+#else
 static void draw_before_editor(long vert, long angle, int state) {
     for (int a = 0; a < 32; a++) {
         putthings_editor(vert, 32 - a, angle, state);
@@ -1622,7 +1635,7 @@ static void draw_before_editor(long vert, long angle, int state) {
     }
     putthings_editor(vert, 0, angle, state);
 }
-
+#endif
 /* draws the cross that flies over the screen */
 static void putcross(long vert) {
     long i, y;
@@ -1724,6 +1737,8 @@ void scr_drawall(long vert, long angle, long time, bool svisible, int subshape, 
     boxstate = (boxstate + 1) & 0xf;
 }
 
+#ifdef __PLAYBOOK__
+#else
 void scr_drawedit(long vpos, long apos, bool showtime) {
 
     long t;
@@ -1785,7 +1800,7 @@ void scr_drawedit(long vpos, long apos, bool showtime) {
 
     boxstate = (boxstate + 1) & 0xf;
 }
-
+#endif
 static void put_scrollerlayer(long horiz, int layer) {
     horiz += scroll_layers[layer].xpos;
     horiz %= scroll_layers[layer].xrepeat;

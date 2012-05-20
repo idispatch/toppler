@@ -359,8 +359,10 @@ run_menu_system(_menusystem *ms, _menusystem *parent) {
                     if ((ms->hilited >= 0) &&
                         (ms->hilited < ms->numoptions) &&
                         (ms->moption[ms->hilited].oproc ||
-                         0==strcmp(ms->moption[ms->hilited].oname,_("Back")))) {
-                        if(0==strcmp(ms->moption[ms->hilited].oname,_("Back"))) {
+                         0==strcmp(ms->moption[ms->hilited].oname,_("Back")) ||
+                         0==strcmp(ms->moption[ms->hilited].oname,_("OK")))) {
+                        if(0==strcmp(ms->moption[ms->hilited].oname,_("Back")) ||
+                           0==strcmp(ms->moption[ms->hilited].oname,_("OK"))) {
                             ms->exitmenu = true;
                         } else {
                             const char *tmpbuf = (*ms->moption[ms->hilited].oproc)(ms);

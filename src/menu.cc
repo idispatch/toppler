@@ -884,8 +884,8 @@ men_main_startgame_proc(_menusystem *ms) {
             return NULL;
         }
     }
-    static char s[30];
-    snprintf(s, 30, _("%c Start: %s %c"), fontptrleft, _(lev_missionname(currentmission)),
+    static char s[200];
+    snprintf(s, sizeof(s), _("%c Start: %s %c"), fontptrleft, _(lev_missionname(currentmission)),
             fontptrright);
     return s;
 }
