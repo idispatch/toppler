@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <emulation version="1">
-<!--
-<key x="20" y="300" width="130" height="130" sym="32" scancode="32" image="assets/button-fire.png">
-  <label x="0" y="0" width="130" height="130" image="assets/button-fire.png" />
-</key>
--->
-<!--
-<key x="300" y="400" width="80" height="80" sym="276" scancode="276" image="assets/button-left.png" />
-<key x="380" y="400" width="80" height="80" sym="274" scancode="274" image="assets/button-down.png" />
-<key x="380" y="320" width="80" height="80" sym="273" scancode="273" image="assets/button-up.png" />
-<key x="460" y="400" width="80" height="80" sym="275" scancode="275" image="assets/button-right.png" />
--->
-<key x="5" y="5" width="80" height="80" sym="27" scancode="27" />
-<key x="5" y="100" width="80" height="80" sym="13" scancode="13" />
-<key x="300" y="400" width="80" height="80" sym="276" scancode="276" />
-<key x="380" y="400" width="80" height="80" sym="274" scancode="274" />
-<key x="380" y="320" width="80" height="80" sym="273" scancode="273" />
-<key x="460" y="400" width="80" height="80" sym="275" scancode="275" />
+  <key x="5" y="5" width="95" height="95" sym="27" scancode="27" image="assets/button-esc.png">
+    <label x="0" y="0" width="95" height="95" image="assets/button-esc.png"/>
+  </key>
+  <key x="20" y="260" width="95" height="95" sym="13" scancode="13" image="assets/button-fire.png">
+    <label x="0" y="0" width="95" height="95" image="assets/button-fire.png"/>
+  </key>
+  <key x="500" y="360" width="95" height="95" sym="276" scancode="276" image="assets/button-left.png">
+    <label x="0" y="0" width="95" height="95" image="assets/button-left.png"/>
+  </key>
+  <key x="600" y="360" width="95" height="95" sym="274" scancode="274" image="assets/button-down.png">
+    <label x="0" y="0" width="95" height="95" image="assets/button-down.png"/>
+  </key>
+  <key x="600" y="260" width="95" height="95" sym="273" scancode="273" image="assets/button-up.png">
+    <label x="0" y="0" width="95" height="95" image="assets/button-up.png"/>
+  </key>
+  <key x="700" y="360" width="95" height="95" sym="275" scancode="275" image="assets/button-right.png">
+    <label x="0" y="0" width="95" height="95" image="assets/button-right.png"/>
+  </key>
 </emulation>

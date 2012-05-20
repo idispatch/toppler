@@ -36,6 +36,7 @@
     <!--  Name of author which is used for signing. Must match the developer name of your development certificate. -->
     <author>Oleg Kosenkov</author>
     <authorId>gYAAgOgucABbvsraEHuj9N_cK6E</authorId>
+    <splashscreen>toppler-splash.png</splashscreen>
     <description>Classic Tower Toppler game port</description>
     
     <!--  Unique author ID assigned by signing authority. Required if using debug tokens. -->
@@ -51,8 +52,9 @@
     <!--  The category where the application appears. Either core.games or core.media. -->
     <category>core.games</category>
     <asset path="assets">assets</asset>
-    <asset path="icon.png">icon.png</asset>
     <asset path="sdl-controls.xml">sdl-controls.xml</asset>
+    <asset path="toppler-icon.png">toppler-icon.png</asset>
+    <asset path="toppler-splash.png">toppler-splash.png</asset>
     <configuration id="com.qnx.qcc.configuration.exe.debug.561979833" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/toppler" entry="true" type="Qnx/Elf">toppler</asset>
@@ -64,7 +66,7 @@
     
     <!--  The icon for the application, which should be 86x86. -->
     <icon>
-        <image>icon.png</image>
+        <image>toppler-icon.png</image>
     </icon>
     
     <!--  The splash screen that will appear when your application is launching. Should be 1024x600. -->

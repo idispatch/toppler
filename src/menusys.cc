@@ -356,17 +356,23 @@ run_menu_system(_menusystem *ms, _menusystem *parent) {
                     }
                     break;
                 case fire_key:
-                    if ((ms->hilited >= 0) && (ms->hilited < ms->numoptions)
-                            && ms->moption[ms->hilited].oproc) {
-                        const char *tmpbuf = (*ms->moption[ms->hilited].oproc)(ms);
-                        if (tmpbuf) {
-                            int olen = strlen(tmpbuf);
-                            memset(ms->moption[ms->hilited].oname, '\0', MENUOPTIONLEN);
-                            memcpy(ms->moption[ms->hilited].oname, tmpbuf,
-                                    (olen < MENUOPTIONLEN) ? olen + 1 : (MENUOPTIONLEN - 1));
-                            olen = scr_textlength(tmpbuf);
-                            if (ms->maxoptlen < olen)
-                                ms->maxoptlen = olen;
+                    if ((ms->hilited >= 0) &&
+                        (ms->hilited < ms->numoptions) &&
+                        (ms->moption[ms->hilited].oproc ||
+                         0==strcmp(ms->moption[ms->hilited].oname,_("Back")))) {
+                        if(0==strcmp(ms->moption[ms->hilited].oname,_("Back"))) {
+                            ms->exitmenu = true;
+                        } else {
+                            const char *tmpbuf = (*ms->moption[ms->hilited].oproc)(ms);
+                            if (tmpbuf) {
+                                int olen = strlen(tmpbuf);
+                                memset(ms->moption[ms->hilited].oname, '\0', MENUOPTIONLEN);
+                                memcpy(ms->moption[ms->hilited].oname, tmpbuf,
+                                        (olen < MENUOPTIONLEN) ? olen + 1 : (MENUOPTIONLEN - 1));
+                                olen = scr_textlength(tmpbuf);
+                                if (ms->maxoptlen < olen)
+                                    ms->maxoptlen = olen;
+                            }
                         }
                         break;
                     }

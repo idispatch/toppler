@@ -145,6 +145,7 @@
 
 #define TOP_DATADIR ""
 #define HISCOREDIR ""
+#define CONFIGURATION_FILE_NAME "toppler.cfg"
 
 #ifdef WIN32
 #define OPEN_FOR_READING "rb"

@@ -252,6 +252,8 @@ static const char *men_game_options_menu(_menusystem *prevmenu) {
     return s;
 }
 
+#ifdef __PLAYBOOK__
+#else
 static const char *run_redefine_menu(_menusystem *prevmenu) {
     if (prevmenu) {
         _menusystem *ms = new_menu_system(_("Redefine Keys"), NULL, 0,
@@ -288,7 +290,7 @@ men_options_windowed(_menusystem *ms) {
 
     return txt;
 }
-
+#endif
 static const char *
 men_options_sounds(_menusystem *ms) {
     static char txt[30];
@@ -350,6 +352,8 @@ static void reload_layer_graphics(void) {
     scr_reload_sprites(RL_SCROLLER);
 }
 
+#ifdef __PLAYBOOK__
+#else
 static const char *
 men_alpha_font(_menusystem *ms) {
     static char txt[30];
@@ -453,6 +457,7 @@ men_full_scroller(_menusystem *ms) {
         return _("2 layers Scoller");
 }
 
+#ifdef __PLAYBOOK__
 static const char *
 men_alpha_options(_menusystem *mainmenu) {
     static const char * s = _("Alpha Options");
@@ -477,6 +482,7 @@ men_alpha_options(_menusystem *mainmenu) {
     }
     return s;
 }
+#endif
 
 static const char *
 men_options_graphic(_menusystem *mainmenu) {
@@ -487,7 +493,6 @@ men_options_graphic(_menusystem *mainmenu) {
 
         if (!ms)
             return NULL;
-
         ms = add_menu_option(ms, NULL, men_options_windowed);
         ms = add_menu_option(ms, NULL, men_alpha_options);
         ms = add_menu_option(ms, NULL, men_waves_menu, SDLK_UNKNOWN, MOF_PASSKEYS);
@@ -502,6 +507,7 @@ men_options_graphic(_menusystem *mainmenu) {
     }
     return s;
 }
+#endif
 
 static const char *
 men_options(_menusystem *mainmenu) {
@@ -514,8 +520,11 @@ men_options(_menusystem *mainmenu) {
             return NULL;
 
         ms = add_menu_option(ms, NULL, men_game_options_menu);
+#ifdef __PLAYBOOK__
+#else
         ms = add_menu_option(ms, NULL, run_redefine_menu);
         ms = add_menu_option(ms, NULL, men_options_graphic);
+#endif
         ms = add_menu_option(ms, NULL, men_options_sounds);
         ms = add_menu_option(ms, NULL, men_options_music);
 
@@ -632,6 +641,7 @@ men_hiscores_background_proc(_menusystem *ms) {
                 hiscores_xpos = SCREEN_WIDTH;
                 hiscores_pager = next_page;
             }
+            break;
         default:
             break;
         }
@@ -760,7 +770,11 @@ static void men_highscore(unsigned long pt, int twr) {
 
 #ifndef WIN32
         /* copy the login name into the name entered into the highscore table */
+#ifdef __PLAYBOOK__
+        strncpy(name, "Player", SCORENAMELEN);
+#else
         strncpy(name, getenv("LOGNAME"), SCORENAMELEN);
+#endif
         name[SCORENAMELEN] = 0; // to be sure we have a terminated string
 #else
                 /* on systems without login we have no name */
@@ -985,12 +999,8 @@ void men_init(void) {
 void men_main() {
     _menusystem *ms;
 
-    ms = new_menu_system(NULL, men_main_background_proc, 0, fontsprites.data(titledata)->h + 30);
-
-    if (!ms)
-        return;
-
-    ms = set_menu_system_timeproc(ms, 200, men_main_timer_proc);
+    ms = new_menu_system(NULL, men_main_background_proc, 0, fontsprites.data(titledata)->h + 60);
+    ms = set_menu_system_timeproc(ms, 2000, men_main_timer_proc);
 
     ms = add_menu_option(ms, NULL, men_main_startgame_proc, SDLK_s, MOF_PASSKEYS);
     ms = add_menu_option(ms, NULL, NULL);
@@ -1003,12 +1013,17 @@ void men_main() {
 #ifdef HUNT_THE_FISH
     ms = add_menu_option(ms, NULL, men_main_bonusgame_proc);
 #endif
+#ifdef __PLAYBOOK__
+#else
     ms = add_menu_option(ms, NULL, NULL);
     ms = add_menu_option(ms, _("Quit"), NULL, SDLK_q);
-
+#endif
     ms->wraparound = true;
 
-    ms = run_menu_system(ms, 0);
+    while(true) {
+        ms = run_menu_system(ms, 0);
+        ms->exitmenu = false;
+    }
 
     free_menu_system(ms);
 }

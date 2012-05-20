@@ -91,14 +91,14 @@ void configuration::register_entry(const char *cnf_name, cnf_type cnf_typ, void 
 configuration::configuration(FILE *glob, FILE *local) {
 
     i_fullscreen = true;
-    i_nosound = true;
+    i_nosound = false;
     i_use_water = true;
     i_use_alpha_sprites = true;
     i_use_alpha_layers = true;
     i_use_alpha_font = true;
     i_use_alpha_darkening = true;
     i_use_full_scroller = true;
-    i_waves_type = waves_nonreflecting;
+    i_waves_type = waves_expensive;
     i_status_top = true; /* is status line top or bottom of screen? */
     i_editor_towerpagesize = -1;
     i_editor_towerstarthei = -5;
@@ -161,7 +161,7 @@ configuration::~configuration(void) {
     if (need_save) {
 
         if (!f)
-            f = create_local_config_file(".toppler.rc");
+            f = create_local_config_file(CONFIGURATION_FILE_NAME);
 
         fseek(f, 0, SEEK_SET);
 
@@ -216,5 +216,5 @@ void configuration::editor_towername(char name[TOWERNAMELEN + 1]) {
     i_editor_towername[TOWERNAMELEN] = 0;
 }
 
-configuration config(open_local_config_file(".toppler.rc"),
-                     open_local_config_file(".toppler.rc"));
+configuration config(open_local_config_file(CONFIGURATION_FILE_NAME),
+                     open_local_config_file(CONFIGURATION_FILE_NAME));

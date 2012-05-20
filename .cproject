@@ -35,8 +35,8 @@
 									<listOptionValue builtIn="false" value="__PLAYBOOK__"/>
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
 								</option>
-								<option id="com.qnx.qcc.option.compiler.warningLevel.2120723827" superClass="com.qnx.qcc.option.compiler.warningLevel" value="com.qnx.qcc.option.warningLevel.5" valueType="enumerated"/>
-								<option id="com.qnx.qcc.option.compiler.mudflapth.1524043115" superClass="com.qnx.qcc.option.compiler.mudflapth" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.warningLevel.2120723827" name="Warning Level (-w)" superClass="com.qnx.qcc.option.compiler.warningLevel" value="com.qnx.qcc.option.warningLevel.5" valueType="enumerated"/>
+								<option id="com.qnx.qcc.option.compiler.mudflapth.1524043115" name="Build for Mudflap (-fmudflapth)" superClass="com.qnx.qcc.option.compiler.mudflapth" value="false" valueType="boolean"/>
 								<inputType id="com.qnx.qcc.inputType.compiler.300675066" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
 							<tool id="com.qnx.qcc.tool.assembler.1582003713" name="QCC Assembler" superClass="com.qnx.qcc.tool.assembler">
@@ -68,8 +68,8 @@
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="xml2"/>
 								</option>
-								<option id="com.qnx.qcc.option.linker.mudflapth.857415101" superClass="com.qnx.qcc.option.linker.mudflapth" value="true" valueType="boolean"/>
-								<option id="com.qnx.qcc.option.linker.warningLevel.1085134933" superClass="com.qnx.qcc.option.linker.warningLevel" value="com.qnx.qcc.option.warningLevel.5" valueType="enumerated"/>
+								<option id="com.qnx.qcc.option.linker.mudflapth.857415101" name="Build for Mudflap (-fmudflapth)" superClass="com.qnx.qcc.option.linker.mudflapth" value="false" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.warningLevel.1085134933" name="Warning Level (-w)" superClass="com.qnx.qcc.option.linker.warningLevel" value="com.qnx.qcc.option.warningLevel.5" valueType="enumerated"/>
 								<inputType id="com.qnx.qcc.inputType.linker.451774304" superClass="com.qnx.qcc.inputType.linker">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

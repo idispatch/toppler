@@ -31,7 +31,8 @@
 
 /* Menu option flags */
 typedef enum {
-    MOF_NONE = 0x00, MOF_PASSKEYS = 0x01, /* Do keys get passed onto this option? */
+    MOF_NONE = 0x00,
+    MOF_PASSKEYS = 0x01, /* Do keys get passed onto this option? */
     MOF_LEFT = 0x02, /* Option string is left justified */
     MOF_RIGHT = 0x04 /* Option string is right justified */
 } menuoptflags;
