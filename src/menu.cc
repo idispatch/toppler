@@ -248,7 +248,7 @@ game_options_bonus(_menusystem *ms) {
 static const char *men_game_options_menu(_menusystem *prevmenu) {
     static const char * s = _("Game Options");
     if (prevmenu) {
-        _menusystem *ms = new_menu_system(s, NULL, 0, fontsprites.data(titledata)->h + 60);
+        _menusystem *ms = new_menu_system(s, NULL, 0, fontsprites.data(titledata)->h + 30);
 
         ms = add_menu_option(ms, NULL, game_options_menu_password, SDLK_UNKNOWN, MOF_LEFT);
         ms = add_menu_option(ms, NULL, game_options_menu_lives, SDLK_UNKNOWN,
@@ -821,8 +821,8 @@ static void men_highscore(unsigned long pt, int twr) {
 
 static void main_game_loop() {
     unsigned char tower;
-    Uint8 anglepos;
-    Uint16 resttime;
+    Uint8 anglepos = 0;
+    Uint16 resttime = 0;
     int demo = 0;
     int gameresult;
     Uint16 *tmpbuf = NULL;
@@ -1027,7 +1027,7 @@ void men_main() {
     _menusystem *ms;
 
     ms = new_menu_system(NULL, men_main_background_proc, 0, fontsprites.data(titledata)->h + 60);
-    ms = set_menu_system_timeproc(ms, 2000, men_main_timer_proc);
+    ms = set_menu_system_timeproc(ms, 500, men_main_timer_proc);
 
     ms = add_menu_option(ms, NULL, men_main_startgame_proc, SDLK_s, MOF_PASSKEYS);
     ms = add_menu_option(ms, NULL, NULL);

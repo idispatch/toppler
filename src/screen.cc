@@ -136,7 +136,7 @@ void scr_savedisplaybmp(char *fname) {
  * Set the pixel at (x, y) to the given value
  * NOTE: The surface must be locked before calling this!
  */
-void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
+static void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
     int bpp = surface->format->BytesPerPixel;
     /* Here p is the address to the pixel we want to set */
     Uint8 *p = (Uint8 *) surface->pixels + y * surface->pitch + x * bpp;
@@ -591,8 +591,9 @@ static void loadscroller(void) {
     assert_msg(num_scrolllayers > 1, "Must have at least 2 scroll layers!");
 
     scroll_layers = new _scroll_layer[layers];
+#ifdef _DEBUG
     assert_msg(scroll_layers, "Failed to alloc memory for bonus scroller!");
-
+#endif
     towerpos = fi.getbyte();
 
     sl_tower_depth = towerpos;
@@ -600,20 +601,26 @@ static void loadscroller(void) {
     sl_tower_num = fi.getword();
     sl_tower_den = fi.getword();
 
-    for (int l = 0; l < layers; l++) {
-
-        scroll_layers[l].xpos = fi.getword();
-        scroll_layers[l].ypos = fi.getword();
-        scroll_layers[l].width = fi.getword();
-        scroll_layers[l].height = fi.getword();
-        scroll_layers[l].num = fi.getword();
-        scroll_layers[l].den = fi.getword();
-        scroll_layers[l].xrepeat = fi.getword();
+    for (int i = 0; i < layers; i++) {
+        _scroll_layer &current = scroll_layers[i];
+        current.xpos = fi.getword();
+        current.ypos = fi.getword();
+        current.width = fi.getword();
+        current.height = fi.getword();
+        current.num = fi.getword();
+        current.den = fi.getword();
+        current.xrepeat = fi.getword();
 
         scr_read_palette(&fi, pal);
 
-        scroll_layers[l].image = scr_loadsprites(&layersprites, &fi, 1, scroll_layers[l].width,
-                scroll_layers[l].height, l != 0, pal, config.use_alpha_layers());
+        current.image = scr_loadsprites(&layersprites,
+                                                 &fi,
+                                                 1,
+                                                 current.width,
+                                                 current.height,
+                                                 i != 0,
+                                                 pal,
+                                                 config.use_alpha_layers());
     }
 }
 
@@ -661,7 +668,7 @@ void scr_init(void) {
     scr_reinit();
     load_sprites(0xff);
 
-    /* initialize sinus table */
+    /* initialize sine table */
     for (int i = 0; i < TOWER_ANGLES; i++) {
         sintab[i] = int(sin(i * 2 * M_PI / TOWER_ANGLES) * (TOWER_RADIUS + SPR_STEPWID / 2) + 0.5);
     }
@@ -1735,7 +1742,7 @@ static void putcross(long vert) {
     }
 }
 
-/* draws the points, time and lifes left */
+/* draws the points, time and lives left */
 static void draw_data(int time, screenflag flags) {
     char s[256];
     int t;
@@ -1884,21 +1891,23 @@ void scr_drawedit(long vpos, long apos, bool showtime) {
     boxstate = (boxstate + 1) & 0xf;
 }
 #endif
-static void put_scrollerlayer(long horiz, int layer) {
-    horiz += scroll_layers[layer].xpos;
-    horiz %= scroll_layers[layer].xrepeat;
-    scr_blit(layersprites.data(scroll_layers[layer].image), -horiz, scroll_layers[layer].ypos);
-    if (horiz + SCREEN_WIDTH > scroll_layers[layer].xrepeat)
-        scr_blit(layersprites.data(scroll_layers[layer].image), scroll_layers[layer].width - horiz,
-                scroll_layers[layer].ypos);
+static void put_scrollerlayer(long horiz, int index) {
+    _scroll_layer &layer = scroll_layers[index];
+    SDL_Surface * surface = layersprites.data(layer.image);
+    long ypos = layer.ypos;
+    horiz += layer.xpos;
+    horiz %= layer.xrepeat;
+    scr_blit(surface, -horiz, ypos);
+    scr_blit(surface, -horiz + layer.width, ypos);
+    scr_blit(surface, -horiz + layer.width * 2, ypos);
 }
 
 void scr_draw_bonus1(long horiz, long towerpos) {
-    int l;
+    int i;
 
     if (config.use_full_scroller())
-        for (l = 0; (l < num_scrolllayers) && (l < sl_tower_depth); l++)
-            put_scrollerlayer(scroll_layers[l].num * horiz / scroll_layers[l].den, l);
+        for (i = 0; (i < num_scrolllayers) && (i < sl_tower_depth); i++)
+            put_scrollerlayer(scroll_layers[i].num * horiz / scroll_layers[i].den, i);
     else
         put_scrollerlayer(scroll_layers[0].num * horiz / scroll_layers[0].den, 0);
 
@@ -1906,11 +1915,11 @@ void scr_draw_bonus1(long horiz, long towerpos) {
 }
 
 void scr_draw_bonus2(long horiz, long towerpos) {
-    int l;
+    int i;
 
     if (config.use_full_scroller())
-        for (l = sl_tower_depth; l < num_scrolllayers; l++)
-            put_scrollerlayer(scroll_layers[l].num * horiz / scroll_layers[l].den, l);
+        for (i = sl_tower_depth; i < num_scrolllayers; i++)
+            put_scrollerlayer(scroll_layers[i].num * horiz / scroll_layers[i].den, i);
     else
         put_scrollerlayer(
                 scroll_layers[num_scrolllayers - 1].num * horiz

@@ -31,6 +31,8 @@
 #define gametime        500
 #define scrollerspeed   2
 
+extern SDL_Surface *display;
+
 /* position, status and movement direction
  * of all the fishes
  */
@@ -44,7 +46,7 @@ static struct {
 /* position of the submarine and the torpedo,
  * the state is taken from time
  */
-static Sint32 torpedox, torpedoy, subposx, subposy;
+static Sint32 torpedox, torpedoy, torpedov, subposx, subposy;
 
 /* current game time
  */
@@ -67,12 +69,19 @@ static void show() {
     else
         towerpos = gametime * scrollerspeed - 4 * time + SCREEN_WIDTH + (SPRITE_SLICE_WIDTH * 2);
 
+    SDL_Rect r;
+    r.x = r.y = 0;
+    r.w = SCREEN_WIDTH;
+    r.h = SCREEN_HEIGHT;
+    SDL_FillRect(display, &r, 0);
+
     /* draw the background layers */
     scr_draw_bonus1(xpos, towerpos);
 
     /* if the torpedo is visible, draw it */
-    if (torpedox != -1)
+    if (torpedox != -1) {
         scr_draw_torpedo(torpedoy, torpedox);
+    }
 
     /* output the submarine */
     scr_draw_submarine(subposy - 20, subposx, time % 9);
@@ -144,10 +153,10 @@ bool bns_game(void) {
     key_readkey();
 
     do {
-
         /* move torpedo */
         if (torpedox >= 0) {
-            torpedox += 8;
+            torpedox += torpedov;
+            torpedov += 1;
             if (torpedox > (SCREEN_WIDTH + SPR_TORPWID))
                 torpedox = -1;
             for (b = 0; b < fishcnt; b++) {
@@ -169,37 +178,38 @@ bool bns_game(void) {
                 if (torpedox == -1) {
                     torpedox = subposx + TORPEDO_OFS_X;
                     torpedoy = subposy + TORPEDO_OFS_Y;
+                    torpedov = 6;
                     ttsounds::instance()->startsound(SND_TORPEDO);
                 }
             }
 
             if ((key_keystat() & down_key) != 0) {
                 if (subposy < SUBM_MAX_Y)
-                    subposy += 4;
+                    subposy += 8;
             } else {
                 if ((key_keystat() & up_key) != 0) {
                     if (subposy > SUBM_MIN_Y)
-                        subposy -= 4;
+                        subposy -= 8;
                 }
             }
 
             if ((key_keystat() & left_key) != 0) {
                 if (subposx > SUBM_MIN_X)
-                    subposx -= 8;
+                    subposx -= 16;
             } else {
                 if ((key_keystat() & right_key) != 0) {
                     if (subposx < SUBM_MAX_X)
-                        subposx += 4;
+                        subposx += 8;
                 }
             }
         } else {
             if (subposx > SUBM_TARGET_X)
-                subposx -= 8;
+                subposx -= 18;
             else if (subposx < SUBM_TARGET_X)
-                subposx += 4;
+                subposx += 8;
 
             if (subposy > SUBM_TARGET_Y)
-                subposy -= 4;
+                subposy -= 8;
         }
 
         /* escape or pause key pressed */
@@ -236,7 +246,7 @@ bool bns_game(void) {
             }
         }
 
-        /* nexfish handling */
+        /* nextfish handling */
         if (nextfish > 0)
             nextfish--;
         else {

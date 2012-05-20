@@ -30,8 +30,8 @@
 #endif
 
 /* screen width and height, in pixels. */
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 
 /* font width and height, in pixels. */
 #define FONTWID 24
