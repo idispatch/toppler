@@ -92,7 +92,7 @@ typedef struct _menusystem {
  * This function returns immediately, and the return
  * value tells whether the user finished editing the string.
  */
-bool men_input(char *origs, int max_len, int xpos = -1, int ypos = (SCREENHEI * 2) / 3,
+bool men_input(char *origs, int max_len, int xpos = -1, int ypos = (SCREEN_HEIGHT * 2) / 3,
         const char *allowed = NULL);
 
 /* asks a yes/no question; return 0 if "no",

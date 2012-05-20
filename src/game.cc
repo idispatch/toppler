@@ -61,7 +61,7 @@ void gam_arrival(void) {
 
     rob_initialize();
     snb_init();
-    char *passwd = lev_get_passwd();
+    const char *passwd = lev_get_passwd();
 
     bool svisible = true;
     int substart = 0;
@@ -70,7 +70,6 @@ void gam_arrival(void) {
     b = 5;
     toppler = 1;
 
-    //TTSound->startsound(SND_START);
     top_hide();
 
     key_readkey();
@@ -78,17 +77,17 @@ void gam_arrival(void) {
     do {
         scr_drawall(8, 0, lev_towertime(), svisible, subshape, substart, SF_NONE);
         scr_darkenscreen();
-        scr_writetext_center((SCREENHEI / 6), _("You are entering the"));
+        scr_writetext_center((SCREEN_HEIGHT / 6), _("You are entering the"));
 
         if (strlen(lev_towername()))
-            scr_writetext_broken_center((SCREENHEI * 2 / 6), _(lev_towername()));
+            scr_writetext_broken_center((SCREEN_HEIGHT * 2 / 6), _(lev_towername()));
         else
-            scr_writetext_broken_center((SCREENHEI * 2 / 6), _("Nameless Tower"));
+            scr_writetext_broken_center((SCREEN_HEIGHT * 2 / 6), _("Nameless Tower"));
 
         if (passwd && lev_show_passwd(lev_towernr())) {
             char buf[50];
             snprintf(buf, 50, _("Password:   %s"), passwd);
-            scr_writetext_center(SCREENHEI * 5 / 6, buf);
+            scr_writetext_center(SCREEN_HEIGHT * 5 / 6, buf);
         }
         scr_swap();
         ttsounds::instance()->play();
@@ -311,20 +310,20 @@ static void writebonus(int &tower_position, int tower_anglepos, int zeit, int te
 
     if (lifes) {
         snprintf(s, 30, _("Time:      ~t35010 X %3d"), zeit);
-        scr_writeformattext(90, (SCREENHEI / 2) - FONTHEI * 3, s);
+        scr_writeformattext(90, (SCREEN_HEIGHT / 2) - FONT_HEIGHT * 3, s);
         snprintf(s, 30, _("Technique: ~t35010 X %3d"), tec);
-        scr_writeformattext(90, (SCREENHEI / 2) - FONTHEI, s);
+        scr_writeformattext(90, (SCREEN_HEIGHT / 2) - FONT_HEIGHT, s);
         snprintf(s, 30, _("Extra:     ~t35010 X %3d"), extra);
-        scr_writeformattext(90, (SCREENHEI / 2) + FONTHEI, s);
+        scr_writeformattext(90, (SCREEN_HEIGHT / 2) + FONT_HEIGHT, s);
         snprintf(s, 30, _("Lifes:     ~t3505000 X %3d"), lif);
-        scr_writeformattext(90, (SCREENHEI / 2) + FONTHEI * 3, s);
+        scr_writeformattext(90, (SCREEN_HEIGHT / 2) + FONT_HEIGHT * 3, s);
     } else {
         snprintf(s, 30, _("Time:      ~t35010 X %3d"), zeit);
-        scr_writeformattext(90, (SCREENHEI / 2) - FONTHEI * 3, s);
+        scr_writeformattext(90, (SCREEN_HEIGHT / 2) - FONT_HEIGHT * 3, s);
         snprintf(s, 30, _("Technique: ~t35010 X %3d"), tec);
-        scr_writeformattext(90, (SCREENHEI / 2), s);
+        scr_writeformattext(90, (SCREEN_HEIGHT / 2), s);
         snprintf(s, 30, _("Extra:     ~t35010 X %3d"), extra);
-        scr_writeformattext(90, (SCREENHEI / 2) + FONTHEI * 3, s);
+        scr_writeformattext(90, (SCREEN_HEIGHT / 2) + FONT_HEIGHT * 3, s);
     }
 
     scr_swap();

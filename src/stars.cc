@@ -59,8 +59,8 @@ void sts_init(int sn, int nstar) {
     num_stars = nstar;
 
     for (int t = 0; t < num_stars; t++) {
-        stars[t].x = rand() / (RAND_MAX / SCREENWID) - SPR_STARWID;
-        stars[t].y = rand() / (RAND_MAX / SCREENHEI) - SPR_STARHEI;
+        stars[t].x = rand() / (RAND_MAX / SCREEN_WIDTH) - SPR_STARWID;
+        stars[t].y = rand() / (RAND_MAX / SCREEN_HEIGHT) - SPR_STARHEI;
         stars[t].state = 0;
         stars[t].size = rand() / (RAND_MAX / 7);
     }
@@ -90,22 +90,22 @@ void sts_move(long x, long y) {
     for (t = 0; t < num_stars; t++) {
         stars[t].x += starstep * x;
         stars[t].y += y;
-        if (stars[t].x > SCREENWID) {
+        if (stars[t].x > SCREEN_WIDTH) {
             stars[t].x = rand() / (RAND_MAX / starstep) - SPR_STARWID;
-            stars[t].y = rand() / (RAND_MAX / SCREENHEI);
+            stars[t].y = rand() / (RAND_MAX / SCREEN_HEIGHT);
         } else {
             if (stars[t].x < -SPR_STARWID) {
-                stars[t].x = SCREENWID - rand() / (RAND_MAX / starstep);
-                stars[t].y = rand() / (RAND_MAX / SCREENHEI);
+                stars[t].x = SCREEN_WIDTH - rand() / (RAND_MAX / starstep);
+                stars[t].y = rand() / (RAND_MAX / SCREEN_HEIGHT);
             }
         }
-        if (stars[t].y > SCREENHEI) {
+        if (stars[t].y > SCREEN_HEIGHT) {
             stars[t].y = -SPR_STARHEI;
-            stars[t].x = rand() / (RAND_MAX / (SCREENWID + SPR_STARWID)) - SPR_STARWID;
+            stars[t].x = rand() / (RAND_MAX / (SCREEN_WIDTH + SPR_STARWID)) - SPR_STARWID;
         } else {
             if (stars[t].y < -SPR_STARHEI) {
-                stars[t].y = SCREENHEI;
-                stars[t].x = rand() / (RAND_MAX / (SCREENWID + SPR_STARWID)) - SPR_STARWID;
+                stars[t].y = SCREEN_HEIGHT;
+                stars[t].x = rand() / (RAND_MAX / (SCREEN_WIDTH + SPR_STARWID)) - SPR_STARWID;
             }
         }
     }

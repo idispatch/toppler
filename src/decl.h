@@ -30,14 +30,14 @@
 #endif
 
 /* screen width and height, in pixels. */
-#define SCREENWID 640
-#define SCREENHEI 480
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 
 /* font width and height, in pixels. */
 #define FONTWID 24
 #define FONTMINWID 10
-#define FONTMAXWID 40
-#define FONTHEI 40
+#define FONT_MAX_WIDTH 40
+#define FONT_HEIGHT 40
 
 /* the tower dimensions */
 #define TOWER_SLICE_HEIGHT 16
@@ -55,8 +55,8 @@
 #define SPR_STARHEI 32
 
 /* size of one layer sprite of tower */
-#define SPR_SLICEWID 192
-#define SPR_SLICEHEI 16
+#define SPRITE_SLICE_WIDTH 192
+#define SPRITE_SLICE_HEIGHT 16
 #define SPR_SLICEANGLES 8
 #define SPR_SLICEFRAMES 1
 #define SPR_SLICESPRITES (SPR_SLICEANGLES * SPR_SLICEFRAMES)
@@ -119,12 +119,12 @@
 /* submarine moving limits in bonus game */
 #define SUBM_MIN_X 0
 #define SUBM_MIN_Y 60
-#define SUBM_MAX_X (SCREENWID/2)
+#define SUBM_MAX_X (SCREEN_WIDTH/2)
 #define SUBM_MAX_Y 280
 
 /* submarine target coord during automatic guidance.
  the sub also starts from this coord. */
-#define SUBM_TARGET_X (SCREENWID/2)-(SPR_SUBMWID/2)
+#define SUBM_TARGET_X (SCREEN_WIDTH/2)-(SPR_SUBMWID/2)
 #define SUBM_TARGET_Y 60
 
 /* # of stars on the background during game */
@@ -144,11 +144,13 @@
 #endif
 
 #define TOP_DATADIR ""
+#define HISCOREDIR ""
 
 #ifdef WIN32
 #define OPEN_FOR_READING "rb"
 #else
 #define OPEN_FOR_READING "r"
+#define MAX_PATH 256
 #endif
 
 /* names of the different data files */

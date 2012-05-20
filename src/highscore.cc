@@ -33,8 +33,11 @@
 
 #define SCOREFNAME "toppler.hsc"
 
+#ifdef __PLAYBOOK__
+#else
 /* the group ids of the game */
 static gid_t UserGroupID, GameGroupID;
+#endif
 
 /* true, if we use the global highscore table, false if not */
 static bool globalHighscore;
@@ -43,7 +46,7 @@ static bool globalHighscore;
  * file might change any time and so it's better to close and reopen
  * every time we need access
  */
-static char highscoreName[200];
+static char highscoreName[MAX_PATH];
 
 typedef struct {
     Uint32 points;
@@ -114,17 +117,11 @@ static void loadscores(FILE *f) {
 }
 
 static char * homedir() {
-
 #ifndef WIN32
-
     return getenv("HOME");
-
 #else
-
     return "./";
-
 #endif
-
 }
 
 static bool hsc_lock(void) {
@@ -147,17 +144,20 @@ static bool hsc_lock(void) {
 
 #endif
 #endif
+#ifdef __PLAYBOOK__
+#else
     if (globalHighscore)
         setegid(GameGroupID);
+#endif
     FILE *f = fopen(highscoreName, OPEN_FOR_READING);
+#ifdef __PLAYBOOK__
+#else
     if (globalHighscore)
         setegid(UserGroupID);
-
+#endif
     loadscores(f);
-
     if (f)
         fclose(f);
-
     return true;
 }
 
@@ -165,13 +165,11 @@ static void hsc_unlock(void) {
 #ifdef __PLAYBOOK__
 #else
 #ifndef WIN32
-
     if (globalHighscore) {
         setegid(GameGroupID);
         unlink(HISCOREDIR "/" SCOREFNAME ".lck");
         setegid(UserGroupID);
     }
-
 #endif
 #endif
 }
@@ -184,17 +182,23 @@ void hsc_init(void) {
     }
 
 #ifndef WIN32
-
+#ifdef __PLAYBOOK__
+#else
     /* fine at first save the group ids and drop group privileges */
     UserGroupID = getgid();
     GameGroupID = getegid();
 
     setegid(UserGroupID);
-
+#endif
     /* assume we use local highscore table */
     globalHighscore = false;
-    snprintf(highscoreName, 199, "%s/.toppler/%s", homedir(), SCOREFNAME);
-
+#ifdef __PLAYBOOK__
+    snprintf(highscoreName, sizeof(highscoreName), "%s/%s", homedir(), SCOREFNAME);
+#else
+    snprintf(highscoreName, sizeof(highscoreName), "/.toppler/%s", homedir(), SCOREFNAME);
+#endif
+#ifdef __PLAYBOOK__
+#else
     /* now check if we have access to a global highscore table */
 
 #ifdef HISCOREDIR
@@ -203,17 +207,23 @@ void hsc_init(void) {
 
     /* 1. get read and write access to the file */
 
-    char fname[200];
-    snprintf(fname, 200, HISCOREDIR "/" SCOREFNAME);
-
+    char fname[MAX_PATH];
+#ifdef __PLAYBOOK__
+    snprintf(fname, sizeof(fname), "%s/%s", homedir(), SCOREFNAME);
+#else
+    snprintf(fname, sizeof(fname), HISCOREDIR "/" SCOREFNAME);
+#endif
+#ifdef __PLAYBOOK__
+#else
     setegid(GameGroupID);
+#endif
     FILE * f = fopen(fname, "r+");
+#ifdef __PLAYBOOK__
+#else
     setegid(UserGroupID);
-
+#endif
     if (f) {
-
         fclose(f);
-
         /* 2. get write access to the directory to create the lock file
          * to check this we try to chreate a file with a random name
          */
@@ -237,7 +247,7 @@ void hsc_init(void) {
     }
 
 #endif
-
+#endif
     /* no dir to the global highscore table -> not global highscore table */
 
     if (globalHighscore)
@@ -248,23 +258,24 @@ void hsc_init(void) {
 #else // ifdef WIN32
     /* for non unix systems we use only local highscore tables */
     globalHighscore = false;
-    snprintf(highscoreName, 200, SCOREFNAME);
-
+    snprintf(highscoreName, sizeof(highscoreName), SCOREFNAME);
 #endif
-
 }
 
 void hsc_select(const char * mission) {
     strncpy(missionname, mission, 100);
-
+#ifdef __PLAYBOOK__
+#else
     if (globalHighscore)
         setegid(GameGroupID);
+#endif
     FILE *f = fopen(highscoreName, OPEN_FOR_READING);
+#ifdef __PLAYBOOK__
+#else
     if (globalHighscore)
         setegid(UserGroupID);
-
+#endif
     loadscores(f);
-
     if (f)
         fclose(f);
 }
@@ -317,11 +328,17 @@ Uint8 hsc_enter(Uint32 points, Uint8 tower, char *name) {
             FILE *f;
 
             if (globalHighscore) {
+#ifdef __PLAYBOOK__
+#else
                 if (globalHighscore)
                     setegid(GameGroupID);
+#endif
                 f = fopen(highscoreName, "r+b");
+#ifdef __PLAYBOOK__
+#else
                 if (globalHighscore)
                     setegid(UserGroupID);
+#endif
             } else {
 
                 /* local highscore: this one might require creating the file */

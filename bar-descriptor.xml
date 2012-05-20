@@ -52,6 +52,7 @@
     <category>core.games</category>
     <asset path="assets">assets</asset>
     <asset path="icon.png">icon.png</asset>
+    <asset path="sdl-controls.xml">sdl-controls.xml</asset>
     <configuration id="com.qnx.qcc.configuration.exe.debug.561979833" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/toppler" entry="true" type="Qnx/Elf">toppler</asset>

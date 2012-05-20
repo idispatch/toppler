@@ -27,12 +27,12 @@ static SDLKey sdlkeytyped;
 static Uint16 mouse_x, mouse_y;
 static bool mouse_moved;
 static Uint16 mouse_button;
+#ifdef __PLAYBOOK__
+#else
 static int joy_inited = 0;
 static bool joy_action = 0;
 SDL_Joystick *joy;
-
-class quit_action_class {
-};
+#endif
 
 #define JOYSTICK_DEADZONE 6000
 
@@ -44,9 +44,6 @@ struct _ttkeyconv {
 }static ttkeyconv[] = { { up_key, SDLK_UP }, { down_key, SDLK_DOWN }, { left_key, SDLK_LEFT }, {
         right_key, SDLK_RIGHT }, { fire_key, SDLK_SPACE }, { fire_key, SDLK_RETURN }, { break_key,
         SDLK_ESCAPE }, { pause_key, SDLK_p },
-/*   {mousebttn1, SDLK_SPACE},
- {mousebttn4, SDLK_UP},
- {mousebttn5, SDLK_DOWN},*/
 
 { up_key, SDLK_UP }, { down_key, SDLK_DOWN }, { left_key, SDLK_LEFT }, { right_key, SDLK_RIGHT }, {
         fire_key, SDLK_SPACE }, { break_key, SDLK_ESCAPE }, { pause_key, SDLK_p }, };
@@ -63,11 +60,15 @@ void key_redefine(ttkey code, SDLKey key) {
 
 void key_init(void) {
     SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+#ifdef __PLAYBOOK__
+#else
     SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_IGNORE);
+#endif
     SDL_EventState(SDL_SYSWMEVENT, SDL_IGNORE);
 
+#ifdef __PLAYBOOK__
+#else
     SDL_EnableUNICODE(1);
-
     if (joy_inited == 0) {
         if (SDL_Init(SDL_INIT_JOYSTICK) < 0) {
             joy_inited = 2;
@@ -82,7 +83,7 @@ void key_init(void) {
             }
         }
     }
-
+#endif
     chartyped = 0;
     keytyped = keydown = no_key;
     sdlkeytyped = SDLK_UNKNOWN;
@@ -92,13 +93,14 @@ void key_init(void) {
 
 static void handleEvents(void) {
     SDL_Event e;
-
+#ifdef __PLAYBOOK__
+#else
     if (joy_action) {
         keydown = no_key;
         keytyped = no_key;
         joy_action = 0;
     }
-
+#endif
     while (SDL_PollEvent(&e)) {
 
         switch (e.type) {
@@ -106,6 +108,8 @@ static void handleEvents(void) {
             if ((e.active.state & SDL_APPINPUTFOCUS) || (e.active.state & SDL_APPACTIVE))
                 tt_has_focus = (e.active.gain == 1);
             break;
+#ifdef __PLAYBOOK__
+#else
         case SDL_MOUSEMOTION:
             mouse_x = e.motion.x;
             mouse_y = e.motion.y;
@@ -144,9 +148,10 @@ static void handleEvents(void) {
             mouse_y = e.button.y;
             mouse_button = e.button.button;
             break;
+#endif
         case SDL_QUIT:
-            fprintf(stderr, _("Wheee!!\n"));
-            throw new quit_action_class;
+            //SDL_Quit();
+            exit(0);
             break;
         case SDL_KEYDOWN:
         case SDL_KEYUP:
@@ -179,7 +184,10 @@ static void handleEvents(void) {
 }
 
 void key_done(void) {
+#ifdef __PLAYBOOK__
+#else
     SDL_JoystickClose(joy);
+#endif
 }
 
 Uint16 key_keystat(void) {
@@ -296,11 +304,6 @@ bool key_mouse(Uint16 *x, Uint16 *y, ttkey *bttn) {
     default:
         *bttn = no_key;
         break;
-        /*  case 1: *bttn = mousebttn1; break;
-         case 2: *bttn = mousebttn2; break;
-         case 3: *bttn = mousebttn3; break;
-         case 4: *bttn = mousebttn4; break;
-         case 5: *bttn = mousebttn5; break;*/
     }
     mouse_moved = false;
     mouse_button = 0;

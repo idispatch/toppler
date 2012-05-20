@@ -93,7 +93,7 @@ static int towerdemo_len = 0;
 
 typedef struct mission_node {
     char name[30];
-    char fname[100];
+    char fname[MAX_PATH];
     Uint8 prio; // the lower prio, the further in front the mission will be in the list
     mission_node *next;
 } mission_node;
@@ -101,12 +101,24 @@ typedef struct mission_node {
 mission_node * missions;
 
 #ifndef CREATOR
+#ifdef __PLAYBOOK__
+static inline const char *get_filename_ext(const char *filename) {
+    const char *dot = strrchr(filename, '.');
+    if(!dot || dot == filename) return "";
+    return dot + 1;
+}
+#endif
 
-static int missionfiles(const struct dirent *file) {
+static inline int missionfiles(const struct dirent *file) {
+#ifdef __PLAYBOOK__
+    const char * ext = get_filename_ext(file->d_name);
+    return strcmp(ext, "ttm") == 0;
+#else
     int len = strlen(file->d_name);
 
     return ((len > 4) && (file->d_name[len - 1] == 'm') && (file->d_name[len - 2] == 't')
             && (file->d_name[len - 3] == 't') && (file->d_name[len - 4] == '.'));
+#endif
 }
 
 #endif
@@ -126,13 +138,12 @@ char conv_towercode2char(Uint8 code) {
     return towerblockdata[TB_EMPTY].ch;
 }
 
-static void add_mission(char *fname) {
+static void add_mission(char const *fname) {
 
     char mname[30];
     Uint8 prio;
 
     FILE * f = fopen(fname, OPEN_FOR_READING);
-
     if (!f)
         return;
 
@@ -151,7 +162,6 @@ static void add_mission(char *fname) {
 
     /* first check if the mission is already there */
     while (m) {
-
         int erg = strcmp(m->name, mname);
         /* no two missions with the same name */
         if (erg == 0) {
@@ -208,7 +218,7 @@ static void add_mission(char *fname) {
 
 void lev_findmissions() {
 
-    char pathname[100];
+    char pathname[MAX_PATH];
 
     struct dirent **eps = NULL;
 
@@ -228,37 +238,35 @@ void lev_findmissions() {
         sprintf(pathname, "%s\\", n);
     }
 #else
+#ifdef __PLAYBOOK__
+    snprintf(pathname, sizeof(pathname), "%s/../app/native/assets/", getenv("HOME"));
+#else
     sprintf(pathname, "%s", "./");
 #endif
-
+#endif
     int n = alpha_scandir(pathname, &eps, missionfiles);
-
     if (n >= 0) {
-
         for (int i = 0; i < n; i++) {
-
-            char fname[200];
+            char fname[MAX_PATH];
             sprintf(fname, "%s%s", pathname, eps[i]->d_name);
-
             add_mission(fname);
-
             free(eps[i]);
         }
     }
     free(eps);
     eps = NULL;
-
+#ifdef __PLAYBOOK__
+#else
 #ifndef WIN32
-
-    snprintf(pathname, 100, "%s/.toppler/", getenv("HOME"));
+    snprintf(pathname, sizeof(pathname), "%s/.toppler/", getenv("HOME"));
     n = alpha_scandir(pathname, &eps, missionfiles);
 
     if (n >= 0) {
 
         for (int i = 0; i < n; i++) {
 
-            char fname[200];
-            snprintf(fname, 200, "%s%s", pathname, eps[i]->d_name);
+            char fname[MAX_PATH];
+            snprintf(fname, sizeof(fname), "%s%s", pathname, eps[i]->d_name);
 
             add_mission(fname);
         }
@@ -266,15 +274,15 @@ void lev_findmissions() {
     free(eps);
     eps = NULL;
 
-    snprintf(pathname, 100, "%s/", TOP_DATADIR);
+    snprintf(pathname, sizeof(pathname), "%s/", TOP_DATADIR);
     n = alpha_scandir(pathname, &eps, missionfiles);
 
     if (n >= 0) {
 
         for (int i = 0; i < n; i++) {
 
-            char fname[200];
-            snprintf(fname, 200, "%s%s", pathname, eps[i]->d_name);
+            char fname[MAX_PATH];
+            snprintf(fname, sizeof(fname), "%s%s", pathname, eps[i]->d_name);
 
             add_mission(fname);
         }
@@ -283,7 +291,7 @@ void lev_findmissions() {
     eps = NULL;
 
 #endif
-
+#endif
 }
 
 #endif
@@ -338,6 +346,8 @@ bool lev_loadmission(Uint16 num) {
     }
 
     FILE * in = fopen(m->fname, OPEN_FOR_READING);
+    if(!in)
+        return false;
 
     if (mission)
         delete[] mission;
@@ -473,8 +483,8 @@ void lev_selecttower(Uint8 number) {
     } while ((towersection) section != TSS_END);
 }
 
-char *
-gen_passwd(int pwlen, char *allowed, int buflen, char *buf) {
+static char *
+gen_passwd(int pwlen, char const *allowed, int buflen, char *buf) {
     static char passwd[PASSWORD_LEN + 1];
     int len = buflen;
     int alen;
@@ -507,7 +517,7 @@ gen_passwd(int pwlen, char *allowed, int buflen, char *buf) {
     return passwd;
 }
 
-char *lev_get_passwd(void) {
+const char *lev_get_passwd(void) {
     return gen_passwd(PASSWORD_LEN, PASSWORD_CHARS, 256 * TOWERWID, (char *) tower);
 }
 
@@ -1139,6 +1149,8 @@ void lev_restore(unsigned char *&data) {
     delete[] data;
 }
 
+#ifdef __PLAYBOOK__
+#else
 lev_problem lev_is_consistent(int &row, int &col) {
 
     int y;
@@ -1323,7 +1335,6 @@ lev_problem lev_is_consistent(int &row, int &col) {
 }
 
 /* the functions for mission creation */
-
 static FILE * fmission = NULL;
 static Uint8 nmission = 0;
 static Uint32 missionidx[256];
@@ -1543,4 +1554,4 @@ void lev_mission_finish() {
 
     fmission = NULL;
 }
-
+#endif

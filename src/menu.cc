@@ -80,7 +80,7 @@ static const char *
 men_main_background_proc(_menusystem *ms) {
     if (ms) {
         scr_blit(restsprites.data(menupicture), 0, 0);
-        scr_blit(fontsprites.data(titledata), (SCREENWID - fontsprites.data(titledata)->w) / 2, 20);
+        scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
         return NULL;
     }
     return "";
@@ -532,7 +532,7 @@ men_options(_menusystem *mainmenu) {
 static int hiscores_timer = 0;
 static int hiscores_pager = 0;
 static int hiscores_state = 0;
-static int hiscores_xpos = SCREENWID;
+static int hiscores_xpos = SCREEN_WIDTH;
 static int hiscores_hilited = -1;
 static int hiscores_maxlen_pos = 0;
 static int hiscores_maxlen_points = 0;
@@ -590,11 +590,11 @@ men_hiscores_background_proc(_menusystem *ms) {
     if (ms) {
 
         scr_blit(restsprites.data(menupicture), 0, 0);
-        scr_blit(fontsprites.data(titledata), (SCREENWID - fontsprites.data(titledata)->w) / 2, 20);
+        scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
 
         switch (hiscores_state) {
         case 0: /* bring the scores in */
-            if (hiscores_xpos > ((SCREENWID - hiscores_maxlen) / 2)) {
+            if (hiscores_xpos > ((SCREEN_WIDTH - hiscores_maxlen) / 2)) {
                 hiscores_xpos -= 10;
                 break;
             } else
@@ -629,7 +629,7 @@ men_hiscores_background_proc(_menusystem *ms) {
                 break;
             } else {
                 hiscores_state = 0;
-                hiscores_xpos = SCREENWID;
+                hiscores_xpos = SCREEN_WIDTH;
                 hiscores_pager = next_page;
             }
         default:
@@ -637,13 +637,13 @@ men_hiscores_background_proc(_menusystem *ms) {
         }
         for (int t = 0; t < HISCORES_PER_PAGE; t++) {
             int cs = t + (hiscores_pager * HISCORES_PER_PAGE);
-            int ypos = (t * (FONTHEI + 1)) + fontsprites.data(titledata)->h + FONTHEI * 2;
+            int ypos = (t * (FONT_HEIGHT + 1)) + fontsprites.data(titledata)->h + FONT_HEIGHT * 2;
             char *pos, *points, *name;
             get_hiscores_string(cs, &pos, &points, &name);
             if (cs == hiscores_hilited) {
                 int clen = hiscores_maxlen_pos + hiscores_maxlen_points + hiscores_maxlen_name
                         + 20 * 2 + 20;
-                scr_putbar(hiscores_xpos - 5, ypos - 3, clen, FONTHEI + 3, blink_r, blink_g,
+                scr_putbar(hiscores_xpos - 5, ypos - 3, clen, FONT_HEIGHT + 3, blink_r, blink_g,
                         blink_b, (config.use_alpha_darkening()) ? 128 : 255);
             }
             scr_writetext(hiscores_xpos + hiscores_maxlen_pos - scr_textlength(pos), ypos, pos);
@@ -677,7 +677,7 @@ static void show_scores(bool back = true, int mark = -1) {
     hiscores_state = 0;
     calc_hiscores_maxlen(&hiscores_maxlen_pos, &hiscores_maxlen_points, &hiscores_maxlen_name);
     hiscores_maxlen = hiscores_maxlen_pos + hiscores_maxlen_points + hiscores_maxlen_name + 20;
-    hiscores_xpos = SCREENWID;
+    hiscores_xpos = SCREEN_WIDTH;
     hiscores_hilited = mark;
 
     /* fake options; the empty lines are used by the background proc */
@@ -696,7 +696,7 @@ static void show_scores(bool back = true, int mark = -1) {
 
 static void congrats_background_proc(void) {
     scr_blit(restsprites.data(menupicture), 0, 0);
-    scr_blit(fontsprites.data(titledata), (SCREENWID - fontsprites.data(titledata)->w) / 2, 20);
+    scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
 
     /* you can use up to 4 lines of text here, but please check
      * if the text fits onto the screen
@@ -884,6 +884,8 @@ men_main_highscore_proc(_menusystem *ms) {
     return _("Highscores");
 }
 
+#ifdef __PLAYBOOK__
+#else
 static const char *
 men_main_leveleditor_proc(_menusystem *ms) {
     if (ms) {
@@ -894,6 +896,7 @@ men_main_leveleditor_proc(_menusystem *ms) {
     }
     return _("Level Editor");
 }
+#endif
 
 static const char *
 men_main_timer_proc(_menusystem *ms) {
@@ -962,7 +965,7 @@ men_game_leavegame(_menusystem *tms) {
 
 #ifdef GAME_DEBUG_KEYS
 void run_debug_menu(void) {
-    _menusystem *ms = new_menu_system(_("DEBUG MENU"), NULL, 0, SCREENHEI / 5);
+    _menusystem *ms = new_menu_system(_("DEBUG MENU"), NULL, 0, SCREEN_HEIGHT / 5);
 
     ms = add_menu_option(ms, NULL, debug_menu_extralife);
     ms = add_menu_option(ms, NULL, debug_menu_extrascore);
@@ -993,7 +996,10 @@ void men_main() {
     ms = add_menu_option(ms, NULL, NULL);
     ms = add_menu_option(ms, NULL, men_main_highscore_proc, SDLK_h);
     ms = add_menu_option(ms, NULL, men_options, SDLK_o);
+#ifdef __PLAYBOOK__
+#else
     ms = add_menu_option(ms, NULL, men_main_leveleditor_proc, SDLK_e);
+#endif
 #ifdef HUNT_THE_FISH
     ms = add_menu_option(ms, NULL, men_main_bonusgame_proc);
 #endif

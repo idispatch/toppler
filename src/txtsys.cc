@@ -35,8 +35,8 @@ textsystem::textsystem(const char *title, menuopt_callback_proc pr) {
     lines = NULL;
     mproc = pr;
     xoffs = yoffs = disp_xoffs = disp_yoffs = 0;
-    ystart = (title) ? FONTHEI + 15 : 0;
-    shownlines = ((SCREENHEI - ystart) / FONTHEI) + 1;
+    ystart = (title) ? FONT_HEIGHT + 15 : 0;
+    shownlines = ((SCREEN_HEIGHT - ystart) / FONT_HEIGHT) + 1;
 }
 
 textsystem::~textsystem() {
@@ -97,16 +97,16 @@ void textsystem::run() {
 
         switch (key_sdlkey2conv(key, false)) {
         case up_key:
-            if (yoffs >= FONTHEI)
-                yoffs -= FONTHEI;
+            if (yoffs >= FONT_HEIGHT)
+                yoffs -= FONT_HEIGHT;
             else
                 yoffs = 0;
             break;
         case down_key:
-            if (yoffs + (shownlines * FONTHEI) < (numlines * FONTHEI))
-                yoffs += FONTHEI;
+            if (yoffs + (shownlines * FONT_HEIGHT) < (numlines * FONT_HEIGHT))
+                yoffs += FONT_HEIGHT;
             else
-                yoffs = (numlines - shownlines + 1) * FONTHEI;
+                yoffs = (numlines - shownlines + 1) * FONT_HEIGHT;
             break;
         case break_key:
             ende = true;
@@ -118,31 +118,31 @@ void textsystem::run() {
                 xoffs = 0;
             break;
         case right_key:
-            if (xoffs <= max_length - SCREENWID - FONTWID)
+            if (xoffs <= max_length - SCREEN_WIDTH - FONTWID)
                 xoffs += FONTWID;
             else
-                xoffs = max_length - SCREENWID;
+                xoffs = max_length - SCREEN_WIDTH;
             break;
         default:
             switch (key) {
             case SDLK_PAGEUP:
-                if (yoffs >= shownlines * FONTHEI)
-                    yoffs -= shownlines * FONTHEI;
+                if (yoffs >= shownlines * FONT_HEIGHT)
+                    yoffs -= shownlines * FONT_HEIGHT;
                 else
                     yoffs = 0;
                 break;
             case SDLK_SPACE:
             case SDLK_PAGEDOWN:
-                if ((yoffs / FONTHEI) + (shownlines * 2) <= numlines)
-                    yoffs += shownlines * FONTHEI;
+                if ((yoffs / FONT_HEIGHT) + (shownlines * 2) <= numlines)
+                    yoffs += shownlines * FONT_HEIGHT;
                 else
-                    yoffs = (numlines - shownlines + 1) * FONTHEI;
+                    yoffs = (numlines - shownlines + 1) * FONT_HEIGHT;
                 break;
             case SDLK_HOME:
                 yoffs = 0;
                 break;
             case SDLK_END:
-                yoffs = (numlines - shownlines + 1) * FONTHEI;
+                yoffs = (numlines - shownlines + 1) * FONT_HEIGHT;
                 break;
             case SDLK_RETURN:
             case SDLK_ESCAPE:
@@ -195,25 +195,25 @@ void textsystem::draw() {
             disp_xoffs = xoffs;
     }
 
-    scr_setclipping(0, ystart, SCREENWID, SCREENHEI);
+    scr_setclipping(0, ystart, SCREEN_WIDTH, SCREEN_HEIGHT);
     for (int k = 0; k <= shownlines; k++)
-        if (k + (disp_yoffs / FONTHEI) < numlines) {
-            if (lines[k + (disp_yoffs / FONTHEI)])
-                scr_writeformattext(-disp_xoffs, k * FONTHEI + ystart - (disp_yoffs % FONTHEI),
-                        lines[k + (disp_yoffs / FONTHEI)]);
+        if (k + (disp_yoffs / FONT_HEIGHT) < numlines) {
+            if (lines[k + (disp_yoffs / FONT_HEIGHT)])
+                scr_writeformattext(-disp_xoffs, k * FONT_HEIGHT + ystart - (disp_yoffs % FONT_HEIGHT),
+                        lines[k + (disp_yoffs / FONT_HEIGHT)]);
         }
 
     scr_setclipping();
 
     if (disp_yoffs > 0)
-        scr_writetext(SCREENWID - FONTWID, 34, pointup);
-    if ((disp_yoffs / FONTHEI) + shownlines < numlines)
-        scr_writetext(SCREENWID - FONTWID, SCREENHEI - FONTHEI, pointdown);
+        scr_writetext(SCREEN_WIDTH - FONTWID, 34, pointup);
+    if ((disp_yoffs / FONT_HEIGHT) + shownlines < numlines)
+        scr_writetext(SCREEN_WIDTH - FONTWID, SCREEN_HEIGHT - FONT_HEIGHT, pointdown);
 
     if (disp_xoffs > 0)
         scr_writetext(FONTWID, 5, pointleft);
-    if (disp_xoffs < max_length - SCREENWID)
-        scr_writetext(SCREENWID - FONTWID, 5, pointright);
+    if (disp_xoffs < max_length - SCREEN_WIDTH)
+        scr_writetext(SCREEN_WIDTH - FONTWID, 5, pointright);
 
     scr_swap();
     dcl_wait();

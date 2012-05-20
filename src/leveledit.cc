@@ -15,7 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
+#ifdef __PLAYBOOK__
+#else
 #include "leveledit.h"
 
 #include "decl.h"
@@ -199,26 +200,26 @@ static bool edit_towercolor(int row, int col) {
         for (tmp = 0; tmp < 3; tmp++) {
             scr_color_ramp(&abg_r, &abg_g, &abg_b);
             tmpcol = newc[tmp];
-            z = ((SCREENHEI * 2) / 3) + tmp * (FONTHEI + 2);
+            z = ((SCREEN_HEIGHT * 2) / 3) + tmp * (FONT_HEIGHT + 2);
 
             if (tmp == activecol) {
-                scr_putbar((SCREENWID / 2) - (128 + 8), z, 8, FONTHEI, abg_r, abg_g, abg_b, 255);
-                scr_putbar((SCREENWID / 2) + 128 - 1, z, 8, FONTHEI, abg_r, abg_g, abg_b, 255);
+                scr_putbar((SCREEN_WIDTH / 2) - (128 + 8), z, 8, FONT_HEIGHT, abg_r, abg_g, abg_b, 255);
+                scr_putbar((SCREEN_WIDTH / 2) + 128 - 1, z, 8, FONT_HEIGHT, abg_r, abg_g, abg_b, 255);
             } else {
-                scr_putbar((SCREENWID / 2) - (128 + 8), z, 8, FONTHEI, 66, 66, 66, 255);
-                scr_putbar((SCREENWID / 2) + 128 - 1, z, 8, FONTHEI, 66, 66, 66, 255);
+                scr_putbar((SCREEN_WIDTH / 2) - (128 + 8), z, 8, FONT_HEIGHT, 66, 66, 66, 255);
+                scr_putbar((SCREEN_WIDTH / 2) + 128 - 1, z, 8, FONT_HEIGHT, 66, 66, 66, 255);
             }
-            scr_putbar((SCREENWID / 2) - 128 + tmpcol, z, 255 - tmpcol, FONTHEI, 0, 0, 0, 255);
+            scr_putbar((SCREEN_WIDTH / 2) - 128 + tmpcol, z, 255 - tmpcol, FONT_HEIGHT, 0, 0, 0, 255);
             switch (tmp) {
             default:
             case 0:
-                scr_putbar((SCREENWID / 2) - 128, z, tmpcol, FONTHEI, tmpcol / 3 + 64, 0, 0, 255);
+                scr_putbar((SCREEN_WIDTH / 2) - 128, z, tmpcol, FONT_HEIGHT, tmpcol / 3 + 64, 0, 0, 255);
                 break;
             case 1:
-                scr_putbar((SCREENWID / 2) - 128, z, tmpcol, FONTHEI, 0, tmpcol / 3 + 64, 0, 255);
+                scr_putbar((SCREEN_WIDTH / 2) - 128, z, tmpcol, FONT_HEIGHT, 0, tmpcol / 3 + 64, 0, 255);
                 break;
             case 2:
-                scr_putbar((SCREENWID / 2) - 128, z, tmpcol, FONTHEI, 0, 0, tmpcol / 3 + 64, 255);
+                scr_putbar((SCREEN_WIDTH / 2) - 128, z, tmpcol, FONT_HEIGHT, 0, 0, tmpcol / 3 + 64, 255);
                 break;
             }
             cbuf[0] = '\0';
@@ -292,6 +293,7 @@ static bool edit_towercolor(int row, int col) {
         case SDLK_SPACE:
         case SDLK_RETURN:
             ende = true;
+            break;
         default:
             break;
         }
@@ -553,13 +555,13 @@ void le_edit(void) {
         snprintf(status, 80, "%c~t050X%d~t150Y%d~t250%s:%d", changed ? '*' : ' ', -col & 0xf, row,
                 _("cut#"), clipboard_rows);
 
-        scr_putbar(SCREENWID - 8, SCREENHEI - lev_towerrows(), 8, lev_towerrows(),
+        scr_putbar(SCREEN_WIDTH - 8, SCREEN_HEIGHT - lev_towerrows(), 8, lev_towerrows(),
                 lev_towercol_red(), lev_towercol_green(), lev_towercol_blue(), 255);
-        scr_putbar(SCREENWID - 8, SCREENHEI - row - 1, 8, 1, blink_r, blink_g, blink_b, 128);
+        scr_putbar(SCREEN_WIDTH - 8, SCREEN_HEIGHT - row - 1, 8, 1, blink_r, blink_g, blink_b, 128);
 
         scr_color_ramp(&blink_r, &blink_g, &blink_b);
 
-        scr_writeformattext(0, SCREENHEI - FONTHEI, status);
+        scr_writeformattext(0, SCREEN_HEIGHT - FONT_HEIGHT, status);
 
         scr_swap();
         dcl_wait();
@@ -977,3 +979,4 @@ void le_edit(void) {
         }
     }
 }
+#endif

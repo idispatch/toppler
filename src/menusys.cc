@@ -163,7 +163,7 @@ void draw_menu_system(_menusystem *ms, Uint16 dx, Uint16 dy) {
                 bool end = ms->title[pos] == 0;
 
                 ms->title[pos] = 0;
-                scr_writetext_center(ms->ystart + titlehei * FONTHEI, ms->title + start);
+                scr_writetext_center(ms->ystart + titlehei * FONT_HEIGHT, ms->title + start);
                 titlehei++;
 
                 if (!end)
@@ -181,16 +181,16 @@ void draw_menu_system(_menusystem *ms, Uint16 dx, Uint16 dy) {
      * TODO: Put slider if more options than fits in screen.
      */
 
-    yz = ms->ystart + (titlehei) * FONTHEI;
+    yz = ms->ystart + (titlehei) * FONT_HEIGHT;
 
-    for (y = 0; (yz + y + 1 < SCREENHEI) && (y + offs < ms->numoptions); y++) {
-        realy = yz + y * FONTHEI;
+    for (y = 0; (yz + y + 1 < SCREEN_HEIGHT) && (y + offs < ms->numoptions); y++) {
+        realy = yz + y * FONT_HEIGHT;
         len = strlen(ms->moption[y + offs].oname);
         scrlen = scr_textlength(ms->moption[y + offs].oname, len);
-        minx = (SCREENWID - scrlen) / 2;
+        minx = (SCREEN_WIDTH - scrlen) / 2;
         miny = realy;
-        maxx = (SCREENWID + scrlen) / 2;
-        maxy = realy + FONTHEI;
+        maxx = (SCREEN_WIDTH + scrlen) / 2;
+        maxy = realy + FONT_HEIGHT;
         if (len) {
             if (dx >= minx && dx <= maxx && dy >= miny && dy <= maxy) {
                 newhilite = y + offs;
@@ -210,8 +210,8 @@ void draw_menu_system(_menusystem *ms, Uint16 dx, Uint16 dy) {
                             ms->yhilitpos = miny;
                     }
                 }
-                scr_putbar((SCREENWID - ms->maxoptlen - 8) / 2, ms->yhilitpos - 3,
-                        ms->maxoptlen + 8, FONTHEI + 3, color_r, color_g, color_b,
+                scr_putbar((SCREEN_WIDTH - ms->maxoptlen - 8) / 2, ms->yhilitpos - 3,
+                        ms->maxoptlen + 8, FONT_HEIGHT + 3, color_r, color_g, color_b,
                         (config.use_alpha_darkening()) ? 128 : 255);
             }
         }
@@ -221,13 +221,13 @@ void draw_menu_system(_menusystem *ms, Uint16 dx, Uint16 dy) {
 
     for (y = 0; y < maxy; y++) {
         if (strlen(ms->moption[y + offs].oname)) {
-            miny = ms->ystart + (y + titlehei) * FONTHEI;
+            miny = ms->ystart + (y + titlehei) * FONT_HEIGHT;
             if ((ms->moption[y + offs].oflags & MOF_LEFT))
-                scr_writetext((SCREENWID - ms->maxoptlen) / 2 + 4, miny,
+                scr_writetext((SCREEN_WIDTH - ms->maxoptlen) / 2 + 4, miny,
                         ms->moption[y + offs].oname);
             else if ((ms->moption[y + offs].oflags & MOF_RIGHT))
                 scr_writetext(
-                        (SCREENWID + ms->maxoptlen) / 2 - 4
+                        (SCREEN_WIDTH + ms->maxoptlen) / 2 - 4
                                 - scr_textlength(ms->moption[y + offs].oname), miny,
                         ms->moption[y + offs].oname);
             else
@@ -388,9 +388,9 @@ void men_info(const char *s, long timeout, int fire) {
     do {
         if (menu_background_proc)
             (*menu_background_proc)();
-        scr_writetext_center((SCREENHEI / 5), s);
+        scr_writetext_center((SCREEN_HEIGHT / 5), s);
         if (fire)
-            scr_writetext_center((SCREENHEI / 5) + 2 * FONTHEI,
+            scr_writetext_center((SCREEN_HEIGHT / 5) + 2 * FONT_HEIGHT,
                     (fire == 1) ? _("Press fire") : _("Press space"));
         scr_swap();
         dcl_wait();
@@ -413,43 +413,43 @@ void draw_input_box(int x, int y, int len, int cursor, char *txt) {
     int nlen = len, slen = len;
     int arrows = 0;
 
-    if ((len + 3) * FONTMAXWID > SCREENWID)
-        nlen = (SCREENWID / FONTMAXWID) - 3;
+    if ((len + 3) * FONT_MAX_WIDTH > SCREEN_WIDTH)
+        nlen = (SCREEN_WIDTH / FONT_MAX_WIDTH) - 3;
 
     if (x < 0)
-        x = (SCREENWID / 2) - nlen * (FONTMAXWID / 2);
+        x = (SCREEN_WIDTH / 2) - nlen * (FONT_MAX_WIDTH / 2);
     if (x < 0)
         x = 0;
     if (y < 0)
-        y = (SCREENHEI / 2) - (FONTHEI / 2);
+        y = (SCREEN_HEIGHT / 2) - (FONT_HEIGHT / 2);
 
-    scr_putbar(x, y, nlen * FONTMAXWID, FONTHEI, 0, 0, 0,
+    scr_putbar(x, y, nlen * FONT_MAX_WIDTH, FONT_HEIGHT, 0, 0, 0,
             (config.use_alpha_darkening()) ? 128 : 255);
 
-    if (scr_textlength(txt) >= nlen * FONTMAXWID) {
-        while ((cursor >= 0) && (scr_textlength(txt, cursor + (nlen / 2)) >= (nlen) * FONTMAXWID)) {
+    if (scr_textlength(txt) >= nlen * FONT_MAX_WIDTH) {
+        while ((cursor >= 0) && (scr_textlength(txt, cursor + (nlen / 2)) >= (nlen) * FONT_MAX_WIDTH)) {
             cursor--;
             txt++;
             arrows = 1;
         }
     }
-    if (scr_textlength(txt) >= nlen * FONTMAXWID) {
+    if (scr_textlength(txt) >= nlen * FONT_MAX_WIDTH) {
         arrows |= 2;
-        while ((slen > 0) && (scr_textlength(txt, slen) >= nlen * FONTMAXWID))
+        while ((slen > 0) && (scr_textlength(txt, slen) >= nlen * FONT_MAX_WIDTH))
             slen--;
     }
 
     scr_writetext(x + 1, y, txt, slen);
 
     if ((input_box_cursor_state & 4) && (cursor >= 0))
-        scr_putbar(x + scr_textlength(txt, cursor) + 1, y, FONTMINWID, FONTHEI, col_r, col_g, col_b,
+        scr_putbar(x + scr_textlength(txt, cursor) + 1, y, FONTMINWID, FONT_HEIGHT, col_r, col_g, col_b,
                 (config.use_alpha_darkening()) ? 128 : 255);
-    scr_putrect(x, y, nlen * FONTMAXWID, FONTHEI, col_r, col_g, col_b, 255);
+    scr_putrect(x, y, nlen * FONT_MAX_WIDTH, FONT_HEIGHT, col_r, col_g, col_b, 255);
 
     if ((arrows & 1))
-        scr_writetext(x - FONTMAXWID, y, "\x08"); //fontptrright
+        scr_writetext(x - FONT_MAX_WIDTH, y, "\x08"); //fontptrright
     if ((arrows & 2))
-        scr_writetext(x + (nlen * FONTMAXWID), y, "\x06"); //fontptrleft
+        scr_writetext(x + (nlen * FONT_MAX_WIDTH), y, "\x06"); //fontptrleft
 
     input_box_cursor_state++;
 
@@ -596,7 +596,7 @@ men_yn_option_no(_menusystem *ms) {
 }
 
 unsigned char men_yn(const char *s, bool defchoice, menuopt_callback_proc pr) {
-    _menusystem *ms = new_menu_system(s, pr, 0, SCREENHEI / 5);
+    _menusystem *ms = new_menu_system(s, pr, 0, SCREEN_HEIGHT / 5);
 
     bool doquit = false;
 

@@ -60,6 +60,7 @@ void configuration::parse(FILE * in) {
                         break;
                     default:
                         assert_msg(0, "Unknown config data type.");
+                        break;
                     }
                     break;
                 }
@@ -89,13 +90,13 @@ void configuration::register_entry(const char *cnf_name, cnf_type cnf_typ, void 
 
 configuration::configuration(FILE *glob, FILE *local) {
 
-    i_fullscreen = false;
-    i_nosound = false;
+    i_fullscreen = true;
+    i_nosound = true;
     i_use_water = true;
-    i_use_alpha_sprites = false;
-    i_use_alpha_layers = false;
-    i_use_alpha_font = false;
-    i_use_alpha_darkening = false;
+    i_use_alpha_sprites = true;
+    i_use_alpha_layers = true;
+    i_use_alpha_font = true;
+    i_use_alpha_darkening = true;
     i_use_full_scroller = true;
     i_waves_type = waves_nonreflecting;
     i_status_top = true; /* is status line top or bottom of screen? */
@@ -138,11 +139,12 @@ configuration::configuration(FILE *glob, FILE *local) {
         parse(glob);
         fclose(glob);
     }
-
+#ifdef __PLAYBOOK__
+#else
     f = local;
     if (f)
         parse(f);
-
+#endif
     if (i_start_lives < 1)
         i_start_lives = 1;
     else if (i_start_lives > 3)
@@ -183,6 +185,7 @@ configuration::~configuration(void) {
                 break;
             default:
                 assert_msg(0, "Unknown config data type.");
+                break;
             }
 
             fprintf(f, "\n");
@@ -213,4 +216,5 @@ void configuration::editor_towername(char name[TOWERNAMELEN + 1]) {
     i_editor_towername[TOWERNAMELEN] = 0;
 }
 
-configuration config(open_local_config_file(".toppler.rc"), open_local_config_file(".toppler.rc"));
+configuration config(open_local_config_file(".toppler.rc"),
+                     open_local_config_file(".toppler.rc"));

@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
 #endif
 #ifdef __PLAYBOOK__
 #else
-    printf(_("Nebulous version %s"), VERSION);
+    printf(_("Nebulus version %s"), VERSION);
     printf("\n");
 
     printf("hsc init\n");
@@ -121,9 +121,9 @@ int main(int argc, char *argv[]) {
     if (parse_arguments(argc, argv)) {
 #endif
         SDL_InitSubSystem(SDL_INIT_VIDEO);
-        SDL_WM_SetCaption(_("Nebulous"), NULL);
 #ifdef __PLAYBOOK__
 #else
+        SDL_WM_SetCaption(_("Nebulus"), NULL);
         int mouse = SDL_ShowCursor(config.fullscreen() ? 0 : 1);
 #endif
         tt_has_focus = true;

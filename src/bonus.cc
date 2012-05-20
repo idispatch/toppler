@@ -65,7 +65,7 @@ static void show() {
     if (time < gametime / 2)
         towerpos = -(4 * time);
     else
-        towerpos = gametime * scrollerspeed - 4 * time + SCREENWID + (SPR_SLICEWID * 2);
+        towerpos = gametime * scrollerspeed - 4 * time + SCREEN_WIDTH + (SPRITE_SLICE_WIDTH * 2);
 
     /* draw the background layers */
     scr_draw_bonus1(xpos, towerpos);
@@ -148,7 +148,7 @@ bool bns_game(void) {
         /* move torpedo */
         if (torpedox >= 0) {
             torpedox += 8;
-            if (torpedox > (SCREENWID + SPR_TORPWID))
+            if (torpedox > (SCREEN_WIDTH + SPR_TORPWID))
                 torpedox = -1;
             for (b = 0; b < fishcnt; b++) {
                 if (fish[b].x > 0 && fish[b].state >= 32) {
@@ -242,7 +242,7 @@ bool bns_game(void) {
         else {
             for (b = 0; b < fishcnt; b++) {
                 if (fish[b].x < -SPR_FISHWID) {
-                    fish[b].x = SCREENWID;
+                    fish[b].x = SCREEN_WIDTH;
                     fish[b].y = rand() / (RAND_MAX / 140) + 120;
                     fish[b].state = 32;
                     do {

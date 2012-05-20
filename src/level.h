@@ -93,7 +93,7 @@ Uint8 conv_char2towercode(wchar_t ch);
 
 /* Get tower password. Note that the password changes when
  the tower changes. */
-char *lev_get_passwd(void);
+const char *lev_get_passwd(void);
 /* Do we show the tower password to user at the beginning
  of current tower? */
 bool lev_show_passwd(int levnum);

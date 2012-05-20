@@ -80,150 +80,134 @@ void debugprintf(int lvl, const char *fmt, ...) {
  the dir the file is supposed to be in and look there
  but this is not really portable so this
  */
-bool dcl_fileexists(const char *n) {
-
+bool dcl_fileexists(const char * path) {
+#ifdef __PLAYBOOK__
+    struct stat buf;
+    bool result = stat(path, &buf) == 0 && S_ISREG(buf.st_mode);
+#ifdef _DEBUG
+    fprintf(stderr, "dcl_fileexists: %s [%s]", path, (result ? "ok" : "missing!"));
+#endif
+    return result;
+#else
     FILE *f = fopen(n, "r");
-
     if (f) {
         fclose(f);
         return true;
-    } else
+    } else {
         return false;
+    }
+#endif
 }
 
 const char * homedir() {
 
 #ifndef WIN32
-
     return getenv("HOME");
-
 #else
-
     return "./";
-
 #endif
-
 }
 
 /* checks if home/.toppler exists and creates it, if not */
 static void checkdir(void) {
-
 #ifndef WIN32
-
-    char n[200];
-
-    snprintf(n, 199, "%s/.toppler", homedir());
-
-    DIR *d = opendir(n);
-
+#ifdef __PLAYBOOK__
+    /* Do absolutely nothing */
+#else
+    char path[MAX_PATH];
+    snprintf(path, sizeof(path), "%s/.toppler", homedir());
+    DIR *d = opendir(path);
     if (!d) {
-        mkdir(n, S_IRWXU);
+        mkdir(path, S_IRWXU);
     }
-
 #endif
-
+#endif
 }
 
 FILE *open_data_file(const char *name) {
 
 #ifndef WIN32
+#ifdef __PLAYBOOK__
+#else
     // look into actual directory
     if (dcl_fileexists(name))
         return fopen(name, OPEN_FOR_READING);
-
+#endif
     // look into the data dir
-    char n[256];
-
-    snprintf(n, sizeof(n), "%s/%s", homedir(), name);
-    if (dcl_fileexists(n))
-        return fopen(n, OPEN_FOR_READING);
-
-    return NULL;
-
+    char path[MAX_PATH];
+    FILE * result;
+    snprintf(path, sizeof(path), "%s/../app/native/assets/%s", homedir(), name);
+    result = fopen(path, OPEN_FOR_READING);
+#ifdef _DEBUG
+    fprintf(stderr, "open_data_file: %s [%s]", path, (result ? "ok" : "missing!"));
+#endif
+    return result;
 #else
-
     if (dcl_fileexists(name))
-    return fopen(name, OPEN_FOR_READING);
-
+        return fopen(name, OPEN_FOR_READING);
     return NULL;
-
 #endif
 }
 
 bool get_data_file_path(const char * name, char * f, int len) {
 
 #ifndef WIN32
+#ifdef __PLAYBOOK__
+#else
     // look into actual directory
     if (dcl_fileexists(name)) {
         snprintf(f, len, name);
         return true;
     }
-
+#endif
     // look into the data dir
-    char n[200];
-
-    snprintf(n, 200, TOP_DATADIR"/%s", name);
-    if (dcl_fileexists(n)) {
-        snprintf(f, len, n);
+    char path[MAX_PATH];
+    snprintf(path, sizeof(path), "%s/%s", homedir(), name);
+    if (dcl_fileexists(path)) {
+        snprintf(f, len, path);
         return true;
     }
-
     return false;
-
 #else
-
     if (dcl_fileexists(name)) {
         snprintf(f, len, name);
         return true;
     }
-
     return false;
-
 #endif
 }
 
 FILE *open_local_config_file(const char *name) {
-
 #ifndef WIN32
-
     checkdir();
-
-    char n[200];
-
-    snprintf(n, 199, "%s/.toppler/%s", homedir(), name);
-    if (dcl_fileexists(n))
-        return fopen(n, "r+");
-
-    return NULL;
-
+    char path[MAX_PATH];
+#ifdef __PLAYBOOK__
+    snprintf(path, sizeof(path), "%s/%s", homedir(), name);
 #else
-
+    snprintf(path, sizeof(path), "%s/.toppler/%s", homedir(), name);
+#endif
+    return fopen(path, "r+");
+#else
     if (dcl_fileexists(name))
-    return fopen(name, "r+");
-
+        return fopen(name, "r+");
     return NULL;
-
 #endif
 }
 
 FILE *create_local_config_file(const char *name) {
 
 #ifndef WIN32
-
     checkdir();
-
-    char n[200];
-
-    snprintf(n, 199, "%s/.toppler/%s", homedir(), name);
-
-    return fopen(n, "w");
-
+    char path[MAX_PATH];
+#ifdef __PLAYBOOK__
+    snprintf(path, sizeof(path), "%s/%s", homedir(), name);
 #else
-
-    return fopen(name, "w");
-
+    snprintf(path, sizeof(path), "%s/.toppler/%s", homedir(), name);
 #endif
-
+    return fopen(path, "w");
+#else
+    return fopen(name, "w");
+#endif
 }
 
 /* used for tower and mission saving */
@@ -231,41 +215,33 @@ FILE *create_local_config_file(const char *name) {
 FILE *open_local_data_file(const char *name) {
 
 #ifndef WIN32
-
     checkdir();
-
-    char n[200];
-
-    snprintf(n, 199, "%s/.toppler/%s", homedir(), name);
-
-    return fopen(n, "r");
-
+    char path[MAX_PATH];
+#ifdef __PLAYBOOK__
+    snprintf(path, sizeof(path), "%s/%s", homedir(), name);
 #else
-
-    return fopen(name, OPEN_FOR_READING);
-
+    snprintf(path, sizeof(path), "%s/.toppler/%s", homedir(), name);
 #endif
-
+    return fopen(path, "r");
+#else
+    return fopen(name, OPEN_FOR_READING);
+#endif
 }
 
 FILE *create_local_data_file(const char *name) {
-
 #ifndef WIN32
-
     checkdir();
-
-    char n[200];
-
-    snprintf(n, 199, "%s/.toppler/%s", homedir(), name);
-    return fopen(n, "w+");
-
+    char path[MAX_PATH];
+#ifdef __PLAYBOOK__
+    snprintf(path, sizeof(path), "%s/%s", homedir(), name);
 #else
-
+    snprintf(path, sizeof(path), "%s/.toppler/%s", homedir(), name);
+#endif
+    return fopen(path, "w+");
+#else
     fclose(fopen(name, "w+"));
     return fopen(name, "rb+");
-
 #endif
-
 }
 
 static int sort_by_name(const void *a, const void *b) {
