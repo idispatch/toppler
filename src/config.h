@@ -53,7 +53,7 @@
 #undef HAVE_LIBINTL_H
 
 /* Define to 1 if you have the `SDL_mixer' library (-lSDL_mixer). */
-#undef HAVE_LIBSDL_MIXER
+#define HAVE_LIBSDL_MIXER 1
 
 /* Define to 1 if you have the `z' library (-lz). */
 #define HAVE_LIBZ 1

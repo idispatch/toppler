@@ -39,9 +39,11 @@ ttsounds::~ttsounds(void) {
 #ifdef HAVE_LIBSDL_MIXER
     closesound();
 
-    for (int t = 0; t < n_sounds; t++)
-    if (sounds[t].sound)
-    Mix_FreeChunk(sounds[t].sound);
+    for (int t = 0; t < n_sounds; t++) {
+        if (sounds[t].sound) {
+            Mix_FreeChunk(sounds[t].sound);
+        }
+    }
 
     delete [] sounds;
 
@@ -55,12 +57,14 @@ void ttsounds::addsound(const char *fname, int id, int vol, int loops) {
     bool need_add = true;
     int add_pos = n_sounds;
 
-    if (sounds && n_sounds)
-    for (int t = 0; t < n_sounds; t++)
-    if (!sounds[t].in_use) {
-        need_add = false;
-        add_pos = t;
-        break;
+    if (sounds && n_sounds) {
+        for (int t = 0; t < n_sounds; t++) {
+            if (!sounds[t].in_use) {
+                need_add = false;
+                add_pos = t;
+                break;
+            }
+        }
     }
 
     if (need_add) {
@@ -87,8 +91,9 @@ void ttsounds::addsound(const char *fname, int id, int vol, int loops) {
         sounds[add_pos].volume = vol;
         sounds[add_pos].loops = loops;
         debugprintf(8,"ttsounds::addsound(\"%s\", %i, %i) = %i\n", fname, vol, loops, add_pos);
-    } else
-    debugprintf(0,"ttsounds::addsound(): No such file as '%s'\n", fname);
+    } else {
+        debugprintf(0,"ttsounds::addsound(): No such file as '%s'\n", fname);
+    }
 
     n_sounds++;
 
@@ -98,15 +103,17 @@ void ttsounds::addsound(const char *fname, int id, int vol, int loops) {
 
 void ttsounds::play(void) {
 #ifdef HAVE_LIBSDL_MIXER
-    if (!useSound) return;
+    if (!useSound)
+        return;
 
-    for (int t = 0; t < n_sounds; t++)
-    if (sounds[t].in_use && sounds[t].play) {
+    for (int t = 0; t < n_sounds; t++) {
+        if (sounds[t].in_use && sounds[t].play) {
 
-        sounds[t].channel = Mix_PlayChannel(-1, sounds[t].sound, sounds[t].loops);
-        Mix_Volume(sounds[t].channel, sounds[t].volume);
+            sounds[t].channel = Mix_PlayChannel(-1, sounds[t].sound, sounds[t].loops);
+            Mix_Volume(sounds[t].channel, sounds[t].volume);
 
-        sounds[t].play = false;
+            sounds[t].play = false;
+        }
     }
     debugprintf(9,"ttsounds::play()\n");
 #endif
@@ -114,7 +121,9 @@ void ttsounds::play(void) {
 
 void ttsounds::stop(void) {
 #ifdef HAVE_LIBSDL_MIXER
-    for (int t = 0; t < n_sounds; t++) stopsound(t);
+    for (int t = 0; t < n_sounds; t++) {
+        stopsound(t);
+    }
 #endif
 }
 
@@ -136,9 +145,12 @@ void ttsounds::stopsound(int snd) {
 
 void ttsounds::startsound(int snd) {
 #ifdef HAVE_LIBSDL_MIXER
-    if (!useSound) return;
+    if (!useSound)
+        return;
 
-    if ((snd >= 0) && (snd < n_sounds)) sounds[snd].play = true;
+    if ((snd >= 0) && (snd < n_sounds)) {
+        sounds[snd].play = true;
+    }
 
     debugprintf(9,"ttsounds::startsound(%i)\n", snd);
 #endif
@@ -192,7 +204,8 @@ void ttsounds::closesound(void) {
 #ifdef HAVE_LIBSDL_MIXER
     if (!useSound) return;
 
-    while (Mix_Playing(-1)) dcl_wait();
+    while (Mix_Playing(-1))
+        dcl_wait();
 
     Mix_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
@@ -203,10 +216,11 @@ void ttsounds::closesound(void) {
 
 void ttsounds::playmusic(const char * fname) {
 #ifdef HAVE_LIBSDL_MIXER
-    if (!useSound) return;
+    if (!useSound)
+        return;
 
-    char f[500];
-    if (get_data_file_path(fname, f, 500)) {
+    char f[MAX_PATH];
+    if (get_data_file_path(fname, f, sizeof(f))) {
         title = Mix_LoadMUS(f);
         Mix_PlayMusic(title, -1);
         musicVolume = MIX_MAX_VOLUME;
@@ -215,19 +229,22 @@ void ttsounds::playmusic(const char * fname) {
 }
 void ttsounds::stopmusic(void) {
 #ifdef HAVE_LIBSDL_MIXER
-    if (!useSound) return;
+    if (!useSound)
+        return;
 
     if (title) {
         Mix_FadeOutMusic(1000);
 
-        while (Mix_FadingMusic() != MIX_NO_FADING) dcl_wait();
+        while (Mix_FadingMusic() != MIX_NO_FADING)
+            dcl_wait();
     }
 #endif
 }
 
 void ttsounds::fadeToVol(int vol) {
 #ifdef HAVE_LIBSDL_MIXER
-    if (!title) return;
+    if (!title)
+        return;
 
     while (musicVolume != vol) {
 

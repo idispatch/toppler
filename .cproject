@@ -27,6 +27,7 @@
 								<option id="com.qnx.qcc.option.compile.debug.1590442459" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.includePath.398649915" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL12/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDLMixer/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${QNX_TARGET}/../target-override/usr/include&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.security.1048306084" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
@@ -53,9 +54,14 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL12/Device-Debug}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TouchControlOverlay/Device-Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDLMixer/Device-Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/ogg/arm/a.le.v7.g}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/vorbisfile/arm/a.le.v7.g/}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/vorbis/arm/a.le.v7.g/}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.1240403973" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1237474421" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+									<listOptionValue builtIn="false" value="SDLMixer"/>
 									<listOptionValue builtIn="false" value="SDL12"/>
 									<listOptionValue builtIn="false" value="TouchControlOverlay"/>
 									<listOptionValue builtIn="false" value="asound"/>
@@ -67,6 +73,9 @@
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="xml2"/>
+									<listOptionValue builtIn="false" value="vorbisfile_g"/>
+									<listOptionValue builtIn="false" value="vorbis_g"/>
+									<listOptionValue builtIn="false" value="ogg_g"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.mudflapth.857415101" name="Build for Mudflap (-fmudflapth)" superClass="com.qnx.qcc.option.linker.mudflapth" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.warningLevel.1085134933" name="Warning Level (-w)" superClass="com.qnx.qcc.option.linker.warningLevel" value="com.qnx.qcc.option.warningLevel.5" valueType="enumerated"/>
@@ -106,6 +115,7 @@
 								<option id="com.qnx.qcc.option.compiler.optlevel.1738189118" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.2" valueType="enumerated"/>
 								<option id="com.qnx.qcc.option.compiler.includePath.136288689" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL12/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDLMixer/src}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.security.703389255" name="Enhanced Security (-fstack-protector-all)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.defines.1675573280" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
@@ -135,11 +145,16 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL12/Device-Release}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDLMixer/Device-Release}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TouchControlOverlay/Device-Release}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/ogg/arm/a.le.v7}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/vorbisfile/arm/a.le.v7/}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/vorbis/arm/a.le.v7/}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.pie.793579779" name="Position Independent Executable (-pie)" superClass="com.qnx.qcc.option.linker.pie" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.security.1621061525" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.829292097" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+									<listOptionValue builtIn="false" value="SDLMixer"/>
 									<listOptionValue builtIn="false" value="SDL12"/>
 									<listOptionValue builtIn="false" value="TouchControlOverlay"/>
 									<listOptionValue builtIn="false" value="asound"/>
@@ -151,6 +166,9 @@
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="xml2"/>
+									<listOptionValue builtIn="false" value="vorbisfile"/>
+									<listOptionValue builtIn="false" value="vorbis"/>
+									<listOptionValue builtIn="false" value="ogg"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.warningLevel.490380964" name="Warning Level (-w)" superClass="com.qnx.qcc.option.linker.warningLevel" value="com.qnx.qcc.option.warningLevel.4" valueType="enumerated"/>
 								<inputType id="com.qnx.qcc.inputType.linker.261308636" superClass="com.qnx.qcc.inputType.linker">

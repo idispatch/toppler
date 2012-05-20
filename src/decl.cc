@@ -67,12 +67,14 @@ void dcl_setdebuglevel(int level) {
 }
 
 void debugprintf(int lvl, const char *fmt, ...) {
+#ifdef _DEBUG
     if (lvl <= current_debuglevel) {
         va_list args;
         va_start(args, fmt);
         vprintf(fmt, args);
         va_end(args);
     }
+#endif
 }
 
 /* returns true, if file exists, this is not the
@@ -162,7 +164,7 @@ bool get_data_file_path(const char * name, char * f, int len) {
 #endif
     // look into the data dir
     char path[MAX_PATH];
-    snprintf(path, sizeof(path), "%s/%s", homedir(), name);
+    snprintf(path, sizeof(path), "%s/../app/native/assets/%s", homedir(), name);
     if (dcl_fileexists(path)) {
         snprintf(f, len, path);
         return true;
