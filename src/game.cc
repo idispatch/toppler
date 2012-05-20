@@ -95,7 +95,6 @@ void gam_arrival(void) {
         switch (b) {
 
         case 5:
-            //ttsounds::instance()->startsound(SND_START);
             b = 6;
             delay = 0;
             break;
@@ -104,7 +103,6 @@ void gam_arrival(void) {
             delay++;
             if (delay == 10) {
                 b = 0;
-                //ttsounds::instance()->startsound(SND_SUB_RAISE);
             }
             break;
 
@@ -135,7 +133,6 @@ void gam_arrival(void) {
             subshape--;
             if (subshape == 9) {
                 b = 4;
-                //ttsounds::instance()->startsound(SND_SUB_DOWN);
             }
             break;
 

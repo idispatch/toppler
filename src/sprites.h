@@ -41,8 +41,16 @@ public:
         else
             return 0;
     }
+
     Uint16 save(SDL_Surface * s);
 
+    Uint16 replace(const Uint16 nr, SDL_Surface * s){
+        if (nr < usage) {
+            SDL_FreeSurface(array[nr]);
+            array[nr] = s;
+        }
+        return nr;
+    }
 private:
 
     Uint16 size;

@@ -35,7 +35,7 @@
 #include <math.h>
 #include <wchar.h>
 
-static SDL_Surface *display;
+SDL_Surface *display;
 
 static int color_ramp_radj = 3;
 static int color_ramp_gadj = 5;
@@ -176,8 +176,13 @@ Uint16 scr_loadsprites(spritecontainer *spr, file * fi, int num, int w, int h, b
     Uint32 pixel;
 
     for (int t = 0; t < num; t++) {
-        z = SDL_CreateRGBSurface(SDL_SWSURFACE | (sprite) ? SDL_SRCALPHA : 0, w, h, 32, 0x00FF0000,
-                0x0000FF00, 0x000000FF, (sprite & use_alpha) ? 0xFF000000 : 0);
+        z = SDL_CreateRGBSurface(SDL_SWSURFACE | (sprite) ? SDL_SRCALPHA : 0,
+                w, h,
+                32,
+                0xFF0000,
+                0x00FF00,
+                0x0000FF,
+                (sprite & use_alpha) ? 0xFF000000 : 0);
 
         if (sprite & !use_alpha)
             SDL_SetColorKey(z, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(z->format, 1, 1, 1));
@@ -195,7 +200,7 @@ Uint16 scr_loadsprites(spritecontainer *spr, file * fi, int num, int w, int h, b
                         if (a < 128)
                             pixel = SDL_MapRGB(z->format, 1, 1, 1);
                         else {
-                            if ((pal[b * 3 + 2] == 1) && (pal[b * 3 + 1] == 1) || (pal[b * 3] == 1))
+                            if (((pal[b * 3 + 2] == 1) && (pal[b * 3 + 1] == 1)) || (pal[b * 3] == 1))
                                 pixel = SDL_MapRGB(z->format, pal[b * 3 + 0], pal[b * 3 + 1],
                                         pal[b * 3 + 2] + 1);
                             else
@@ -218,10 +223,11 @@ Uint16 scr_loadsprites(spritecontainer *spr, file * fi, int num, int w, int h, b
         SDL_FreeSurface(z);
         z = z2;
 
-        if (t == 0)
+        if (t == 0) {
             erg = spr->save(z);
-        else
+        } else {
             spr->save(z);
+        }
     }
 
     return erg;
@@ -233,8 +239,13 @@ static Uint16 scr_gensprites(spritecontainer *spr, int num, int w, int h, bool s
     SDL_Surface *z;
 
     for (int t = 0; t < num; t++) {
-        z = SDL_CreateRGBSurface(SDL_SWSURFACE | (sprite && use_alpha) ? SDL_SRCALPHA : 0, w, h, 32,
-                0x00FF0000, 0x0000FF00, 0x000000FF, (sprite && use_alpha) ? 0xFF000000 : 0);
+        z = SDL_CreateRGBSurface(SDL_SWSURFACE | (sprite && use_alpha) ? SDL_SRCALPHA : 0,
+                w, h,
+                32,
+                0xFF0000,
+                0x00FF00,
+                0x0000FF,
+                (sprite && use_alpha) ? 0xFF000000 : 0);
 
         if (sprite & !use_alpha)
             /* SDL_RLEACCEL is not allowed here, because we need to edit the data later
@@ -264,8 +275,13 @@ static void scr_regensprites(Uint8 *data, SDL_Surface * const target, int num, i
     Uint32 pixel;
 
     if (screenformat) {
-        z = SDL_CreateRGBSurface(SDL_SWSURFACE | (sprite && use_alpha) ? SDL_SRCALPHA : 0, w, h, 32,
-                0x00FF0000, 0x0000FF00, 0x000000FF, (sprite && use_alpha) ? 0xFF000000 : 0);
+        z = SDL_CreateRGBSurface(SDL_SWSURFACE | (sprite && use_alpha) ? SDL_SRCALPHA : 0,
+                w, h,
+                32,
+                0xFF0000,
+                0x00FF00,
+                0x0000FF,
+                (sprite && use_alpha) ? 0xFF000000 : 0);
 
         if (sprite & !use_alpha)
             /* SDL_RLEACCEL is not allowed here, because we need to edit the data later
@@ -646,19 +662,23 @@ void scr_init(void) {
     load_sprites(0xff);
 
     /* initialize sinus table */
-    for (int i = 0; i < TOWER_ANGLES; i++)
+    for (int i = 0; i < TOWER_ANGLES; i++) {
         sintab[i] = int(sin(i * 2 * M_PI / TOWER_ANGLES) * (TOWER_RADIUS + SPR_STEPWID / 2) + 0.5);
+    }
 
     /* initialize wave table */
-    for (int t = 0; t < 0x80; t++)
+    for (int t = 0; t < 0x80; t++) {
         waves[t] = (Sint8) (8 * (sin(t * 2.0 * M_PI / 0x7f)) + 4 * (sin(t * 3.0 * M_PI / 0x7f + 2))
                 + 3 * (sin(t * 5.0 * M_PI / 0x7f + 3)) + 0.5);
+    }
 }
 
 void scr_reinit() {
     bool fullscreen = config.fullscreen();
-    display = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16,
-            fullscreen ? (SDL_FULLSCREEN) : (0));
+    display = SDL_SetVideoMode(SCREEN_WIDTH,
+                               SCREEN_HEIGHT,
+                               16,
+                               fullscreen ? (SDL_FULLSCREEN) : (0));
 #ifdef _DEBUG
     assert_msg(display, "could not open display");
 #endif
@@ -759,96 +779,143 @@ static void putwater(long height) {
     height *= 4;
 
     if (height < (SCREEN_HEIGHT / 2)) {
+#ifdef __PLAYBOOK__
+        int horizontal_shift;
 
+        scr_putbar(0, (SCREEN_HEIGHT / 2) + height, 10, (SCREEN_HEIGHT / 2) - height, 0, 0, 0, 255);
+        scr_putbar(SCREEN_WIDTH - 10, (SCREEN_HEIGHT / 2) + height, 10, (SCREEN_HEIGHT / 2) - height, 0, 0,
+                0, 255);
+
+        for (int y = 0; y < (SCREEN_HEIGHT / 2) - height; y++) {
+
+            int target_line = (SCREEN_HEIGHT / 2) + height + y;
+            int source_line = (SCREEN_HEIGHT / 2) + height - y - 1
+                    - simple_waves[(wavetime * 4 + y * 2) & 0x7f];
+            if (source_line < 0)
+                source_line = 0;
+
+            int z = simple_waves[(wavetime * 5 + y) & 0x7f];
+            if (abs(z - 4) > y) {
+                if (z < 4)
+                    horizontal_shift = 4 - y;
+                else
+                    horizontal_shift = 4 + y;
+            } else {
+                horizontal_shift = z;
+            }
+
+            SDL_Rect r1;
+            SDL_Rect r2;
+
+            r1.w = r2.w = SCREEN_WIDTH;
+            r1.h = r2.h = 1;
+
+            r2.y = target_line;
+            r1.y = source_line;
+
+            if (horizontal_shift > 0) {
+                r1.x = horizontal_shift;
+                r2.x = 0;
+            } else {
+                r1.x = 0;
+                r2.x = -horizontal_shift;
+            }
+
+            SDL_BlitSurface(display, &r1, display, &r2);
+            scr_putbar(0, target_line, SCREEN_WIDTH, 1, 0, 0, y < 255 ? y : 255, 128);
+        }
+#else
         switch (config.waves_type()) {
+        case configuration::waves_expensive:
+            {
+                int source_line = (SCREEN_HEIGHT / 2) + height - 1;
 
-        case configuration::waves_expensive: {
-            int source_line = (SCREEN_HEIGHT / 2) + height - 1;
+                Uint8 buffer[4] = { 0, 0, 0, 0 };
 
-            Uint8 buffer[4] = { 0, 0, 0, 0 };
+                for (int y = 0; y < (SCREEN_HEIGHT / 2) - height; y++) {
 
-            for (int y = 0; y < (SCREEN_HEIGHT / 2) - height; y++) {
+                    Uint8 * target = (Uint8*) display->pixels
+                            + ((SCREEN_HEIGHT / 2) + height + y) * display->pitch;
 
-                Uint8 * target = (Uint8*) display->pixels
-                        + ((SCREEN_HEIGHT / 2) + height + y) * display->pitch;
+                    for (int x = 0; x < SCREEN_WIDTH; x++) {
+                        Sint16 dx = waves[(x + y + 12 * wavetime) & 0x7f]
+                                + waves[2 * x - y + 11 * wavetime & 0x7f];
+                        Sint16 dy = waves[(x - y + 13 * wavetime) & 0x7f]
+                                + waves[2 * x - 3 * y - 14 * wavetime & 0x7f];
 
-                for (int x = 0; x < SCREEN_WIDTH; x++) {
-                    Sint16 dx = waves[(x + y + 12 * wavetime) & 0x7f]
-                            + waves[2 * x - y + 11 * wavetime & 0x7f];
-                    Sint16 dy = waves[(x - y + 13 * wavetime) & 0x7f]
-                            + waves[2 * x - 3 * y - 14 * wavetime & 0x7f];
+                        dx = dx * y / (SCREEN_HEIGHT / 2);
+                        dy = dy * y / (SCREEN_HEIGHT / 2);
 
-                    dx = dx * y / (SCREEN_HEIGHT / 2);
-                    dy = dy * y / (SCREEN_HEIGHT / 2);
+                        if ((x + dx < 0) || (x + dx > SCREEN_WIDTH) || (source_line + dy < 0))
+                            memcpy(target, &buffer, display->format->BytesPerPixel);
+                        else
+                            memcpy(target,
+                                    (Uint8*) display->pixels + (x + dx) * display->format->BytesPerPixel
+                                            + (source_line + dy) * display->pitch,
+                                    display->format->BytesPerPixel);
 
-                    if ((x + dx < 0) || (x + dx > SCREEN_WIDTH) || (source_line + dy < 0))
-                        memcpy(target, &buffer, display->format->BytesPerPixel);
-                    else
-                        memcpy(target,
-                                (Uint8*) display->pixels + (x + dx) * display->format->BytesPerPixel
-                                        + (source_line + dy) * display->pitch,
-                                display->format->BytesPerPixel);
-
-                    target += display->format->BytesPerPixel;
+                        target += display->format->BytesPerPixel;
+                    }
+                    scr_putbar(0, (SCREEN_HEIGHT / 2) + height + y, SCREEN_WIDTH, 1, 0, 0, y, 128);
+                    source_line--;
                 }
-                scr_putbar(0, (SCREEN_HEIGHT / 2) + height + y, SCREEN_WIDTH, 1, 0, 0, y, 128);
-                source_line--;
             }
-        }
             break;
-        case configuration::waves_simple: {
-            int horizontal_shift;
+        case configuration::waves_simple:
+            {
+                int horizontal_shift;
 
-            scr_putbar(0, (SCREEN_HEIGHT / 2) + height, 10, (SCREEN_HEIGHT / 2) - height, 0, 0, 0, 255);
-            scr_putbar(SCREEN_WIDTH - 10, (SCREEN_HEIGHT / 2) + height, 10, (SCREEN_HEIGHT / 2) - height, 0, 0,
-                    0, 255);
+                scr_putbar(0, (SCREEN_HEIGHT / 2) + height, 10, (SCREEN_HEIGHT / 2) - height, 0, 0, 0, 255);
+                scr_putbar(SCREEN_WIDTH - 10, (SCREEN_HEIGHT / 2) + height, 10, (SCREEN_HEIGHT / 2) - height, 0, 0,
+                        0, 255);
 
-            for (int y = 0; y < (SCREEN_HEIGHT / 2) - height; y++) {
+                for (int y = 0; y < (SCREEN_HEIGHT / 2) - height; y++) {
 
-                int target_line = (SCREEN_HEIGHT / 2) + height + y;
-                int source_line = (SCREEN_HEIGHT / 2) + height - y - 1
-                        - simple_waves[(wavetime * 4 + y * 2) & 0x7f];
-                if (source_line < 0)
-                    source_line = 0;
+                    int target_line = (SCREEN_HEIGHT / 2) + height + y;
+                    int source_line = (SCREEN_HEIGHT / 2) + height - y - 1
+                            - simple_waves[(wavetime * 4 + y * 2) & 0x7f];
+                    if (source_line < 0)
+                        source_line = 0;
 
-                int z = simple_waves[(wavetime * 5 + y) & 0x7f];
-                if (abs(z - 4) > y) {
-                    if (z < 4)
-                        horizontal_shift = 4 - y;
-                    else
-                        horizontal_shift = 4 + y;
-                } else {
-                    horizontal_shift = z;
+                    int z = simple_waves[(wavetime * 5 + y) & 0x7f];
+                    if (abs(z - 4) > y) {
+                        if (z < 4)
+                            horizontal_shift = 4 - y;
+                        else
+                            horizontal_shift = 4 + y;
+                    } else {
+                        horizontal_shift = z;
+                    }
+
+                    SDL_Rect r1;
+                    SDL_Rect r2;
+
+                    r1.w = r2.w = SCREEN_WIDTH;
+                    r1.h = r2.h = 1;
+
+                    r2.y = target_line;
+                    r1.y = source_line;
+
+                    if (horizontal_shift > 0) {
+                        r1.x = horizontal_shift;
+                        r2.x = 0;
+                    } else {
+                        r1.x = 0;
+                        r2.x = -horizontal_shift;
+                    }
+
+                    SDL_BlitSurface(display, &r1, display, &r2);
+                    scr_putbar(0, target_line, SCREEN_WIDTH, 1, 0, 0, y, 128);
                 }
-
-                SDL_Rect r1;
-                SDL_Rect r2;
-
-                r1.w = r2.w = SCREEN_WIDTH;
-                r1.h = r2.h = 1;
-
-                r2.y = target_line;
-                r1.y = source_line;
-
-                if (horizontal_shift > 0) {
-                    r1.x = horizontal_shift;
-                    r2.x = 0;
-                } else {
-                    r1.x = 0;
-                    r2.x = -horizontal_shift;
-                }
-
-                SDL_BlitSurface(display, &r1, display, &r2);
-                scr_putbar(0, target_line, SCREEN_WIDTH, 1, 0, 0, y, 128);
-
             }
-        }
             break;
         case configuration::waves_nonreflecting:
-            for (int y = 0; y < (SCREEN_HEIGHT / 2) - height; y++)
+            for (int y = 0; y < (SCREEN_HEIGHT / 2) - height; y++) {
                 scr_putbar(0, SCREEN_HEIGHT / 2 + height + y, SCREEN_WIDTH, 1, 0, 0, 30 + y / 2, 255);
+            }
             break;
         }
+#endif
     }
 
     wavetime++;
@@ -928,8 +995,13 @@ void scr_putbar(int x, int y, int br, int h, Uint8 colr, Uint8 colg, Uint8 colb,
 
     if (alpha != 255) {
 
-        SDL_Surface *s = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_SRCALPHA, br, h, 16,
-                display->format->Rmask, display->format->Gmask, display->format->Bmask, 0);
+        SDL_Surface *s = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_SRCALPHA,
+                br, h,
+                display->format->BitsPerPixel,
+                display->format->Rmask,
+                display->format->Gmask,
+                display->format->Bmask,
+                display->format->Amask);
         SDL_SetAlpha(s, SDL_SRCALPHA, alpha);
 
         SDL_Rect r;
@@ -939,13 +1011,9 @@ void scr_putbar(int x, int y, int br, int h, Uint8 colr, Uint8 colg, Uint8 colb,
         r.y = 0;
 
         SDL_FillRect(s, &r, SDL_MapRGB(display->format, colr, colg, colb));
-
         scr_blit(s, x, y);
-
         SDL_FreeSurface(s);
-
     } else {
-
         SDL_Rect r;
         r.w = br;
         r.h = h;
@@ -973,9 +1041,9 @@ void scr_swap(void) {
 }
 
 void scr_setclipping(int x, int y, int w, int h) {
-    if (x < 0)
+    if (x < 0) {
         SDL_SetClipRect(display, NULL);
-    else {
+    } else {
         SDL_Rect r;
         r.x = x;
         r.y = y;
@@ -992,6 +1060,15 @@ void scr_blit(SDL_Surface * s, int x, int y) {
     r.x = x;
     r.y = y;
     SDL_BlitSurface(s, NULL, display, &r);
+}
+
+void scr_blit_stretch(SDL_Surface * s, int x, int y, SDL_Rect * dest) {
+    SDL_Rect r;
+    r.w = s->w;
+    r.h = s->h;
+    r.x = x;
+    r.y = y;
+    SDL_SoftStretch(s, &r, display, dest);
 }
 
 /* draws the tower and the doors */
@@ -1146,8 +1223,14 @@ static void putcase_editor(unsigned char w, long x, long h, int state) {
         break;
     case TB_STEP_VANISHER:
         if (config.use_alpha_sprites()) {
-            SDL_Surface *s = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_SRCALPHA, SPR_STEPWID,
-                    SPR_STEPHEI, 24, 0xff, 0xff00, 0xff0000, 0);
+            SDL_Surface *s = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_SRCALPHA,
+                    SPR_STEPWID,
+                    SPR_STEPHEI,
+                    24,
+                    0xff,
+                    0xff00,
+                    0xff0000,
+                    0);
             SDL_Rect r;
             r.w = SPR_STEPWID;
             r.h = SPR_STEPHEI;

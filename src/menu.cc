@@ -45,6 +45,8 @@
 static unsigned short menupicture, titledata;
 static unsigned char currentmission = 0;
 
+extern SDL_Surface *display;
+
 static void men_reload_sprites(Uint8 what) {
     Uint8 pal[3 * 256];
 
@@ -53,6 +55,12 @@ static void men_reload_sprites(Uint8 what) {
 
         scr_read_palette(&fi, pal);
         menupicture = scr_loadsprites(&restsprites, &fi, 1, 640, 480, false, pal, 0);
+        if(menupicture) {
+            SDL_Surface * s = SDL_ConvertSurface(restsprites.data(menupicture), display->format, 0);
+            if(s) {
+                menupicture = restsprites.replace(menupicture, s);
+            }
+        }
     }
 
     if (what & 2) {
@@ -79,13 +87,20 @@ static char *debug_menu_extrascore(_menusystem *ms) {
 static const char *
 men_main_background_proc(_menusystem *ms) {
     if (ms) {
-        scr_blit(restsprites.data(menupicture), 0, 0);
+        SDL_Rect dest;
+        dest.x = 0;
+        dest.y = 0;
+        dest.w = SCREEN_WIDTH;
+        dest.h = SCREEN_HEIGHT;
+        scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
         scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
         return NULL;
     }
     return "";
 }
 
+#ifdef __PLAYBOOK__
+#else
 #define REDEFINEREC 5
 static int times_called = 0;
 static const char *redefine_menu_up(_menusystem *ms) {
@@ -131,6 +146,7 @@ static const char *redefine_menu_up(_menusystem *ms) {
     }
     return buf;
 }
+#endif
 
 static const char *game_options_menu_password(_menusystem *prevmenu) {
     static char buf[50];
@@ -232,7 +248,7 @@ game_options_bonus(_menusystem *ms) {
 static const char *men_game_options_menu(_menusystem *prevmenu) {
     static const char * s = _("Game Options");
     if (prevmenu) {
-        _menusystem *ms = new_menu_system(s, NULL, 0, fontsprites.data(titledata)->h + 30);
+        _menusystem *ms = new_menu_system(s, NULL, 0, fontsprites.data(titledata)->h + 60);
 
         ms = add_menu_option(ms, NULL, game_options_menu_password, SDLK_UNKNOWN, MOF_LEFT);
         ms = add_menu_option(ms, NULL, game_options_menu_lives, SDLK_UNKNOWN,
@@ -335,6 +351,8 @@ men_options_music(_menusystem *ms) {
     return txt;
 }
 
+#ifdef __PLAYBOOK__
+#else
 static void reload_font_graphics(void) {
     fontsprites.freedata();
 
@@ -352,8 +370,6 @@ static void reload_layer_graphics(void) {
     scr_reload_sprites(RL_SCROLLER);
 }
 
-#ifdef __PLAYBOOK__
-#else
 static const char *
 men_alpha_font(_menusystem *ms) {
     static char txt[30];
@@ -463,7 +479,7 @@ men_alpha_options(_menusystem *mainmenu) {
     static const char * s = _("Alpha Options");
     if (mainmenu) {
 
-        _menusystem *ms = new_menu_system(s, NULL, 0, fontsprites.data(titledata)->h + 30);
+        _menusystem *ms = new_menu_system(s, NULL, 0, fontsprites.data(titledata)->h + 60);
 
         if (!ms)
             return NULL;
@@ -514,7 +530,7 @@ men_options(_menusystem *mainmenu) {
     static const char * s = _("Options");
     if (mainmenu) {
 
-        _menusystem *ms = new_menu_system(s, NULL, 0, fontsprites.data(titledata)->h + 30);
+        _menusystem *ms = new_menu_system(s, NULL, 0, fontsprites.data(titledata)->h + 60);
 
         if (!ms)
             return NULL;
@@ -598,13 +614,19 @@ men_hiscores_background_proc(_menusystem *ms) {
 
     if (ms) {
 
-        scr_blit(restsprites.data(menupicture), 0, 0);
-        scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
+        SDL_Rect dest;
+        dest.x = 0;
+        dest.y = 0;
+        dest.w = SCREEN_WIDTH;
+        dest.h = SCREEN_HEIGHT;
+        scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
+        scr_blit(fontsprites.data(titledata),
+                 (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
 
         switch (hiscores_state) {
         case 0: /* bring the scores in */
             if (hiscores_xpos > ((SCREEN_WIDTH - hiscores_maxlen) / 2)) {
-                hiscores_xpos -= 10;
+                hiscores_xpos -= 20;
                 break;
             } else
                 hiscores_state = 1;
@@ -634,7 +656,7 @@ men_hiscores_background_proc(_menusystem *ms) {
         case 2: /* move the scores out */
             if (hiscores_xpos > -(hiscores_maxlen + 40)) {
                 hiscores_timer = 0;
-                hiscores_xpos -= 10;
+                hiscores_xpos -= 20;
                 break;
             } else {
                 hiscores_state = 0;
@@ -647,7 +669,7 @@ men_hiscores_background_proc(_menusystem *ms) {
         }
         for (int t = 0; t < HISCORES_PER_PAGE; t++) {
             int cs = t + (hiscores_pager * HISCORES_PER_PAGE);
-            int ypos = (t * (FONT_HEIGHT + 1)) + fontsprites.data(titledata)->h + FONT_HEIGHT * 2;
+            int ypos = (t * (FONT_HEIGHT + 1)) + fontsprites.data(titledata)->h + FONT_HEIGHT * 3;
             char *pos, *points, *name;
             get_hiscores_string(cs, &pos, &points, &name);
             if (cs == hiscores_hilited) {
@@ -669,10 +691,10 @@ men_hiscores_background_proc(_menusystem *ms) {
 }
 
 static void show_scores(bool back = true, int mark = -1) {
-    static char buf[50];
-    snprintf(buf, 50, _("Scores for %s"), lev_missionname(currentmission));
+    static char buf[100];
+    snprintf(buf, sizeof(buf), _("Scores for %s"), lev_missionname(currentmission));
     _menusystem *ms = new_menu_system(buf, men_hiscores_background_proc, 0,
-            fontsprites.data(titledata)->h + 30);
+            fontsprites.data(titledata)->h + 60);
 
     if (!ms)
         return;
@@ -705,7 +727,12 @@ static void show_scores(bool back = true, int mark = -1) {
 }
 
 static void congrats_background_proc(void) {
-    scr_blit(restsprites.data(menupicture), 0, 0);
+    SDL_Rect dest;
+    dest.x = 0;
+    dest.y = 0;
+    dest.w = SCREEN_WIDTH;
+    dest.h = SCREEN_HEIGHT;
+    scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
     scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
 
     /* you can use up to 4 lines of text here, but please check
@@ -1033,7 +1060,7 @@ bool men_game() {
     bool do_quit;
     int speed = dcl_update_speed(MENU_DCLSPEED);
 
-    ms = new_menu_system(NULL, NULL, 0, fontsprites.data(titledata)->h + 30);
+    ms = new_menu_system(NULL, NULL, 0, fontsprites.data(titledata)->h + 60);
 
     if (!ms)
         return 0;

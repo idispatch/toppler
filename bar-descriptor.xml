@@ -22,7 +22,7 @@
 
     <!-- Fourth digit segment of the package version. First three segments are taken from the 
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
-    <buildId>1</buildId>
+    <buildId>2</buildId>
                  
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
     <!-- <versionLabel></versionLabel> -->
@@ -51,10 +51,6 @@
     
     <!--  The category where the application appears. Either core.games or core.media. -->
     <category>core.games</category>
-    <asset path="assets">assets</asset>
-    <asset path="sdl-controls.xml">sdl-controls.xml</asset>
-    <asset path="toppler-icon.png">toppler-icon.png</asset>
-    <asset path="toppler-splash.png">toppler-splash.png</asset>
     <configuration id="com.qnx.qcc.configuration.exe.debug.561979833" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/toppler" entry="true" type="Qnx/Elf">toppler</asset>

@@ -28,11 +28,10 @@ spritecontainer::~spritecontainer(void) {
 }
 
 void spritecontainer::freedata(void) {
-    for (int i = 0; i < usage; i++)
+    for (Uint16 i = 0; i < usage; i++) {
         SDL_FreeSurface(array[i]);
-
+    }
     delete[] array;
-
     array = 0;
     usage = 0;
     size = 0;
@@ -41,14 +40,15 @@ void spritecontainer::freedata(void) {
 Uint16 spritecontainer::save(SDL_Surface *s) {
     if (usage == size) {
         SDL_Surface **array2 = new SDL_Surface*[size + 200];
-
+#ifdef _DEBUG
         assert_msg(array2, "could not alloc memory for sprite array");
-
+#endif
         if (usage)
             memcpy(array2, array, usage * sizeof(SDL_Surface*));
 
-        if (array)
+        if (array) {
             delete[] array;
+        }
 
         array = array2;
 
@@ -57,7 +57,6 @@ Uint16 spritecontainer::save(SDL_Surface *s) {
 
     Uint16 erg = usage;
     array[usage++] = s;
-
     return erg;
 }
 

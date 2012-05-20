@@ -58,10 +58,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/ogg/arm/a.le.v7.g}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/vorbisfile/arm/a.le.v7.g/}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/vorbis/arm/a.le.v7.g/}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/smpeg/Device-Debug}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.1240403973" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1237474421" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="SDLMixer"/>
+									<listOptionValue builtIn="false" value="smpeg"/>
 									<listOptionValue builtIn="false" value="SDL12"/>
 									<listOptionValue builtIn="false" value="TouchControlOverlay"/>
 									<listOptionValue builtIn="false" value="asound"/>
@@ -150,11 +152,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/ogg/arm/a.le.v7}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/vorbisfile/arm/a.le.v7/}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/vorbis/qnx/vorbis/arm/a.le.v7/}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/smpeg/Device-Release}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.pie.793579779" name="Position Independent Executable (-pie)" superClass="com.qnx.qcc.option.linker.pie" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.security.1621061525" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.829292097" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
 									<listOptionValue builtIn="false" value="SDLMixer"/>
+									<listOptionValue builtIn="false" value="smpeg"/>
 									<listOptionValue builtIn="false" value="SDL12"/>
 									<listOptionValue builtIn="false" value="TouchControlOverlay"/>
 									<listOptionValue builtIn="false" value="asound"/>
