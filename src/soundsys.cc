@@ -28,9 +28,9 @@ ttsounds::ttsounds(void) {
     useSound = false;
     n_sounds = 0;
     sounds = NULL;
-
+#ifdef _DEBUG
     debugprintf(9, "ttsounds::ttsounds\n");
-
+#endif
     title = 0;
 #endif
 }
@@ -46,8 +46,9 @@ ttsounds::~ttsounds(void) {
     }
 
     delete [] sounds;
-
+#ifdef _DEBUG
     debugprintf(9, "ttsounds::~ttsounds\n");
+#endif
 #endif
 }
 
@@ -69,9 +70,6 @@ void ttsounds::addsound(const char *fname, int id, int vol, int loops) {
 
     if (need_add) {
         tmp = new struct ttsnddat [n_sounds + 1];
-
-        if (!tmp) return;
-
         if (n_sounds) {
             memcpy(tmp, sounds, sizeof(struct ttsnddat) * n_sounds);
             delete [] sounds;
@@ -90,9 +88,13 @@ void ttsounds::addsound(const char *fname, int id, int vol, int loops) {
         sounds[add_pos].channel = -1;
         sounds[add_pos].volume = vol;
         sounds[add_pos].loops = loops;
+#ifdef _DEBUG
         debugprintf(8,"ttsounds::addsound(\"%s\", %i, %i) = %i\n", fname, vol, loops, add_pos);
+#endif
     } else {
+#ifdef _DEBUG
         debugprintf(0,"ttsounds::addsound(): No such file as '%s'\n", fname);
+#endif
     }
 
     n_sounds++;
@@ -115,7 +117,9 @@ void ttsounds::play(void) {
             sounds[t].play = false;
         }
     }
+#ifdef _DEBUG
     debugprintf(9,"ttsounds::play()\n");
+#endif
 #endif
 }
 
@@ -139,7 +143,9 @@ void ttsounds::stopsound(int snd) {
             sounds[snd].play = false;
         }
     }
+#ifdef _DEBUG
     debugprintf(9,"ttsounds::stopsound(%i)\n", snd);
+#endif
 #endif
 }
 
@@ -151,8 +157,9 @@ void ttsounds::startsound(int snd) {
     if ((snd >= 0) && (snd < n_sounds)) {
         sounds[snd].play = true;
     }
-
+#ifdef _DEBUG
     debugprintf(9,"ttsounds::startsound(%i)\n", snd);
+#endif
 #endif
 }
 
@@ -167,8 +174,9 @@ void ttsounds::setsoundvol(int snd, int vol) {
             }
             sounds[snd].volume = vol;
         }
-
+#ifdef _DEBUG
         debugprintf(9,"ttsounds::setsoundvol(%i, %i)\n", snd, vol);
+#endif
     }
 #endif
 }
@@ -185,12 +193,16 @@ class ttsounds *ttsounds::inst = 0;
 void ttsounds::opensound(void) {
 #ifdef HAVE_LIBSDL_MIXER
     if(SDL_InitSubSystem(SDL_INIT_AUDIO) != 0) {
+#ifdef _DEBUG
         debugprintf(0, "Couldn't init the sound system, muting.\n");
+#endif
         return;
     }
 
     if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
+#ifdef _DEBUG
         debugprintf(0, "Could not open audio, muting.\n");
+#endif
         SDL_QuitSubSystem(SDL_INIT_AUDIO);
         return;
     }

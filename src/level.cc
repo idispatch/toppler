@@ -124,11 +124,14 @@ static inline int missionfiles(const struct dirent *file) {
 #endif
 
 Uint8 conv_char2towercode(wchar_t ch) {
-    if (ch)
-        for (int x = 0; x < NUM_TBLOCKS; x++)
+    if (ch) {
+        for (int x = 0; x < NUM_TBLOCKS; x++) {
             // we can do that because we use only chars below 128
-            if (ch == towerblockdata[x].ch)
+            if (ch == (wchar_t)towerblockdata[x].ch) {
                 return x;
+            }
+        }
+    }
     return TB_EMPTY;
 }
 

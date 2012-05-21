@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include "keyb.h"
 
-static bool str2bool(char *s) {
+static bool str2bool(const char *s) {
     if (s) {
         if (!strcmp("yes", s) || !strcmp("true", s))
             return true;
@@ -204,7 +204,7 @@ configuration::~configuration(void) {
     }
 }
 
-void configuration::curr_password(char pwd[PASSWORD_LEN + 1]) {
+void configuration::curr_password(const char pwd[PASSWORD_LEN + 1]) {
     need_save = true;
     strncpy(i_curr_password, pwd, PASSWORD_LEN);
     i_curr_password[PASSWORD_LEN] = 0;

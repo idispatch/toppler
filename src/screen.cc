@@ -786,52 +786,6 @@ static void putwater(long height) {
     height *= 4;
 
     if (height < (SCREEN_HEIGHT / 2)) {
-#ifdef __PLAYBOOK__
-        int horizontal_shift;
-
-        scr_putbar(0, (SCREEN_HEIGHT / 2) + height, 10, (SCREEN_HEIGHT / 2) - height, 0, 0, 0, 255);
-        scr_putbar(SCREEN_WIDTH - 10, (SCREEN_HEIGHT / 2) + height, 10, (SCREEN_HEIGHT / 2) - height, 0, 0,
-                0, 255);
-
-        for (int y = 0; y < (SCREEN_HEIGHT / 2) - height; y++) {
-
-            int target_line = (SCREEN_HEIGHT / 2) + height + y;
-            int source_line = (SCREEN_HEIGHT / 2) + height - y - 1
-                    - simple_waves[(wavetime * 4 + y * 2) & 0x7f];
-            if (source_line < 0)
-                source_line = 0;
-
-            int z = simple_waves[(wavetime * 5 + y) & 0x7f];
-            if (abs(z - 4) > y) {
-                if (z < 4)
-                    horizontal_shift = 4 - y;
-                else
-                    horizontal_shift = 4 + y;
-            } else {
-                horizontal_shift = z;
-            }
-
-            SDL_Rect r1;
-            SDL_Rect r2;
-
-            r1.w = r2.w = SCREEN_WIDTH;
-            r1.h = r2.h = 1;
-
-            r2.y = target_line;
-            r1.y = source_line;
-
-            if (horizontal_shift > 0) {
-                r1.x = horizontal_shift;
-                r2.x = 0;
-            } else {
-                r1.x = 0;
-                r2.x = -horizontal_shift;
-            }
-
-            SDL_BlitSurface(display, &r1, display, &r2);
-            scr_putbar(0, target_line, SCREEN_WIDTH, 1, 0, 0, y < 255 ? y : 255, 128);
-        }
-#else
         switch (config.waves_type()) {
         case configuration::waves_expensive:
             {
@@ -922,7 +876,6 @@ static void putwater(long height) {
             }
             break;
         }
-#endif
     }
 
     wavetime++;

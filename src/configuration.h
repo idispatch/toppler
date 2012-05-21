@@ -162,7 +162,7 @@ public:
     const char *curr_password() const {
         return i_curr_password;
     }
-    void curr_password(char pwd[PASSWORD_LEN + 1]);
+    void curr_password(const char pwd[PASSWORD_LEN + 1]);
 
     int debug_level() const {
         return i_debug_level;
