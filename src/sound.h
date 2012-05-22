@@ -49,7 +49,9 @@ enum {
 
 void snd_init(void);
 void snd_done(void);
-
+void snd_enableSounds(bool);
+void snd_enableMusic(bool);
+void snd_stopSounds(void);
 void snd_playTitle(void);
 void snd_stopTitle(void);
 void snd_musicVolume(int vol);

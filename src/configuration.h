@@ -33,8 +33,11 @@
 class configuration {
 
 public:
-
+#ifdef __PLAYBOOK__
+    configuration(FILE *local);
+#else
     configuration(FILE *glob, FILE *local);
+#endif
     ~configuration();
 
     bool fullscreen() const {
@@ -231,7 +234,6 @@ private:
     int i_nobonus;
 
     bool need_save;
-
 };
 
 extern configuration config;

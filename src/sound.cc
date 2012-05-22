@@ -26,28 +26,27 @@
 static bool samplesloaded = false;
 
 void snd_init(void) {
-    if (!config.nosound()) {
-        ttsounds::instance()->opensound();
-
-        if (!samplesloaded) {
-            ttsounds::instance()->addsound("water.wav", SND_WATER, MIX_MAX_VOLUME * 2/5, -1);
-            ttsounds::instance()->addsound("tap.wav", SND_TAP, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("boing.wav", SND_BOINK, 0, 0);
-            ttsounds::instance()->addsound("hit.wav", SND_HIT, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("honk.wav", SND_CROSS, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("tick.wav", SND_TICK, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("bubbles.wav", SND_DROWN, MIX_MAX_VOLUME, 2);
-            ttsounds::instance()->addsound("splash.wav", SND_SPLASH, 0, 0);
-            ttsounds::instance()->addsound("swoosh.wav", SND_SHOOT, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("alarm.wav", SND_ALARM, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("score.wav", SND_SCORE, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("rumble.wav", SND_CRUMBLE, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("fanfare.wav", SND_FANFARE, MIX_MAX_VOLUME, 0);
-            ttsounds::instance()->addsound("sonar.wav", SND_SONAR, MIX_MAX_VOLUME / 6, 0);
-            ttsounds::instance()->addsound("torpedo.wav", SND_TORPEDO, MIX_MAX_VOLUME, 0);
-            samplesloaded = true;
-        }
+    ttsounds::instance()->opensound();
+    if (!samplesloaded) {
+        ttsounds::instance()->addsound("water.wav", SND_WATER, MIX_MAX_VOLUME * 2/5, -1);
+        ttsounds::instance()->addsound("tap.wav", SND_TAP, MIX_MAX_VOLUME * 2/3, 0);
+        ttsounds::instance()->addsound("boing.wav", SND_BOINK, 0, 0);
+        ttsounds::instance()->addsound("hit.wav", SND_HIT, MIX_MAX_VOLUME, 0);
+        ttsounds::instance()->addsound("honk.wav", SND_CROSS, MIX_MAX_VOLUME * 2/3, 0);
+        ttsounds::instance()->addsound("tick.wav", SND_TICK, MIX_MAX_VOLUME, 0);
+        ttsounds::instance()->addsound("bubbles.wav", SND_DROWN, MIX_MAX_VOLUME, 2);
+        ttsounds::instance()->addsound("splash.wav", SND_SPLASH, 0, 0);
+        ttsounds::instance()->addsound("swoosh.wav", SND_SHOOT, MIX_MAX_VOLUME, 0);
+        ttsounds::instance()->addsound("alarm.wav", SND_ALARM, MIX_MAX_VOLUME, 0);
+        ttsounds::instance()->addsound("score.wav", SND_SCORE, MIX_MAX_VOLUME, 0);
+        ttsounds::instance()->addsound("rumble.wav", SND_CRUMBLE, MIX_MAX_VOLUME, 0);
+        ttsounds::instance()->addsound("fanfare.wav", SND_FANFARE, MIX_MAX_VOLUME, 0);
+        ttsounds::instance()->addsound("sonar.wav", SND_SONAR, MIX_MAX_VOLUME / 4, 0);
+        ttsounds::instance()->addsound("torpedo.wav", SND_TORPEDO, MIX_MAX_VOLUME, 0);
+        samplesloaded = true;
     }
+    snd_enableMusic(!config.nomusic());
+    snd_enableSounds(!config.nosound());
 }
 
 void snd_done(void) {
@@ -55,13 +54,29 @@ void snd_done(void) {
 }
 
 void snd_playTitle(void) {
-    ttsounds::instance()->playmusic("fishtro.s3m");
+    if (!config.nomusic()) {
+        ttsounds::instance()->playmusic("fishtro.s3m");
+    }
 }
 
 void snd_stopTitle(void) {
-    ttsounds::instance()->stopmusic();
+    if (!config.nomusic()) {
+        ttsounds::instance()->stopmusic();
+    }
+}
+
+void snd_stopSounds(void) {
+    ttsounds::instance()->stop();
 }
 
 void snd_musicVolume(int vol) {
     ttsounds::instance()->fadeToVol(vol);
+}
+
+void snd_enableSounds(bool enabled) {
+    ttsounds::instance()->enableSounds(enabled);
+}
+
+void snd_enableMusic(bool enabled) {
+    ttsounds::instance()->enableMusic(enabled);
 }

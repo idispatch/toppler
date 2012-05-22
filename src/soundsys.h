@@ -59,19 +59,25 @@ public:
     /* closes the sound device */
     void closesound(void);
 
+    void enableSounds(bool enabled) {
+        m_soundsEnabled = enabled;
+    }
+    void enableMusic(bool enabled) {
+        m_musicEnabled = enabled;
+    }
+
     /* singleton function, use this function to access the one and only
      * instance of this class
      */
     static ttsounds * instance(void);
 
 private:
-    ttsounds(void);
+    ttsounds();
 
 #ifdef HAVE_LIBSDL_MIXER
-    /* this var is only true, if we the user wants sound, and wa
-     * can init it
-     */
-    bool useSound;
+    bool m_soundInitialized;
+    bool m_soundsEnabled;
+    bool m_musicEnabled;
 
     int n_sounds; // # of sounds allocated
     struct ttsnddat *sounds;

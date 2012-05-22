@@ -69,16 +69,13 @@ static bool parse_arguments(int argc, char *argv[]) {
 #endif
 
 static void startgame(void) {
-
     lev_findmissions();
     gam_init();
     men_init();
     snd_init();
-    if (!config.nomusic())
-        snd_playTitle();
+    snd_playTitle();
     men_main();
-    if (!config.nomusic())
-        snd_stopTitle();
+    snd_stopTitle();
     lev_done();
     snd_done();
     gam_done();
@@ -90,7 +87,6 @@ static void QuitFunction(void) {
 
 int main(int argc, char *argv[]) {
     dataarchive = new archive(open_data_file("toppler.dat"));
-
 #if ENABLE_NLS == 1
     setlocale(LC_MESSAGES, "");
     setlocale(LC_CTYPE, "");
@@ -108,7 +104,6 @@ int main(int argc, char *argv[]) {
     printf("hsc init\n");
 #endif
     hsc_init();
-
 #ifdef __PLAYBOOK__
 #else
     if (parse_arguments(argc, argv)) {
@@ -134,6 +129,5 @@ int main(int argc, char *argv[]) {
 #else
     }
 #endif
-
     return 0;
 }

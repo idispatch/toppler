@@ -93,7 +93,10 @@ men_main_background_proc(_menusystem *ms) {
         dest.w = SCREEN_WIDTH;
         dest.h = SCREEN_HEIGHT;
         scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
+#ifdef __PLAYBOOK__
+#else
         scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
+#endif
         return NULL;
     }
     return "";
@@ -313,13 +316,22 @@ men_options_sounds(_menusystem *ms) {
     if (ms) {
         if (config.nosound()) {
             config.nosound(false);
+            snd_enableSounds(true);
+#ifdef __PLAYBOOK__
+#else
             snd_init();
             if (!config.nomusic())
                 snd_playTitle();
+#endif
         } else {
+#ifdef __PLAYBOOK__
+#else
             if (!config.nomusic())
                 snd_stopTitle();
             snd_done();
+#endif
+            snd_stopSounds();
+            snd_enableSounds(false);
             config.nosound(true);
         }
     }
@@ -327,7 +339,6 @@ men_options_sounds(_menusystem *ms) {
         sprintf(txt, "%s %c", _("Sounds"), 3);
     else
         sprintf(txt, "%s %c", _("Sounds"), 4);
-
     return txt;
 }
 
@@ -337,9 +348,11 @@ men_options_music(_menusystem *ms) {
     if (ms) {
         if (config.nomusic()) {
             config.nomusic(false);
+            snd_enableMusic(true);
             snd_playTitle();
         } else {
             snd_stopTitle();
+            snd_enableMusic(false);
             config.nomusic(true);
         }
     }
@@ -347,7 +360,6 @@ men_options_music(_menusystem *ms) {
         sprintf(txt, "%s %c", _("Music"), 3);
     else
         sprintf(txt, "%s %c", _("Music"), 4);
-
     return txt;
 }
 
@@ -620,9 +632,11 @@ men_hiscores_background_proc(_menusystem *ms) {
         dest.w = SCREEN_WIDTH;
         dest.h = SCREEN_HEIGHT;
         scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
+#ifdef __PLAYBOOK__
+#else
         scr_blit(fontsprites.data(titledata),
                  (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
-
+#endif
         switch (hiscores_state) {
         case 0: /* bring the scores in */
             if (hiscores_xpos > ((SCREEN_WIDTH - hiscores_maxlen) / 2)) {
@@ -733,8 +747,10 @@ static void congrats_background_proc(void) {
     dest.w = SCREEN_WIDTH;
     dest.h = SCREEN_HEIGHT;
     scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
+#ifdef __PLAYBOOK__
+#else
     scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
-
+#endif
     /* you can use up to 4 lines of text here, but please check
      * if the text fits onto the screen
      */
@@ -744,9 +760,11 @@ static void congrats_background_proc(void) {
 
     int ypos = 210;
 
-    for (int pos = 0; text[pos]; pos++)
-        if (text[pos] == '\n')
+    for (int pos = 0; text[pos]; pos++) {
+        if (text[pos] == '\n') {
             ypos -= 40;
+        }
+    }
 
     char line[200];
     int pos = 0;

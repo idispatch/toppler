@@ -88,10 +88,14 @@ void configuration::register_entry(const char *cnf_name, cnf_type cnf_typ, void 
 #define CNF_INT(a,b) register_entry(a, CT_INT, b, 0)
 #define CNF_KEY(a,b) register_entry(a, CT_KEY, NULL, b)
 
+#ifdef __PLAYBOOK__
+configuration::configuration(FILE *local) {
+#else
 configuration::configuration(FILE *glob, FILE *local) {
-
+#endif
     i_fullscreen = true;
     i_nosound = false;
+    i_nomusic = false;
     i_use_water = true;
     i_use_alpha_sprites = true;
     i_use_alpha_layers = true;
@@ -135,16 +139,17 @@ configuration::configuration(FILE *glob, FILE *local) {
     CNF_INT( "game_speed", &i_game_speed);
     CNF_BOOL( "nobonus", &i_nobonus);
 
+#ifdef __PLAYBOOK__
+#else
     if (glob) {
         parse(glob);
         fclose(glob);
     }
-#ifdef __PLAYBOOK__
-#else
-    f = local;
-    if (f)
-        parse(f);
 #endif
+    f = local;
+    if (f) {
+        parse(f);
+    }
     if (i_start_lives < 1)
         i_start_lives = 1;
     else if (i_start_lives > 3)
@@ -157,43 +162,46 @@ configuration::configuration(FILE *glob, FILE *local) {
 }
 
 configuration::~configuration(void) {
-
     if (need_save) {
-
-        if (!f)
+        if (!f) {
             f = create_local_config_file(CONFIGURATION_FILE_NAME);
+        }
+        if (f) {
+            fseek(f, 0, SEEK_SET);
 
-        fseek(f, 0, SEEK_SET);
+            config_data *t = first_data;
 
-        config_data *t = first_data;
+            while (t) {
+                fprintf(f, "%s: ", t->cnf_name);
 
-        while (t) {
-            fprintf(f, "%s: ", t->cnf_name);
+                switch (t->cnf_typ) {
+                case CT_BOOL:
+                    fprintf(f, "%s", (*(bool *) t->cnf_var) ? ("yes") : ("no"));
+                    break;
+                case CT_STRING:
+                    fprintf(f, "\"%s\"", (char *) (t->cnf_var));
+                    break;
+                case CT_INT:
+                    fprintf(f, "%i", *(int *) t->cnf_var);
+                    break;
+                case CT_KEY:
+                    fprintf(f, "%i", (int) key_conv2sdlkey((ttkey) t->maxlen, true));
+                    break;
+                default:
+                    assert_msg(0, "Unknown config data type.");
+                    break;
+                }
 
-            switch (t->cnf_typ) {
-            case CT_BOOL:
-                fprintf(f, "%s", (*(bool *) t->cnf_var) ? ("yes") : ("no"));
-                break;
-            case CT_STRING:
-                fprintf(f, "\"%s\"", (char *) (t->cnf_var));
-                break;
-            case CT_INT:
-                fprintf(f, "%i", *(int *) t->cnf_var);
-                break;
-            case CT_KEY:
-                fprintf(f, "%i", (int) key_conv2sdlkey((ttkey) t->maxlen, true));
-                break;
-            default:
-                assert_msg(0, "Unknown config data type.");
-                break;
+                fprintf(f, "\n");
+
+                t = t->next;
             }
-
-            fprintf(f, "\n");
-
-            t = t->next;
         }
     }
-    fclose(f);
+
+    if(f) {
+        fclose(f);
+    }
 
     config_data *t = first_data;
 
@@ -216,5 +224,9 @@ void configuration::editor_towername(char name[TOWERNAMELEN + 1]) {
     i_editor_towername[TOWERNAMELEN] = 0;
 }
 
+#ifdef __PLAYBOOK__
+configuration config(open_local_config_file(CONFIGURATION_FILE_NAME));
+#else
 configuration config(open_local_config_file(CONFIGURATION_FILE_NAME),
                      open_local_config_file(CONFIGURATION_FILE_NAME));
+#endif
