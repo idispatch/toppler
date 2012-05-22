@@ -166,11 +166,12 @@ void ttsounds::startsound(int snd) {
 void ttsounds::setsoundvol(int snd, int vol) {
 #ifdef HAVE_LIBSDL_MIXER
     if (useSound) {
+        if(vol < 0) {
+            vol = 0;
+        }
         if ((snd >= 0) && (snd < n_sounds)) {
             if (sounds[snd].channel != -1) {
-
                 Mix_Volume(sounds[snd].channel, vol);
-
             }
             sounds[snd].volume = vol;
         }

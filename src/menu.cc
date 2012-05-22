@@ -846,7 +846,7 @@ static void main_game_loop() {
         do {
             gam_loadtower(tower);
             scr_settowercolor(lev_towercol_red(), lev_towercol_green(), lev_towercol_blue());
-            ttsounds::instance()->setsoundvol(SND_WATER, 128);
+            ttsounds::instance()->setsoundvol(SND_WATER, MIX_MAX_VOLUME * 2/5);
             gam_arrival();
             gameresult = gam_towergame(anglepos, resttime, demo, &tmpbuf);
         } while ((gameresult == GAME_DIED) && pts_lifesleft());
@@ -977,7 +977,7 @@ men_main_timer_proc(_menusystem *ms) {
         gam_newgame();
         ttsounds::instance()->startsound(SND_WATER);
         scr_settowercolor(lev_towercol_red(), lev_towercol_green(), lev_towercol_blue());
-        ttsounds::instance()->setsoundvol(SND_WATER, 128);
+        ttsounds::instance()->setsoundvol(SND_WATER, MIX_MAX_VOLUME * 2/5);
         rob_initialize();
         (void) gam_towergame(anglepos, resttime, demolen, &demobuf);
         ttsounds::instance()->stopsound(SND_WATER);

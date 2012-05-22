@@ -231,7 +231,7 @@ static void drown(void) {
     substate = 0;
     verticalpos = 0;
 
-    ttsounds::instance()->setsoundvol(SND_SPLASH, 128);
+    ttsounds::instance()->setsoundvol(SND_SPLASH, MIX_MAX_VOLUME*3/4);
     ttsounds::instance()->startsound(SND_SPLASH);
 }
 

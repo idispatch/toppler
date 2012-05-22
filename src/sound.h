@@ -45,11 +45,6 @@ enum {
     SND_SONAR,
     SND_TORPEDO,
     SND_DOORTAP = SND_TAP
-//  SND_SUB_RAISE
-//  SND_SUB_DOWN
-//  SND_START
-//  SND_TIMEOUT
-//  SND_FALL
 };
 
 void snd_init(void);

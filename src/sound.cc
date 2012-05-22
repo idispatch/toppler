@@ -30,7 +30,7 @@ void snd_init(void) {
         ttsounds::instance()->opensound();
 
         if (!samplesloaded) {
-            ttsounds::instance()->addsound("water.wav", SND_WATER, MIX_MAX_VOLUME/8, -1);
+            ttsounds::instance()->addsound("water.wav", SND_WATER, MIX_MAX_VOLUME * 2/5, -1);
             ttsounds::instance()->addsound("tap.wav", SND_TAP, MIX_MAX_VOLUME, 0);
             ttsounds::instance()->addsound("boing.wav", SND_BOINK, 0, 0);
             ttsounds::instance()->addsound("hit.wav", SND_HIT, MIX_MAX_VOLUME, 0);

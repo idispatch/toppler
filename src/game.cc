@@ -268,7 +268,8 @@ static unsigned short towerpos(int verticalpos, int &tower_position, int anglepo
     sts_move(j, i);
     tower_position += i;
 
-    ttsounds::instance()->setsoundvol(SND_WATER, verticalpos > 100 ? 30 : 128 - verticalpos);
+    ttsounds::instance()->setsoundvol(SND_WATER,
+            verticalpos >= MIX_MAX_VOLUME * 2 / 5 ? 0 : MIX_MAX_VOLUME * 2 / 5 - verticalpos);
 
     return tower_position;
 }

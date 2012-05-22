@@ -489,7 +489,7 @@ void rob_update(void) {
                 if (w >= 0x80)
                     w = 0xff & (~w + 1);
 
-                ttsounds::instance()->setsoundvol(SND_BOINK, 120 - w);
+                ttsounds::instance()->setsoundvol(SND_BOINK, MIX_MAX_VOLUME - w);
                 ttsounds::instance()->startsound(SND_BOINK);
             }
 
@@ -522,7 +522,7 @@ void rob_update(void) {
                 if (w >= 0x80)
                     w = 0xff & (~w + 1);
 
-                ttsounds::instance()->setsoundvol(SND_BOINK, 128 - 2 * w);
+                ttsounds::instance()->setsoundvol(SND_BOINK, MIX_MAX_VOLUME - 2 * w);
                 ttsounds::instance()->startsound(SND_BOINK);
 
                 /* restart bounce cyclus */
