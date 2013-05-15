@@ -31,6 +31,9 @@
 #include <unistd.h>
 
 #include <stdexcept>
+#ifdef __BLACKBERRY__
+#include <eula.h>
+#endif
 
 #if ENABLE_NLS == 1
 #include <libintl.h>
@@ -86,6 +89,11 @@ static void QuitFunction(void) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef __BLACKBERRY__
+    if(!show_hint_dialog()) {
+        return 1;
+    }
+#endif
     dataarchive = new archive(open_data_file("toppler.dat"));
 #if ENABLE_NLS == 1
     setlocale(LC_MESSAGES, "");
