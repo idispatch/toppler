@@ -33,7 +33,7 @@
 class configuration {
 
 public:
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     configuration(FILE *local);
 #else
     configuration(FILE *glob, FILE *local);

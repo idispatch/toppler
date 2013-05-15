@@ -88,7 +88,7 @@ void configuration::register_entry(const char *cnf_name, cnf_type cnf_typ, void 
 #define CNF_INT(a,b) register_entry(a, CT_INT, b, 0)
 #define CNF_KEY(a,b) register_entry(a, CT_KEY, NULL, b)
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 configuration::configuration(FILE *local) {
 #else
 configuration::configuration(FILE *glob, FILE *local) {
@@ -139,7 +139,7 @@ configuration::configuration(FILE *glob, FILE *local) {
     CNF_INT( "game_speed", &i_game_speed);
     CNF_BOOL( "nobonus", &i_nobonus);
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     if (glob) {
         parse(glob);
@@ -224,7 +224,7 @@ void configuration::editor_towername(char name[TOWERNAMELEN + 1]) {
     i_editor_towername[TOWERNAMELEN] = 0;
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 configuration config(open_local_config_file(CONFIGURATION_FILE_NAME));
 #else
 configuration config(open_local_config_file(CONFIGURATION_FILE_NAME),

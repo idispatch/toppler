@@ -125,7 +125,7 @@ void scr_color_ramp(int *r, int *g, int *b) {
     color_ramp1(b, &color_ramp_badj, 1, 255);
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 void scr_savedisplaybmp(char *fname) {
     SDL_SaveBMP(display, fname);
@@ -1071,7 +1071,7 @@ static void draw_tower(long vert, long angle) {
     }
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static void draw_tower_editor(long vert, long angle, int state) {
 
@@ -1611,7 +1611,7 @@ static void putthings(long vert, long a, long angle) {
     }
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static void putthings_editor(long vert, long a, long angle, int state) {
 
@@ -1650,7 +1650,7 @@ static void draw_behind(long vert, long angle) {
     }
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static void draw_behind_editor(long vert, long angle, int state) {
     for (int a = 0; a < 16; a++) {
@@ -1669,7 +1669,7 @@ static void draw_before(long vert, long angle) {
     putthings(vert, 0, angle);
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static void draw_before_editor(long vert, long angle, int state) {
     for (int a = 0; a < 32; a++) {
@@ -1780,7 +1780,7 @@ void scr_drawall(long vert, long angle, long time, bool svisible, int subshape, 
     boxstate = (boxstate + 1) & 0xf;
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 void scr_drawedit(long vpos, long apos, bool showtime) {
 

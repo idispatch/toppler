@@ -27,7 +27,7 @@ static SDLKey sdlkeytyped;
 static Uint16 mouse_x, mouse_y;
 static bool mouse_moved;
 static Uint16 mouse_button;
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static int joy_inited = 0;
 static bool joy_action = 0;
@@ -60,13 +60,13 @@ void key_redefine(ttkey code, SDLKey key) {
 
 void key_init(void) {
     SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_IGNORE);
 #endif
     SDL_EventState(SDL_SYSWMEVENT, SDL_IGNORE);
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     SDL_EnableUNICODE(1);
     if (joy_inited == 0) {
@@ -93,7 +93,7 @@ void key_init(void) {
 
 static void handleEvents(void) {
     SDL_Event e;
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     if (joy_action) {
         keydown = no_key;
@@ -108,7 +108,7 @@ static void handleEvents(void) {
             if ((e.active.state & SDL_APPINPUTFOCUS) || (e.active.state & SDL_APPACTIVE))
                 tt_has_focus = (e.active.gain == 1);
             break;
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
         case SDL_MOUSEMOTION:
             mouse_x = e.motion.x;
@@ -184,7 +184,7 @@ static void handleEvents(void) {
 }
 
 void key_done(void) {
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     SDL_JoystickClose(joy);
 #endif

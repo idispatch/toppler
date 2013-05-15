@@ -33,7 +33,7 @@
 
 #define SCOREFNAME "toppler.hsc"
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 /* the group ids of the game */
 static gid_t UserGroupID, GameGroupID;
@@ -125,7 +125,7 @@ static char * homedir() {
 }
 
 static bool hsc_lock(void) {
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 #ifndef WIN32
 
@@ -144,13 +144,13 @@ static bool hsc_lock(void) {
 
 #endif
 #endif
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     if (globalHighscore)
         setegid(GameGroupID);
 #endif
     FILE *f = fopen(highscoreName, OPEN_FOR_READING);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     if (globalHighscore)
         setegid(UserGroupID);
@@ -162,7 +162,7 @@ static bool hsc_lock(void) {
 }
 
 static void hsc_unlock(void) {
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 #ifndef WIN32
     if (globalHighscore) {
@@ -182,7 +182,7 @@ void hsc_init(void) {
     }
 
 #ifndef WIN32
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     /* fine at first save the group ids and drop group privileges */
     UserGroupID = getgid();
@@ -192,12 +192,12 @@ void hsc_init(void) {
 #endif
     /* assume we use local highscore table */
     globalHighscore = false;
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     snprintf(highscoreName, sizeof(highscoreName), "%s/%s", homedir(), SCOREFNAME);
 #else
     snprintf(highscoreName, sizeof(highscoreName), "/.toppler/%s", homedir(), SCOREFNAME);
 #endif
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     /* now check if we have access to a global highscore table */
 
@@ -208,17 +208,17 @@ void hsc_init(void) {
     /* 1. get read and write access to the file */
 
     char fname[MAX_PATH];
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     snprintf(fname, sizeof(fname), "%s/%s", homedir(), SCOREFNAME);
 #else
     snprintf(fname, sizeof(fname), HISCOREDIR "/" SCOREFNAME);
 #endif
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     setegid(GameGroupID);
 #endif
     FILE * f = fopen(fname, "r+");
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     setegid(UserGroupID);
 #endif
@@ -264,13 +264,13 @@ void hsc_init(void) {
 
 void hsc_select(const char * mission) {
     strncpy(missionname, mission, 100);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     if (globalHighscore)
         setegid(GameGroupID);
 #endif
     FILE *f = fopen(highscoreName, OPEN_FOR_READING);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     if (globalHighscore)
         setegid(UserGroupID);
@@ -328,13 +328,13 @@ Uint8 hsc_enter(Uint32 points, Uint8 tower, char *name) {
             FILE *f;
 
             if (globalHighscore) {
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
                 if (globalHighscore)
                     setegid(GameGroupID);
 #endif
                 f = fopen(highscoreName, "r+b");
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
                 if (globalHighscore)
                     setegid(UserGroupID);

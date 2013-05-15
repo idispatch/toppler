@@ -101,7 +101,7 @@ typedef struct mission_node {
 mission_node * missions;
 
 #ifndef CREATOR
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 static inline const char *get_filename_ext(const char *filename) {
     const char *dot = strrchr(filename, '.');
     if(!dot || dot == filename) return "";
@@ -110,7 +110,7 @@ static inline const char *get_filename_ext(const char *filename) {
 #endif
 
 static inline int missionfiles(const struct dirent *file) {
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     const char * ext = get_filename_ext(file->d_name);
     return strcmp(ext, "ttm") == 0;
 #else
@@ -241,7 +241,7 @@ void lev_findmissions() {
         sprintf(pathname, "%s\\", n);
     }
 #else
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     snprintf(pathname, sizeof(pathname), "%s/../app/native/assets/", getenv("HOME"));
 #else
     sprintf(pathname, "%s", "./");
@@ -258,7 +258,7 @@ void lev_findmissions() {
     }
     free(eps);
     eps = NULL;
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 #ifndef WIN32
     snprintf(pathname, sizeof(pathname), "%s/.toppler/", getenv("HOME"));
@@ -1152,7 +1152,7 @@ void lev_restore(unsigned char *&data) {
     delete[] data;
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 lev_problem lev_is_consistent(int &row, int &col) {
 

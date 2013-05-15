@@ -83,7 +83,7 @@ void debugprintf(int lvl, const char *fmt, ...) {
  but this is not really portable so this
  */
 bool dcl_fileexists(const char * path) {
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     struct stat buf;
     bool result = stat(path, &buf) == 0 && S_ISREG(buf.st_mode);
 #ifdef _DEBUG
@@ -113,7 +113,7 @@ const char * homedir() {
 /* checks if home/.toppler exists and creates it, if not */
 static void checkdir(void) {
 #ifndef WIN32
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     /* Do absolutely nothing */
 #else
     char path[MAX_PATH];
@@ -129,7 +129,7 @@ static void checkdir(void) {
 FILE *open_data_file(const char *name) {
 
 #ifndef WIN32
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     // look into actual directory
     if (dcl_fileexists(name))
@@ -154,7 +154,7 @@ FILE *open_data_file(const char *name) {
 bool get_data_file_path(const char * name, char * f, int len) {
 
 #ifndef WIN32
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     // look into actual directory
     if (dcl_fileexists(name)) {
@@ -183,7 +183,7 @@ FILE *open_local_config_file(const char *name) {
 #ifndef WIN32
     checkdir();
     char path[MAX_PATH];
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     snprintf(path, sizeof(path), "%s/%s", homedir(), name);
 #else
     snprintf(path, sizeof(path), "%s/.toppler/%s", homedir(), name);
@@ -201,7 +201,7 @@ FILE *create_local_config_file(const char *name) {
 #ifndef WIN32
     checkdir();
     char path[MAX_PATH];
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     snprintf(path, sizeof(path), "%s/%s", homedir(), name);
 #else
     snprintf(path, sizeof(path), "%s/.toppler/%s", homedir(), name);
@@ -219,7 +219,7 @@ FILE *open_local_data_file(const char *name) {
 #ifndef WIN32
     checkdir();
     char path[MAX_PATH];
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     snprintf(path, sizeof(path), "%s/%s", homedir(), name);
 #else
     snprintf(path, sizeof(path), "%s/.toppler/%s", homedir(), name);
@@ -234,7 +234,7 @@ FILE *create_local_data_file(const char *name) {
 #ifndef WIN32
     checkdir();
     char path[MAX_PATH];
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
     snprintf(path, sizeof(path), "%s/%s", homedir(), name);
 #else
     snprintf(path, sizeof(path), "%s/.toppler/%s", homedir(), name);

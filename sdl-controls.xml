@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <emulation version="1">
   <key x="10" y="135" width="80" height="87" sym="27" scancode="27" image="assets/button-esc.png">
-    <label x="0" y="0" width="80" height="87" image="assets/button-esc.png"/>
+    <label x="0" y="0" width="80" height="87" alpha="100" image="assets/button-esc.png"/>
   </key>
   <key x="10" y="280" width="80" height="87" sym="13" scancode="13" image="assets/button-fire.png">
-    <label x="0" y="0" width="80" height="87" image="assets/button-fire.png"/>
+    <label x="0" y="0" width="80" height="87" alpha="100" image="assets/button-fire.png"/>
   </key>
   <key x="386" y="380" width="80" height="87" sym="276" scancode="276" image="assets/button-left.png">
-    <label x="0" y="0" width="80" height="87" image="assets/button-left.png"/>
+    <label x="0" y="0" width="80" height="87" alpha="100" image="assets/button-left.png"/>
   </key>
   <key x="468" y="380" width="80" height="87" sym="274" scancode="274" image="assets/button-down.png">
-    <label x="0" y="0" width="80" height="87" image="assets/button-down.png"/>
+    <label x="0" y="0" width="80" height="87" alpha="100" image="assets/button-down.png"/>
   </key>
   <key x="468" y="290" width="80" height="87" sym="273" scancode="273" image="assets/button-up.png">
-    <label x="0" y="0" width="80" height="87" image="assets/button-up.png"/>
+    <label x="0" y="0" width="80" height="87" alpha="100" image="assets/button-up.png"/>
   </key>
   <key x="550" y="380" width="80" height="87" sym="275" scancode="275" image="assets/button-right.png">
-    <label x="0" y="0" width="80" height="87" image="assets/button-right.png"/>
+    <label x="0" y="0" width="80" height="87" alpha="100" image="assets/button-right.png"/>
   </key>
 </emulation>

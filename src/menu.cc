@@ -93,7 +93,7 @@ men_main_background_proc(_menusystem *ms) {
         dest.w = SCREEN_WIDTH;
         dest.h = SCREEN_HEIGHT;
         scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
         scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
 #endif
@@ -102,7 +102,7 @@ men_main_background_proc(_menusystem *ms) {
     return "";
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 #define REDEFINEREC 5
 static int times_called = 0;
@@ -271,7 +271,7 @@ static const char *men_game_options_menu(_menusystem *prevmenu) {
     return s;
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static const char *run_redefine_menu(_menusystem *prevmenu) {
     if (prevmenu) {
@@ -317,14 +317,14 @@ men_options_sounds(_menusystem *ms) {
         if (config.nosound()) {
             config.nosound(false);
             snd_enableSounds(true);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
             snd_init();
             if (!config.nomusic())
                 snd_playTitle();
 #endif
         } else {
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
             if (!config.nomusic())
                 snd_stopTitle();
@@ -363,7 +363,7 @@ men_options_music(_menusystem *ms) {
     return txt;
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static void reload_font_graphics(void) {
     fontsprites.freedata();
@@ -485,7 +485,7 @@ men_full_scroller(_menusystem *ms) {
         return _("2 layers Scoller");
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 static const char *
 men_alpha_options(_menusystem *mainmenu) {
     static const char * s = _("Alpha Options");
@@ -548,7 +548,7 @@ men_options(_menusystem *mainmenu) {
             return NULL;
 
         ms = add_menu_option(ms, NULL, men_game_options_menu);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
         ms = add_menu_option(ms, NULL, run_redefine_menu);
         ms = add_menu_option(ms, NULL, men_options_graphic);
@@ -632,7 +632,7 @@ men_hiscores_background_proc(_menusystem *ms) {
         dest.w = SCREEN_WIDTH;
         dest.h = SCREEN_HEIGHT;
         scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
         scr_blit(fontsprites.data(titledata),
                  (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
@@ -747,7 +747,7 @@ static void congrats_background_proc(void) {
     dest.w = SCREEN_WIDTH;
     dest.h = SCREEN_HEIGHT;
     scr_blit_stretch(restsprites.data(menupicture), 0, 0, &dest);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
 #endif
@@ -815,7 +815,7 @@ static void men_highscore(unsigned long pt, int twr) {
 
 #ifndef WIN32
         /* copy the login name into the name entered into the highscore table */
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
         strncpy(name, "Player", SCORENAMELEN);
 #else
         strncpy(name, getenv("LOGNAME"), SCORENAMELEN);
@@ -943,7 +943,7 @@ men_main_highscore_proc(_menusystem *ms) {
     return _("Highscores");
 }
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static const char *
 men_main_leveleditor_proc(_menusystem *ms) {
@@ -1051,14 +1051,14 @@ void men_main() {
     ms = add_menu_option(ms, NULL, NULL);
     ms = add_menu_option(ms, NULL, men_main_highscore_proc, SDLK_h);
     ms = add_menu_option(ms, NULL, men_options, SDLK_o);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     ms = add_menu_option(ms, NULL, men_main_leveleditor_proc, SDLK_e);
 #endif
 #ifdef HUNT_THE_FISH
     ms = add_menu_option(ms, NULL, men_main_bonusgame_proc);
 #endif
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     ms = add_menu_option(ms, NULL, NULL);
     ms = add_menu_option(ms, _("Quit"), NULL, SDLK_q);

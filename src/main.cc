@@ -38,7 +38,7 @@
 #include <dirent.h>
 #endif
 
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 static void printhelp(void) {
     printf(
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
     closedir(dir);
     textdomain("toppler");
 #endif
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     printf(_("Nebulus version %s"), VERSION);
     printf("\n");
@@ -104,12 +104,12 @@ int main(int argc, char *argv[]) {
     printf("hsc init\n");
 #endif
     hsc_init();
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     if (parse_arguments(argc, argv)) {
 #endif
         SDL_InitSubSystem(SDL_INIT_VIDEO);
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
         SDL_ShowCursor(SDL_DISABLE);
 #else
         SDL_WM_SetCaption(_("Nebulus"), NULL);
@@ -119,13 +119,13 @@ int main(int argc, char *argv[]) {
         atexit(QuitFunction);
         srand(time(0));
         startgame();
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
         printf(_("Thanks for playing!\n"));
         SDL_ShowCursor(mouse);
 #endif
         SDL_Quit();
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
     }
 #endif
