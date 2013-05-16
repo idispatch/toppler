@@ -2,4 +2,6 @@
 Device-Debug
 Device-Release
 client-*.csj
-
+BlackBerrySignCertificates.zip
+BlackBerrySignCertificates/*
+assets/.assets.index

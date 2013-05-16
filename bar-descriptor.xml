@@ -4,8 +4,8 @@
     <name>Tower Toppler</name>
     <versionNumber>1.0.1</versionNumber>
     <buildId>3</buildId>
-    <author>kosenkov.ca</author>
-    <authorId>gYAAgOgucABbvsraEHuj9N_cK6E</authorId>
+    <author>Oleg Kosenkov</author>
+    <authorId>gYAAgNvOOqSvefTEeSiCjimMZSs</authorId>
     <description>Classic Tower Toppler game port</description>
     <initialWindow>
         <aspectRatio>landscape</aspectRatio>
@@ -17,17 +17,17 @@
     <asset path="assets">assets</asset>
     <asset path="toppler-icon.png">toppler-icon.png</asset>
     <asset path="controls.json">controls.json</asset>
-    <configuration id="com.qnx.qcc.configuration.exe.debug.561979833" name="Device-Debug">
+    <configuration name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/toppler" entry="true" type="Qnx/Elf">toppler</asset>
     </configuration>
-    <configuration id="com.qnx.qcc.configuration.exe.release.1914504020" name="Device-Release">
+    <configuration name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Release/toppler" entry="true" type="Qnx/Elf">toppler</asset>
     </configuration>
     <icon>
         <image>toppler-icon.png</image>
     </icon>
-    <action system="true">run_native</action>
+    <permission system="true">run_native</permission>
     <env var="LD_LIBRARY_PATH" value="app/native/lib"/>
 </qnx>
