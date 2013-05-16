@@ -1773,10 +1773,11 @@ void scr_drawall(long vert, long angle, long time, bool svisible, int subshape, 
     putwater(vert);
 
     draw_data(time, flags);
-
+#ifdef __BLACKBERRY__
+#else
     if (dcl_wait_overflow())
         scr_putbar(0, 0, 5, 5, 255, 0, 0, 255);
-
+#endif
     boxstate = (boxstate + 1) & 0xf;
 }
 

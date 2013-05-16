@@ -38,7 +38,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-
+#ifdef __BLACKBERRY__
+#include <bps/virtualkeyboard.h>
+#endif
 #define NUMHISCORES 10
 #define HISCORES_PER_PAGE 5
 
@@ -158,8 +160,14 @@ static const char *game_options_menu_password(_menusystem *prevmenu) {
     if (prevmenu) {
         /* one more character to also copy the termination */
         strncpy(pwd, config.curr_password(), PASSWORD_LEN + 1);
+#ifdef __BLACKBERRY__
+        virtualkeyboard_show();
+#endif
         while (!men_input(pwd, PASSWORD_LEN, -1, -1, PASSWORD_CHARS))
             ;
+#ifdef __BLACKBERRY__
+        virtualkeyboard_hide();
+#endif
         config.curr_password(pwd);
         /* FIXME: change -1, -1 to correct position; Need to fix menu system
          first... */
@@ -640,7 +648,7 @@ men_hiscores_background_proc(_menusystem *ms) {
         switch (hiscores_state) {
         case 0: /* bring the scores in */
             if (hiscores_xpos > ((SCREEN_WIDTH - hiscores_maxlen) / 2)) {
-                hiscores_xpos -= 20;
+                hiscores_xpos -= 30;
                 break;
             } else
                 hiscores_state = 1;
@@ -670,7 +678,7 @@ men_hiscores_background_proc(_menusystem *ms) {
         case 2: /* move the scores out */
             if (hiscores_xpos > -(hiscores_maxlen + 40)) {
                 hiscores_timer = 0;
-                hiscores_xpos -= 20;
+                hiscores_xpos -= 30;
                 break;
             } else {
                 hiscores_state = 0;
@@ -751,27 +759,15 @@ static void congrats_background_proc(void) {
 #else
     scr_blit(fontsprites.data(titledata), (SCREEN_WIDTH - fontsprites.data(titledata)->w) / 2, 20);
 #endif
-    /* you can use up to 4 lines of text here, but please check
-     * if the text fits onto the screen
-     */
-    const char * text = _("Congratulations! You are\n"
-            "probably good enough to\n"
-            "enter the highscore table!");
+    const char * text = _("New High Score!");
 
-    int ypos = 210;
-
-    for (int pos = 0; text[pos]; pos++) {
-        if (text[pos] == '\n') {
-            ypos -= 40;
-        }
-    }
+    int ypos = 10;
 
     char line[200];
     int pos = 0;
     int linepos = 0;
 
     while (text[pos]) {
-
         if (text[pos] == '\n') {
             line[linepos] = 0;
             scr_writetext_center(ypos, line);
@@ -789,7 +785,7 @@ static void congrats_background_proc(void) {
     line[linepos] = 0;
     scr_writetext_center(ypos, line);
 
-    scr_writetext_center(270, _("Please enter your name"));
+    scr_writetext_center(50, _("Please enter your name"));
 }
 
 /* highscores, after the game
@@ -817,6 +813,7 @@ static void men_highscore(unsigned long pt, int twr) {
         /* copy the login name into the name entered into the highscore table */
 #ifdef __BLACKBERRY__
         strncpy(name, "Player", SCORENAMELEN);
+        virtualkeyboard_show();
 #else
         strncpy(name, getenv("LOGNAME"), SCORENAMELEN);
 #endif
@@ -828,6 +825,9 @@ static void men_highscore(unsigned long pt, int twr) {
 
         while (!men_input(name, SCORENAMELEN))
             ;
+#ifdef __BLACKBERRY__
+        virtualkeyboard_hide();
+#endif
 
         pos = hsc_enter(pt, twr, name);
     }

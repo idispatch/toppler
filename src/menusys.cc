@@ -429,7 +429,7 @@ void draw_input_box(int x, int y, int len, int cursor, char *txt) {
     if (x < 0)
         x = 0;
     if (y < 0)
-        y = (SCREEN_HEIGHT / 2) - (FONT_HEIGHT / 2);
+        y = 120;/*(SCREEN_HEIGHT / 2) - (FONT_HEIGHT / 2);*/
 
     scr_putbar(x, y, nlen * FONT_MAX_WIDTH, FONT_HEIGHT, 0, 0, 0,
             (config.use_alpha_darkening()) ? 128 : 255);
