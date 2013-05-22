@@ -650,6 +650,7 @@ men_hiscores_background_proc(_menusystem *ms) {
                 break;
             } else
                 hiscores_state = 1;
+                /* no break */
         case 1: /* hold the scores on screen */
             if (hiscores_timer < 100) {
                 hiscores_timer++;
@@ -673,6 +674,7 @@ men_hiscores_background_proc(_menusystem *ms) {
                     next_page = pager;
                 }
             }
+            /* no break */
         case 2: /* move the scores out */
             if (hiscores_xpos > -(hiscores_maxlen + 40)) {
                 hiscores_timer = 0;
