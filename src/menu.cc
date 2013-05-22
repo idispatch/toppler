@@ -38,9 +38,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#ifdef __BLACKBERRY__
-#include <bps/virtualkeyboard.h>
-#endif
+
 #define NUMHISCORES 10
 #define HISCORES_PER_PAGE 5
 
@@ -161,12 +159,12 @@ static const char *game_options_menu_password(_menusystem *prevmenu) {
         /* one more character to also copy the termination */
         strncpy(pwd, config.curr_password(), PASSWORD_LEN + 1);
 #ifdef __BLACKBERRY__
-        virtualkeyboard_show();
+        SDL_ShowKeyboard(1);
 #endif
         while (!men_input(pwd, PASSWORD_LEN, -1, -1, PASSWORD_CHARS))
             ;
 #ifdef __BLACKBERRY__
-        virtualkeyboard_hide();
+        SDL_ShowKeyboard(0);
 #endif
         config.curr_password(pwd);
         /* FIXME: change -1, -1 to correct position; Need to fix menu system
@@ -811,9 +809,9 @@ static void men_highscore(unsigned long pt, int twr) {
 
 #ifndef WIN32
         /* copy the login name into the name entered into the highscore table */
-#ifdef __BLACKBERRY__
         strncpy(name, "Player", SCORENAMELEN);
-        virtualkeyboard_show();
+#ifdef __BLACKBERRY__
+        SDL_ShowKeyboard(1);
 #else
         strncpy(name, getenv("LOGNAME"), SCORENAMELEN);
 #endif
@@ -826,9 +824,8 @@ static void men_highscore(unsigned long pt, int twr) {
         while (!men_input(name, SCORENAMELEN))
             ;
 #ifdef __BLACKBERRY__
-        virtualkeyboard_hide();
+        SDL_ShowKeyboard(0);
 #endif
-
         pos = hsc_enter(pt, twr, name);
     }
 

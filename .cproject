@@ -69,7 +69,6 @@
 									<listOptionValue builtIn="false" value="tco_g"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="cJSON_g"/>
-									<listOptionValue builtIn="false" value="libmodplug_g"/>
 									<listOptionValue builtIn="false" value="bps"/>
 									<listOptionValue builtIn="false" value="screen"/>
 									<listOptionValue builtIn="false" value="z"/>
@@ -77,6 +76,7 @@
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="png"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="modplug_g"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.mudflapth.857415101" name="Build for Mudflap (-fmudflapth)" superClass="com.qnx.qcc.option.linker.mudflapth" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.warningLevel.1085134933" name="Warning Level (-w)" superClass="com.qnx.qcc.option.linker.warningLevel" value="com.qnx.qcc.option.warningLevel.5" valueType="enumerated"/>
@@ -163,7 +163,6 @@
 									<listOptionValue builtIn="false" value="SDL"/>
 									<listOptionValue builtIn="false" value="tco"/>
 									<listOptionValue builtIn="false" value="cJSON"/>
-									<listOptionValue builtIn="false" value="libmodplug"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="bps"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -172,6 +171,7 @@
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="EGL"/>
 									<listOptionValue builtIn="false" value="png"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="modplug"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.warningLevel.490380964" name="Warning Level (-w)" superClass="com.qnx.qcc.option.linker.warningLevel" value="com.qnx.qcc.option.warningLevel.4" valueType="enumerated"/>
 								<inputType id="com.qnx.qcc.inputType.linker.261308636" superClass="com.qnx.qcc.inputType.linker">
