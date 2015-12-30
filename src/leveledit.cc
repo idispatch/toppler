@@ -1,5 +1,5 @@
 /* Tower Toppler - Nebulus
- * Copyright (C) 2000-2006  Andreas Röver
+ * Copyright (C) 2000-2006  Andreas Rï¿½ver
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-#ifdef __PLAYBOOK__
+#ifdef __BLACKBERRY__
 #else
 #include "leveledit.h"
 
@@ -88,7 +88,7 @@ typedef enum {
     EDACT_TOGGLEROBOT,
 
     NUMEDITORACTIONS
-} key_actions;
+}key_actions;
 
 struct _ed_key {
     key_actions action;
@@ -100,42 +100,42 @@ struct _ed_key {
 #define TOWERPAGESIZE 5 /* pageup/pagedown moving */
 #define TOWERSTARTHEI 4 /* tower starting height */
 
-const char *_ed_key_actions[NUMEDITORACTIONS] = { N_("Quit"), N_("Move up"), N_("Move down"),
-        N_("Move left"), N_("Move right"), N_("Insert row"), N_("Delete row"),
-        N_("Rotate 180"), N_("Put space"), N_("Put step"), N_("Put vanisher"),
-        N_("Put slider left"), N_("Put slider right"), N_("Put door"), N_("Put goal"),
-        N_("Check tower"), N_("Put rolling ball"), N_("Put jumping ball moving"),
-        N_("Put jumping ball"), N_("Put robot up down"), N_("Put robot up down fast"),
-        N_("Put robot left right"), N_("Put robot left right fast"), N_("Put lift"),
-        N_("Lift middle stop"), N_("Lift top stop"), N_("Put pillar"), N_("Put box"),
-        N_("Load tower"), N_("Save tower"), N_("Test tower"), N_("Set tower color"),
-        N_("Increase time"), N_("Decrease time"), N_("Create mission"), N_("Move page up"),
-        N_("Move page down"), N_("Go to start"), N_("Show this help"), N_("Name the tower"),
-        N_("Set tower time"), N_("Record demo"), N_("Play demo"), N_("Adjust tower height"),
-        N_("Go to end"), N_("Cut row"), N_("Paste row"), N_("Change robot type") };
+const char *_ed_key_actions[NUMEDITORACTIONS] = {N_("Quit"), N_("Move up"), N_("Move down"),
+    N_("Move left"), N_("Move right"), N_("Insert row"), N_("Delete row"),
+    N_("Rotate 180"), N_("Put space"), N_("Put step"), N_("Put vanisher"),
+    N_("Put slider left"), N_("Put slider right"), N_("Put door"), N_("Put goal"),
+    N_("Check tower"), N_("Put rolling ball"), N_("Put jumping ball moving"),
+    N_("Put jumping ball"), N_("Put robot up down"), N_("Put robot up down fast"),
+    N_("Put robot left right"), N_("Put robot left right fast"), N_("Put lift"),
+    N_("Lift middle stop"), N_("Lift top stop"), N_("Put pillar"), N_("Put box"),
+    N_("Load tower"), N_("Save tower"), N_("Test tower"), N_("Set tower color"),
+    N_("Increase time"), N_("Decrease time"), N_("Create mission"), N_("Move page up"),
+    N_("Move page down"), N_("Go to start"), N_("Show this help"), N_("Name the tower"),
+    N_("Set tower time"), N_("Record demo"), N_("Play demo"), N_("Adjust tower height"),
+    N_("Go to end"), N_("Cut row"), N_("Paste row"), N_("Change robot type")};
 
-const struct _ed_key _ed_keys[] = { { EDACT_QUIT, SDLK_ESCAPE }, { EDACT_SHOWKEYHELP, SDLK_F1 }, {
-        EDACT_SHOWKEYHELP, SDLK_h, 'h' }, { EDACT_MOVEUP, SDLK_UP }, { EDACT_MOVEDOWN, SDLK_DOWN },
-        { EDACT_MOVELEFT, SDLK_LEFT }, { EDACT_MOVERIGHT, SDLK_RIGHT }, { EDACT_MOVEPAGEUP,
-                SDLK_PAGEUP }, { EDACT_MOVEPAGEDOWN, SDLK_PAGEDOWN },
-        { EDACT_GOTOSTART, SDLK_HOME }, { EDACT_GOTOEND, SDLK_END }, { EDACT_ROT180, SDLK_y, 'y' },
-        { EDACT_INSROW, SDLK_INSERT }, { EDACT_DELROW, SDLK_DELETE }, { EDACT_CUTROW, SDLK_MINUS,
-                '-' }, { EDACT_PASTEROW, SDLK_PLUS, '+' }, { EDACT_PUTSPACE, SDLK_SPACE, ' ' }, {
-                EDACT_PUTSTEP, SDLK_w, 'w' }, { EDACT_PUTVANISHER, SDLK_s, 's' }, {
-                EDACT_PUTSLIDERLEFT, SDLK_x, 'x' },
-        { EDACT_PUTSLIDERRIGHT, SDLK_x, 'X', KMOD_SHIFT }, { EDACT_PUTDOOR, SDLK_i, 'i' }, {
-                EDACT_PUTGOAL, SDLK_k, 'k' }, { EDACT_PUTROBOT1, SDLK_1, '1' }, { EDACT_PUTROBOT2,
-                SDLK_2, '2' }, { EDACT_PUTROBOT3, SDLK_3, '3' }, { EDACT_PUTROBOT4, SDLK_4, '4' }, {
-                EDACT_PUTROBOT5, SDLK_5, '5' }, { EDACT_PUTROBOT6, SDLK_6, '6' }, { EDACT_PUTROBOT7,
-                SDLK_7, '7' }, { EDACT_TOGGLEROBOT, SDLK_8, '8' }, { EDACT_PUTLIFT, SDLK_c, 'c' }, {
-                EDACT_PUTLIFTMID, SDLK_d, 'd' }, { EDACT_PUTLIFTTOP, SDLK_e, 'e' }, {
-                EDACT_PUTSTICK, SDLK_q, 'q' }, { EDACT_PUTBOX, SDLK_a, 'a' }, { EDACT_CHECKTOWER,
-                SDLK_z, 'z' }, { EDACT_LOADTOWER, SDLK_l, 'l' }, { EDACT_SAVETOWER, SDLK_o, 'o' }, {
-                EDACT_TESTTOWER, SDLK_p, 'p' }, { EDACT_SETTOWERCOLOR, SDLK_v, 'v' }, {
-                EDACT_SETTIME, SDLK_b, 'b' }, { EDACT_INCTIME, SDLK_n, 'n' }, { EDACT_DECTIME,
-                SDLK_n, 'N', KMOD_SHIFT }, { EDACT_CREATEMISSION, SDLK_m, 'm' }, { EDACT_NAMETOWER,
-                SDLK_t, 't' }, { EDACT_REC_DEMO, SDLK_F10 }, { EDACT_PLAY_DEMO, SDLK_F11 }, {
-                EDACT_ADJHEIGHT, SDLK_F8 } };
+const struct _ed_key _ed_keys[] = { {EDACT_QUIT, SDLK_ESCAPE}, {EDACT_SHOWKEYHELP, SDLK_F1}, {
+        EDACT_SHOWKEYHELP, SDLK_h, 'h'}, {EDACT_MOVEUP, SDLK_UP}, {EDACT_MOVEDOWN, SDLK_DOWN},
+    {   EDACT_MOVELEFT, SDLK_LEFT}, {EDACT_MOVERIGHT, SDLK_RIGHT}, {EDACT_MOVEPAGEUP,
+        SDLK_PAGEUP}, {EDACT_MOVEPAGEDOWN, SDLK_PAGEDOWN},
+    {   EDACT_GOTOSTART, SDLK_HOME}, {EDACT_GOTOEND, SDLK_END}, {EDACT_ROT180, SDLK_y, 'y'},
+    {   EDACT_INSROW, SDLK_INSERT}, {EDACT_DELROW, SDLK_DELETE}, {EDACT_CUTROW, SDLK_MINUS,
+        '-'}, {EDACT_PASTEROW, SDLK_PLUS, '+'}, {EDACT_PUTSPACE, SDLK_SPACE, ' '}, {
+        EDACT_PUTSTEP, SDLK_w, 'w'}, {EDACT_PUTVANISHER, SDLK_s, 's'}, {
+        EDACT_PUTSLIDERLEFT, SDLK_x, 'x'},
+    {   EDACT_PUTSLIDERRIGHT, SDLK_x, 'X', KMOD_SHIFT}, {EDACT_PUTDOOR, SDLK_i, 'i'}, {
+        EDACT_PUTGOAL, SDLK_k, 'k'}, {EDACT_PUTROBOT1, SDLK_1, '1'}, {EDACT_PUTROBOT2,
+        SDLK_2, '2'}, {EDACT_PUTROBOT3, SDLK_3, '3'}, {EDACT_PUTROBOT4, SDLK_4, '4'}, {
+        EDACT_PUTROBOT5, SDLK_5, '5'}, {EDACT_PUTROBOT6, SDLK_6, '6'}, {EDACT_PUTROBOT7,
+        SDLK_7, '7'}, {EDACT_TOGGLEROBOT, SDLK_8, '8'}, {EDACT_PUTLIFT, SDLK_c, 'c'}, {
+        EDACT_PUTLIFTMID, SDLK_d, 'd'}, {EDACT_PUTLIFTTOP, SDLK_e, 'e'}, {
+        EDACT_PUTSTICK, SDLK_q, 'q'}, {EDACT_PUTBOX, SDLK_a, 'a'}, {EDACT_CHECKTOWER,
+        SDLK_z, 'z'}, {EDACT_LOADTOWER, SDLK_l, 'l'}, {EDACT_SAVETOWER, SDLK_o, 'o'}, {
+        EDACT_TESTTOWER, SDLK_p, 'p'}, {EDACT_SETTOWERCOLOR, SDLK_v, 'v'}, {
+        EDACT_SETTIME, SDLK_b, 'b'}, {EDACT_INCTIME, SDLK_n, 'n'}, {EDACT_DECTIME,
+        SDLK_n, 'N', KMOD_SHIFT}, {EDACT_CREATEMISSION, SDLK_m, 'm'}, {EDACT_NAMETOWER,
+        SDLK_t, 't'}, {EDACT_REC_DEMO, SDLK_F10}, {EDACT_PLAY_DEMO, SDLK_F11}, {
+        EDACT_ADJHEIGHT, SDLK_F8}};
 
 static int bg_row;
 static int bg_col;
@@ -146,9 +146,9 @@ static bool bg_darken = false;
 static void editor_background_proc(void) {
     scr_drawedit(bg_row * 4, bg_col * 8, false);
     if (bg_darken)
-        scr_darkenscreen();
+    scr_darkenscreen();
     if (bg_text)
-        scr_writetext_center(5, bg_text);
+    scr_writetext_center(5, bg_text);
 }
 
 static const char *editor_background_menu_proc(_menusystem *ms) {
@@ -186,7 +186,7 @@ static bool edit_towercolor(int row, int col) {
     int oldc[3], newc[3], curc[3];
     SDLKey c;
 
-    const char *colorname[] = { _("Red"), _("Green"), _("Blue") };
+    const char *colorname[] = {_("Red"), _("Green"), _("Blue")};
 
     curc[0] = newc[0] = oldc[0] = lev_towercol_red();
     curc[1] = newc[1] = oldc[1] = lev_towercol_green();
@@ -211,14 +211,14 @@ static bool edit_towercolor(int row, int col) {
             }
             scr_putbar((SCREEN_WIDTH / 2) - 128 + tmpcol, z, 255 - tmpcol, FONT_HEIGHT, 0, 0, 0, 255);
             switch (tmp) {
-            default:
-            case 0:
+                default:
+                case 0:
                 scr_putbar((SCREEN_WIDTH / 2) - 128, z, tmpcol, FONT_HEIGHT, tmpcol / 3 + 64, 0, 0, 255);
                 break;
-            case 1:
+                case 1:
                 scr_putbar((SCREEN_WIDTH / 2) - 128, z, tmpcol, FONT_HEIGHT, 0, tmpcol / 3 + 64, 0, 255);
                 break;
-            case 2:
+                case 2:
                 scr_putbar((SCREEN_WIDTH / 2) - 128, z, tmpcol, FONT_HEIGHT, 0, 0, tmpcol / 3 + 64, 255);
                 break;
             }
@@ -233,76 +233,76 @@ static bool edit_towercolor(int row, int col) {
         c = key_sdlkey();
 
         switch (c) {
-        case SDLK_UP:
+            case SDLK_UP:
             if (activecol > 0)
-                activecol--;
+            activecol--;
             break;
-        case SDLK_DOWN:
+            case SDLK_DOWN:
             if (activecol < 2)
-                activecol++;
+            activecol++;
             break;
-        case SDLK_LEFT:
+            case SDLK_LEFT:
             if (newc[activecol] > 0)
-                newc[activecol]--;
+            newc[activecol]--;
             break;
-        case SDLK_RIGHT:
+            case SDLK_RIGHT:
             if (newc[activecol] < 255)
-                newc[activecol]++;
+            newc[activecol]++;
             break;
-        case SDLK_PAGEDOWN:
+            case SDLK_PAGEDOWN:
             if (newc[activecol] > 10)
-                newc[activecol] = newc[activecol] - 10;
+            newc[activecol] = newc[activecol] - 10;
             else
-                newc[activecol] = 0;
+            newc[activecol] = 0;
             break;
-        case SDLK_PAGEUP:
+            case SDLK_PAGEUP:
             if (newc[activecol] < 245)
-                newc[activecol] = newc[activecol] + 10;
+            newc[activecol] = newc[activecol] + 10;
             else
-                newc[activecol] = 255;
+            newc[activecol] = 255;
             break;
-        case SDLK_0:
-        case SDLK_1:
-        case SDLK_2:
-        case SDLK_3:
-        case SDLK_4:
-        case SDLK_5:
-        case SDLK_6:
-        case SDLK_7:
-        case SDLK_8:
-        case SDLK_9:
+            case SDLK_0:
+            case SDLK_1:
+            case SDLK_2:
+            case SDLK_3:
+            case SDLK_4:
+            case SDLK_5:
+            case SDLK_6:
+            case SDLK_7:
+            case SDLK_8:
+            case SDLK_9:
             newc[activecol] = (int) ((c - '0') * 256) / 10;
             break;
-        case SDLK_PERIOD:
+            case SDLK_PERIOD:
             for (tmp = 0; tmp < 3; tmp++)
-                newc[tmp] = rand() % 256;
+            newc[tmp] = rand() % 256;
             break;
-        case SDLK_r:
+            case SDLK_r:
             activecol = 0;
             break;
-        case SDLK_g:
+            case SDLK_g:
             activecol = 1;
             break;
-        case SDLK_b:
+            case SDLK_b:
             activecol = 2;
             break;
-        case SDLK_ESCAPE:
+            case SDLK_ESCAPE:
             ende = true;
             oldpal = true;
             break;
-        case SDLK_SPACE:
-        case SDLK_RETURN:
+            case SDLK_SPACE:
+            case SDLK_RETURN:
             ende = true;
             break;
-        default:
+            default:
             break;
         }
 
         if ((newc[0] != curc[0]) || (newc[1] != curc[1]) || (newc[2] != curc[2]) || oldpal) {
             if (oldpal)
-                lev_set_towercol(oldc[0], oldc[1], oldc[2]);
+            lev_set_towercol(oldc[0], oldc[1], oldc[2]);
             else
-                lev_set_towercol(newc[0], newc[1], newc[2]);
+            lev_set_towercol(newc[0], newc[1], newc[2]);
 
             scr_settowercolor(lev_towercol_red(), lev_towercol_green(), lev_towercol_blue());
 
@@ -311,7 +311,7 @@ static bool edit_towercolor(int row, int col) {
             curc[2] = newc[2];
         }
 
-    } while (!ende);
+    }while (!ende);
 
     return (!oldpal && ((curc[0] != oldc[0]) || (curc[1] != oldc[1]) || (curc[2] != oldc[2])));
 }
@@ -321,15 +321,15 @@ static void edit_checktower(int &row, int &col) {
     r = row;
     c = -col;
 
-    static const char *problemstr[NUM_TPROBLEMS] = { _("No problems found"), _("No starting step"),
-            _("Start is blocked"), _("Unknown block"), _("No elevator stop"),
-            _("Elevator is blocked"), _("No opposing doorway"), _("Broken doorway"),
-            _("No exit"), _("Exit is unreachable"), _("Not enough time"),
-            _("Tower is too short"), _("Tower has no name") };
+    static const char *problemstr[NUM_TPROBLEMS] = {_("No problems found"), _("No starting step"),
+        _("Start is blocked"), _("Unknown block"), _("No elevator stop"),
+        _("Elevator is blocked"), _("No opposing doorway"), _("Broken doorway"),
+        _("No exit"), _("Exit is unreachable"), _("Not enough time"),
+        _("Tower is too short"), _("Tower has no name")};
 
     pr = lev_is_consistent(r, c);
     if ((r >= lev_towerrows()) && (lev_towerrows() > 0))
-        r = lev_towerrows() - 1;
+    r = lev_towerrows() - 1;
     bg_row = r;
     bg_col = -c;
 
@@ -347,11 +347,11 @@ char *keymod2str(Uint16 kmod) {
     buf[0] = '\0';
     if (kmod != KMOD_NONE) {
         if ((kmod & KMOD_LSHIFT) || (kmod & KMOD_RSHIFT))
-            snprintf(buf, 256, "shift+");
+        snprintf(buf, 256, "shift+");
         if ((kmod & KMOD_LCTRL) || (kmod & KMOD_RCTRL))
-            snprintf(&buf[strlen(buf)], 256 - strlen(buf), "ctrl+");
+        snprintf(&buf[strlen(buf)], 256 - strlen(buf), "ctrl+");
         if ((kmod & KMOD_LALT) || (kmod & KMOD_RALT))
-            snprintf(&buf[strlen(buf)], 256 - strlen(buf), "alt+");
+        snprintf(&buf[strlen(buf)], 256 - strlen(buf), "alt+");
     }
     return buf;
 }
@@ -368,10 +368,10 @@ static void createMission(void) {
     char missionname[25];
     missionname[0] = 0;
     while (!men_input(missionname, 15))
-        ;
+    ;
 
     if (!missionname[0])
-        return;
+    return;
 
     if (!lev_mission_new(missionname)) {
 
@@ -387,7 +387,7 @@ static void createMission(void) {
 
         do {
             inp = key_chartyped();
-        } while (!inp);
+        }while (!inp);
 
         return;
     }
@@ -407,10 +407,10 @@ static void createMission(void) {
 
         towername[0] = 0;
         while (!men_input(towername, 25))
-            ;
+        ;
 
         if (!towername[0])
-            break;
+        break;
 
         lev_mission_addtower(towername);
 
@@ -429,7 +429,7 @@ static void le_showkeyhelp(int row, int col) {
     char tabbuf1[6], tabbuf2[6];
 
     if (!ts)
-        return;
+    return;
 
     for (k = 0; k < SIZE(_ed_keys); k++) {
         char knam[256];
@@ -437,16 +437,16 @@ static void le_showkeyhelp(int row, int col) {
         int l = scr_textlength(knam);
 
         if (l > maxkeylen)
-            maxkeylen = l;
+        maxkeylen = l;
     }
 
     snprintf(tabbuf1, 6, "%3i", maxkeylen + FONTWID);
     if (tabbuf1[0] < '0')
-        tabbuf1[0] = '0';
+    tabbuf1[0] = '0';
     if (tabbuf1[1] < '0')
-        tabbuf1[1] = '0';
+    tabbuf1[1] = '0';
     if (tabbuf1[2] < '0')
-        tabbuf1[2] = '0';
+    tabbuf1[2] = '0';
 
     for (k = 0; k < SIZE(_ed_keys); k++) {
         char buf[256];
@@ -457,11 +457,11 @@ static void le_showkeyhelp(int row, int col) {
 
         snprintf(tabbuf2, 256, "%3i", maxkeylen - scr_textlength(knam));
         if (tabbuf2[0] < '0')
-            tabbuf2[0] = '0';
+        tabbuf2[0] = '0';
         if (tabbuf2[1] < '0')
-            tabbuf2[1] = '0';
+        tabbuf2[1] = '0';
         if (tabbuf2[2] < '0')
-            tabbuf2[2] = '0';
+        tabbuf2[2] = '0';
 
         snprintf(tmpb, 256, "~T%s%%s~T%s%%s", tabbuf2, tabbuf1);
         snprintf(buf, 256, tmpb, knam, _(_ed_key_actions[_ed_keys[k].action]));
@@ -480,11 +480,11 @@ static bool cursor_moved = false;
 
 void le_tower_cut(int row, int col) {
     if (cursor_moved)
-        clipboard_rows = 0;
+    clipboard_rows = 0;
 
     if (clipboard_rows < 255) {
         for (int i = 0; i < 16; i++)
-            clipboard_tower[clipboard_rows][i] = lev_tower(row, (col + i) % 16);
+        clipboard_tower[clipboard_rows][i] = lev_tower(row, (col + i) % 16);
         lev_deleterow(row);
         clipboard_rows++;
     }
@@ -501,7 +501,7 @@ void le_tower_paste(int row, int col) {
             }
         }
     } else
-        lev_insertrow(row);
+    lev_insertrow(row);
 
     cursor_moved = false;
 }
@@ -521,9 +521,9 @@ void le_edit(void) {
     int pagesize;
 
     if (config.editor_towerstarthei() < 0)
-        towerstarthei = TOWERSTARTHEI + (rand() % abs(config.editor_towerstarthei()));
+    towerstarthei = TOWERSTARTHEI + (rand() % abs(config.editor_towerstarthei()));
     else
-        towerstarthei = TOWERSTARTHEI + config.editor_towerstarthei();
+    towerstarthei = TOWERSTARTHEI + config.editor_towerstarthei();
 
     lev_new(towerstarthei % 256);
 
@@ -531,7 +531,7 @@ void le_edit(void) {
         config.editor_towerpagesize(TOWERPAGESIZE);
         pagesize = TOWERPAGESIZE;
     } else
-        pagesize = config.editor_towerpagesize();
+    pagesize = config.editor_towerpagesize();
 
     set_men_bgproc(editor_background_proc);
 
@@ -570,166 +570,166 @@ void le_edit(void) {
         inp = key_sdlkey();
         keymod = (SDL_GetModState() & ~(KMOD_NUM | KMOD_CAPS | KMOD_MODE));
         if (keymod & KMOD_SHIFT)
-            keymod |= KMOD_SHIFT;
+        keymod |= KMOD_SHIFT;
         if (keymod & KMOD_CTRL)
-            keymod |= KMOD_CTRL;
+        keymod |= KMOD_CTRL;
         if (keymod & KMOD_ALT)
-            keymod |= KMOD_ALT;
+        keymod |= KMOD_ALT;
         if (keymod & KMOD_META)
-            keymod |= KMOD_META;
+        keymod |= KMOD_META;
 
         int k, action = -1;
 
         if (inp_char != 0)
-            for (k = 0; k < SIZE(_ed_keys); k++)
-                if (_ed_keys[k].character == inp_char) {
-                    action = _ed_keys[k].action;
-                    break;
-                }
+        for (k = 0; k < SIZE(_ed_keys); k++)
+        if (_ed_keys[k].character == inp_char) {
+            action = _ed_keys[k].action;
+            break;
+        }
 
         if ((inp != SDLK_UNKNOWN) && (action == -1))
-            for (k = 0; k < SIZE(_ed_keys); k++)
-                if (_ed_keys[k].key == inp && _ed_keys[k].mod == keymod) {
-                    action = _ed_keys[k].action;
-                    break;
-                }
+        for (k = 0; k < SIZE(_ed_keys); k++)
+        if (_ed_keys[k].key == inp && _ed_keys[k].mod == keymod) {
+            action = _ed_keys[k].action;
+            break;
+        }
 
         if ((action != -1) || (inp_char != 0) || (inp != SDLK_UNKNOWN))
-            debugprintf(3, _("key: %s, char: %c, action: %i\n"), SDL_GetKeyName(inp), inp_char,
-                    action);
+        debugprintf(3, _("key: %s, char: %c, action: %i\n"), SDL_GetKeyName(inp), inp_char,
+                action);
 
         if (action != -1) {
 
             switch (action) {
-            case EDACT_QUIT:
+                case EDACT_QUIT:
                 if (changed)
-                    ende = really_quit(row, col);
+                ende = really_quit(row, col);
                 else
-                    ende = true;
+                ende = true;
                 break;
-            case EDACT_MOVEUP:
+                case EDACT_MOVEUP:
                 if (row + 1 < lev_towerrows()) {
                     row++;
                     cursor_moved = true;
                 }
                 break;
-            case EDACT_MOVEDOWN:
+                case EDACT_MOVEDOWN:
                 if (row > 0) {
                     row--;
                     cursor_moved = true;
                 }
                 break;
-            case EDACT_MOVELEFT:
+                case EDACT_MOVELEFT:
                 col++;
                 cursor_moved = true;
                 break;
-            case EDACT_MOVERIGHT:
+                case EDACT_MOVERIGHT:
                 col--;
                 cursor_moved = true;
                 break;
-            case EDACT_ROT180:
+                case EDACT_ROT180:
                 col += 8;
                 cursor_moved = true;
                 break;
-            case EDACT_INSROW:
+                case EDACT_INSROW:
                 lev_insertrow(row);
                 changed = true;
                 break;
-            case EDACT_DELROW:
+                case EDACT_DELROW:
                 lev_deleterow(row);
                 changed = true;
                 break;
-            case EDACT_PASTEROW:
+                case EDACT_PASTEROW:
                 le_tower_paste(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_CUTROW:
+                case EDACT_CUTROW:
                 le_tower_cut(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTSPACE:
+                case EDACT_PUTSPACE:
                 lev_putspace(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTSTEP:
+                case EDACT_PUTSTEP:
                 lev_putstep(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTVANISHER:
+                case EDACT_PUTVANISHER:
                 lev_putvanishingstep(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTSLIDERLEFT:
+                case EDACT_PUTSLIDERLEFT:
                 lev_putslidingstep_left(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTSLIDERRIGHT:
+                case EDACT_PUTSLIDERRIGHT:
                 lev_putslidingstep_right(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTDOOR:
+                case EDACT_PUTDOOR:
                 lev_putdoor(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTGOAL:
+                case EDACT_PUTGOAL:
                 lev_puttarget(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_CHECKTOWER:
+                case EDACT_CHECKTOWER:
                 edit_checktower(row, col);
                 break;
-            case EDACT_PUTROBOT1:
+                case EDACT_PUTROBOT1:
                 lev_putrobot1(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTROBOT2:
+                case EDACT_PUTROBOT2:
                 lev_putrobot2(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTROBOT3:
+                case EDACT_PUTROBOT3:
                 lev_putrobot3(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTROBOT4:
+                case EDACT_PUTROBOT4:
                 lev_putrobot4(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTROBOT5:
+                case EDACT_PUTROBOT5:
                 lev_putrobot5(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTROBOT6:
+                case EDACT_PUTROBOT6:
                 lev_putrobot6(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTROBOT7:
+                case EDACT_PUTROBOT7:
                 lev_putrobot7(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTLIFTTOP:
+                case EDACT_PUTLIFTTOP:
                 lev_puttopstation(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTLIFTMID:
+                case EDACT_PUTLIFTMID:
                 lev_putmiddlestation(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTLIFT:
+                case EDACT_PUTLIFT:
                 lev_putelevator(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTSTICK:
+                case EDACT_PUTSTICK:
                 lev_putstick(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_PUTBOX:
+                case EDACT_PUTBOX:
                 lev_putbox(row, -col & 0xf);
                 changed = true;
                 break;
-            case EDACT_LOADTOWER:
+                case EDACT_LOADTOWER:
                 if (changed)
-                    if (!really_load(row, col))
-                        break;
+                if (!really_load(row, col))
+                break;
                 bg_text = _("Load tower:");
                 bg_darken = true;
                 key_wait_for_none(editor_background_proc);
@@ -738,7 +738,7 @@ void le_edit(void) {
                     strncpy(name, config.editor_towername(), TOWERNAMELEN);
                     name[TOWERNAMELEN] = 0;
                     while (!men_input(name, TOWERNAMELEN))
-                        ;
+                    ;
                     config.editor_towername(name);
                 }
                 bg_text = NULL;
@@ -749,9 +749,9 @@ void le_edit(void) {
                     changed = false;
                 }
                 if (row >= lev_towerrows())
-                    row = lev_towerrows() - 1;
+                row = lev_towerrows() - 1;
                 break;
-            case EDACT_SAVETOWER:
+                case EDACT_SAVETOWER:
                 bg_text = _("Save tower:");
                 bg_darken = true;
                 key_wait_for_none(editor_background_proc);
@@ -760,7 +760,7 @@ void le_edit(void) {
                     strncpy(name, config.editor_towername(), TOWERNAMELEN);
                     name[TOWERNAMELEN] = 0;
                     while (!men_input(name, TOWERNAMELEN))
-                        ;
+                    ;
                     config.editor_towername(name);
                 }
                 bg_text = NULL;
@@ -768,37 +768,14 @@ void le_edit(void) {
                 changed = false;
                 break;
 
-            case EDACT_REC_DEMO: {
-                Uint8 dummy1;
-                Uint16 dummy2;
-                unsigned char *p;
-                int demolen = -1;
-                Uint16 *demobuf = NULL;
-                int speed = dcl_update_speed(config.game_speed());
-                lev_set_towerdemo(0, NULL);
-                lev_save(p);
-                gam_newgame();
-                rob_initialize();
-                snb_init();
-                ttsounds::instance()->startsound(SND_WATER);
-                gam_towergame(dummy1, dummy2, demolen, &demobuf);
-                ttsounds::instance()->stopsound(SND_WATER);
-                lev_restore(p);
-                lev_set_towerdemo(demolen, demobuf);
-                key_readkey();
-                set_men_bgproc(editor_background_proc);
-                dcl_update_speed(speed);
-            }
-                break;
-            case EDACT_PLAY_DEMO: {
-                int demolen = 0;
-                Uint16 *demobuf = NULL;
-                lev_get_towerdemo(demolen, demobuf);
-                if (demolen > 0) {
+                case EDACT_REC_DEMO: {
                     Uint8 dummy1;
                     Uint16 dummy2;
                     unsigned char *p;
+                    int demolen = -1;
+                    Uint16 *demobuf = NULL;
                     int speed = dcl_update_speed(config.game_speed());
+                    lev_set_towerdemo(0, NULL);
                     lev_save(p);
                     gam_newgame();
                     rob_initialize();
@@ -807,173 +784,196 @@ void le_edit(void) {
                     gam_towergame(dummy1, dummy2, demolen, &demobuf);
                     ttsounds::instance()->stopsound(SND_WATER);
                     lev_restore(p);
+                    lev_set_towerdemo(demolen, demobuf);
                     key_readkey();
                     set_men_bgproc(editor_background_proc);
                     dcl_update_speed(speed);
-                } else {
-                    bg_darken = true;
-                    men_info(_("No recorded demo"), 150, 2);
                 }
-            }
                 break;
-            case EDACT_TESTTOWER: {
-                Uint8 dummy1;
-                Uint16 dummy2;
-                int dummy3 = -2;
-                int speed = dcl_update_speed(config.game_speed());
-                Uint16 *dummybuf = NULL;
-                unsigned char *p;
-                lev_save(p);
-                gam_newgame();
-                rob_initialize();
-                snb_init();
-                ttsounds::instance()->startsound(SND_WATER);
-                gam_towergame(dummy1, dummy2, dummy3, &dummybuf);
-                ttsounds::instance()->stopsound(SND_WATER);
-                lev_restore(p);
-                key_readkey();
-                set_men_bgproc(editor_background_proc);
-                dcl_update_speed(speed);
-            }
+                case EDACT_PLAY_DEMO: {
+                    int demolen = 0;
+                    Uint16 *demobuf = NULL;
+                    lev_get_towerdemo(demolen, demobuf);
+                    if (demolen > 0) {
+                        Uint8 dummy1;
+                        Uint16 dummy2;
+                        unsigned char *p;
+                        int speed = dcl_update_speed(config.game_speed());
+                        lev_save(p);
+                        gam_newgame();
+                        rob_initialize();
+                        snb_init();
+                        ttsounds::instance()->startsound(SND_WATER);
+                        gam_towergame(dummy1, dummy2, demolen, &demobuf);
+                        ttsounds::instance()->stopsound(SND_WATER);
+                        lev_restore(p);
+                        key_readkey();
+                        set_men_bgproc(editor_background_proc);
+                        dcl_update_speed(speed);
+                    } else {
+                        bg_darken = true;
+                        men_info(_("No recorded demo"), 150, 2);
+                    }
+                }
                 break;
-            case EDACT_SETTOWERCOLOR:
+                case EDACT_TESTTOWER: {
+                    Uint8 dummy1;
+                    Uint16 dummy2;
+                    int dummy3 = -2;
+                    int speed = dcl_update_speed(config.game_speed());
+                    Uint16 *dummybuf = NULL;
+                    unsigned char *p;
+                    lev_save(p);
+                    gam_newgame();
+                    rob_initialize();
+                    snb_init();
+                    ttsounds::instance()->startsound(SND_WATER);
+                    gam_towergame(dummy1, dummy2, dummy3, &dummybuf);
+                    ttsounds::instance()->stopsound(SND_WATER);
+                    lev_restore(p);
+                    key_readkey();
+                    set_men_bgproc(editor_background_proc);
+                    dcl_update_speed(speed);
+                }
+                break;
+                case EDACT_SETTOWERCOLOR:
                 changed |= edit_towercolor(row, col);
                 break;
-            case EDACT_INCTIME:
+                case EDACT_INCTIME:
                 if (tstep <= 0)
-                    tstep = 1;
+                tstep = 1;
                 lev_set_towertime(lev_towertime() + tstep);
                 if (tstep < 10)
-                    tstep++;
+                tstep++;
                 changed = true;
                 break;
-            case EDACT_DECTIME:
+                case EDACT_DECTIME:
                 if (tstep >= 0)
-                    tstep = -1;
+                tstep = -1;
                 lev_set_towertime(lev_towertime() + tstep);
                 if (tstep > -10)
-                    tstep--;
+                tstep--;
                 changed = true;
                 break;
-            case EDACT_SETTIME: {
-                char buf[64];
+                case EDACT_SETTIME: {
+                    char buf[64];
 
-                snprintf(buf, 64, "%d", lev_towertime());
+                    snprintf(buf, 64, "%d", lev_towertime());
 
-                bg_text = _("Enter tower time:");
-                bg_darken = true;
-                key_wait_for_none(editor_background_proc);
-                while (!men_input((char *) buf, 15, -1, -1, "0123456789"))
+                    bg_text = _("Enter tower time:");
+                    bg_darken = true;
+                    key_wait_for_none(editor_background_proc);
+                    while (!men_input((char *) buf, 15, -1, -1, "0123456789"))
                     ;
-                bg_text = NULL;
+                    bg_text = NULL;
 
-                lev_set_towertime(atoi(buf));
-            }
+                    lev_set_towertime(atoi(buf));
+                }
                 break;
-            case EDACT_ADJHEIGHT: {
-                char buf[64];
-                int i;
+                case EDACT_ADJHEIGHT: {
+                    char buf[64];
+                    int i;
 
-                snprintf(buf, 64, "0");
+                    snprintf(buf, 64, "0");
 
-                bg_text = _("Adjust tower height:");
-                bg_darken = true;
-                key_wait_for_none(editor_background_proc);
-                while (!men_input((char *) buf, 15, -1, -1, "-+0123456789"))
+                    bg_text = _("Adjust tower height:");
+                    bg_darken = true;
+                    key_wait_for_none(editor_background_proc);
+                    while (!men_input((char *) buf, 15, -1, -1, "-+0123456789"))
                     ;
-                bg_text = NULL;
+                    bg_text = NULL;
 
-                i = atoi(buf);
-                if ((i > 0) && (buf[0] == '+')) {
-                    while (i-- > 0)
+                    i = atoi(buf);
+                    if ((i > 0) && (buf[0] == '+')) {
+                        while (i-- > 0)
                         lev_insertrow(row);
-                } else if (i < 0) {
-                    i = abs(i);
-                    while (i-- > 0)
+                    } else if (i < 0) {
+                        i = abs(i);
+                        while (i-- > 0)
                         lev_deleterow(row);
-                } else if (i > 0) {
-                    if (i < lev_towerrows()) {
-                        while ((i > 0) && (i < lev_towerrows())) {
-                            lev_deleterow(row);
-                            if ((row > 0) && (row >= lev_towerrows()))
+                    } else if (i > 0) {
+                        if (i < lev_towerrows()) {
+                            while ((i > 0) && (i < lev_towerrows())) {
+                                lev_deleterow(row);
+                                if ((row > 0) && (row >= lev_towerrows()))
                                 row--;
-                        }
-                    } else {
-                        while ((i < 255) && (i > lev_towerrows())) {
-                            lev_insertrow(row);
+                            }
+                        } else {
+                            while ((i < 255) && (i > lev_towerrows())) {
+                                lev_insertrow(row);
+                            }
                         }
                     }
                 }
-            }
                 break;
-            case EDACT_CREATEMISSION:
+                case EDACT_CREATEMISSION:
                 createMission();
                 break;
-            case EDACT_MOVEPAGEUP:
+                case EDACT_MOVEPAGEUP:
                 if (row + pagesize < lev_towerrows())
-                    row += pagesize;
+                row += pagesize;
                 else
-                    row = lev_towerrows() - 1;
+                row = lev_towerrows() - 1;
                 break;
-            case EDACT_MOVEPAGEDOWN:
+                case EDACT_MOVEPAGEDOWN:
                 if (row > pagesize)
-                    row -= pagesize;
+                row -= pagesize;
                 else
-                    row = 0;
+                row = 0;
                 break;
-            case EDACT_GOTOSTART:
+                case EDACT_GOTOSTART:
                 col = 0;
                 row = 1;
                 break;
-            case EDACT_GOTOEND: {
-                int trow = row;
-                int tcol = col;
-                int coladj = 0;
-                int rowadj = 0;
-                bool ende = false;
-                bool skip = lev_is_targetdoor(trow, -tcol & 0xf);
+                case EDACT_GOTOEND: {
+                    int trow = row;
+                    int tcol = col;
+                    int coladj = 0;
+                    int rowadj = 0;
+                    bool ende = false;
+                    bool skip = lev_is_targetdoor(trow, -tcol & 0xf);
 
-                do {
-                    tcol++;
-                    coladj++;
+                    do {
+                        tcol++;
+                        coladj++;
 
-                    if (coladj >= 16) {
-                        tcol = col;
-                        trow = (trow + 1) % lev_towerrows();
-                        coladj = 0;
-                        rowadj++;
+                        if (coladj >= 16) {
+                            tcol = col;
+                            trow = (trow + 1) % lev_towerrows();
+                            coladj = 0;
+                            rowadj++;
+                        }
+
+                        if (rowadj >= lev_towerrows())
+                        ende = true;
+                        else if (!skip && lev_is_targetdoor(trow, -tcol & 0xf)
+                                && lev_is_door_upperend(trow, -tcol & 0xf))
+                        ende = true;
+                        skip = false;
+                    }while (!ende);
+
+                    if (rowadj < lev_towerrows()) {
+                        row = trow;
+                        col = tcol;
                     }
-
-                    if (rowadj >= lev_towerrows())
-                        ende = true;
-                    else if (!skip && lev_is_targetdoor(trow, -tcol & 0xf)
-                            && lev_is_door_upperend(trow, -tcol & 0xf))
-                        ende = true;
-                    skip = false;
-                } while (!ende);
-
-                if (rowadj < lev_towerrows()) {
-                    row = trow;
-                    col = tcol;
                 }
-            }
                 break;
-            case EDACT_NAMETOWER:
+                case EDACT_NAMETOWER:
                 bg_text = _("Name the tower:");
                 bg_darken = true;
                 key_wait_for_none(editor_background_proc);
                 while (!men_input(lev_towername(), TOWERNAMELEN))
-                    ;
+                ;
                 bg_text = NULL;
                 changed = true;
                 break;
-            case EDACT_SHOWKEYHELP:
+                case EDACT_SHOWKEYHELP:
                 le_showkeyhelp(row, col);
                 break;
-            case EDACT_TOGGLEROBOT:
+                case EDACT_TOGGLEROBOT:
                 lev_set_robotnr((lev_robotnr() + 1) % scr_numrobots());
                 break;
-            default:
+                default:
                 break;
             }
         }

@@ -5,3 +5,4 @@ client-*.csj
 BlackBerrySignCertificates.zip
 BlackBerrySignCertificates/*
 assets/.assets.index
+/Simulator

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="com.qnx.qcc.configuration.exe.debug.561979833">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.exe.debug.561979833" moduleId="org.eclipse.cdt.core.settings" name="Device-Debug">
@@ -9,10 +7,10 @@
 					<externalSetting/>
 				</externalSettings>
 				<extensions>
-					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="com.qnx.tools.ide.qde.core.QDELinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
@@ -27,7 +25,6 @@
 								<option id="com.qnx.qcc.option.compile.debug.1590442459" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.includePath.398649915" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/rimeula/public}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL_mixer/src}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.security.1048306084" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
@@ -52,30 +49,24 @@
 								<option id="com.qnx.qcc.option.linker.debug.2051729390" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.langcpp.199073759" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.1381368263" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/rimeula/arm/a-le-v7-g}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL/arm/a-le-v7-g}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cJSON/arm/a-le-v7-g}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL_mixer/arm/a-le-v7-g}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/tco/arm/a-le-v7-g}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/modplug/arm/a-le-v7-g}&quot;"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.security.1240403973" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.1237474421" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
-									<listOptionValue builtIn="false" value="rimeula_g"/>
 									<listOptionValue builtIn="false" value="SDL_mixer_g"/>
 									<listOptionValue builtIn="false" value="SDL_g"/>
-									<listOptionValue builtIn="false" value="tco_g"/>
 									<listOptionValue builtIn="false" value="asound"/>
-									<listOptionValue builtIn="false" value="cJSON_g"/>
 									<listOptionValue builtIn="false" value="bps"/>
 									<listOptionValue builtIn="false" value="screen"/>
 									<listOptionValue builtIn="false" value="z"/>
 									<listOptionValue builtIn="false" value="m"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="EGL"/>
-									<listOptionValue builtIn="false" value="png"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="png16"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="modplug_g"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.mudflapth.857415101" name="Build for Mudflap (-fmudflapth)" superClass="com.qnx.qcc.option.linker.mudflapth" value="false" valueType="boolean"/>
@@ -99,10 +90,10 @@
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.exe.release.1914504020" moduleId="org.eclipse.cdt.core.settings" name="Device-Release">
 				<externalSettings/>
 				<extensions>
-					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="com.qnx.tools.ide.qde.core.QDELinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
@@ -116,7 +107,6 @@
 								<option id="com.qnx.qcc.option.compiler.optlevel.1738189118" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.2" valueType="enumerated"/>
 								<option id="com.qnx.qcc.option.compiler.includePath.136288689" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/rimeula/public}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL_mixer/src}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.compiler.security.703389255" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="false" valueType="boolean"/>
@@ -135,7 +125,7 @@
 							<tool id="com.qnx.qcc.tool.assembler.219708589" name="QCC Assembler" superClass="com.qnx.qcc.tool.assembler">
 								<option id="com.qnx.qcc.option.assembler.includePath.811506507" name="Include Directories (-I)" superClass="com.qnx.qcc.option.assembler.includePath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${QNX_TARGET}/../target-override/usr/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL12/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL/include}&quot;"/>
 								</option>
 								<option id="com.qnx.qcc.option.assembler.defines.405639512" name="Defines (-D)" superClass="com.qnx.qcc.option.assembler.defines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
@@ -147,10 +137,7 @@
 								<option id="com.qnx.qcc.option.linker.langcpp.2020859382" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraryPaths.291122605" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL/arm/a-le-v7}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/cJSON/arm/a-le-v7}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/rimeula/arm/a-le-v7}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL_mixer/arm/a-le-v7}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/tco/arm/a-le-v7}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/modplug/arm/a-le-v7}&quot;"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
@@ -158,11 +145,8 @@
 								<option id="com.qnx.qcc.option.linker.pie.793579779" name="Position Independent Executable (-pie)" superClass="com.qnx.qcc.option.linker.pie" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.security.1621061525" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="false" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.linker.libraries.829292097" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
-									<listOptionValue builtIn="false" value="rimeula"/>
 									<listOptionValue builtIn="false" value="SDL_mixer"/>
 									<listOptionValue builtIn="false" value="SDL"/>
-									<listOptionValue builtIn="false" value="tco"/>
-									<listOptionValue builtIn="false" value="cJSON"/>
 									<listOptionValue builtIn="false" value="asound"/>
 									<listOptionValue builtIn="false" value="bps"/>
 									<listOptionValue builtIn="false" value="screen"/>
@@ -170,8 +154,8 @@
 									<listOptionValue builtIn="false" value="m"/>
 									<listOptionValue builtIn="false" value="GLESv2"/>
 									<listOptionValue builtIn="false" value="EGL"/>
-									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="modplug"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="png16"/>
 								</option>
 								<option id="com.qnx.qcc.option.linker.warningLevel.490380964" name="Warning Level (-w)" superClass="com.qnx.qcc.option.linker.warningLevel" value="com.qnx.qcc.option.warningLevel.4" valueType="enumerated"/>
 								<inputType id="com.qnx.qcc.inputType.linker.261308636" superClass="com.qnx.qcc.inputType.linker">
@@ -189,6 +173,93 @@
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
+		<cconfiguration id="com.qnx.qcc.configuration.exe.debug.1126421720.1827759636.1298597312">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.qnx.qcc.configuration.exe.debug.1126421720.1827759636.1298597312" moduleId="org.eclipse.cdt.core.settings" name="Simulator">
+				<externalSettings/>
+				<extensions>
+					<extension id="com.qnx.tools.ide.qde.core.QDELinkerErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.qnx.tools.ide.qde.core.QDEBynaryParser" point="org.eclipse.cdt.core.BinaryParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" description="" id="com.qnx.qcc.configuration.exe.debug.1126421720.1827759636.1298597312" name="Simulator" parent="com.qnx.qcc.configuration.exe.debug">
+					<folderInfo id="com.qnx.qcc.configuration.exe.debug.1126421720.1827759636.1298597312." name="/" resourcePath="">
+						<toolChain id="com.qnx.qcc.toolChain.224186588" name="QNX QCC" superClass="com.qnx.qcc.toolChain">
+							<option id="com.qnx.qcc.option.cpu.346434472" name="Target CPU:" superClass="com.qnx.qcc.option.cpu" value="com.qnx.qcc.option.gen.cpu.x86" valueType="enumerated"/>
+							<targetPlatform archList="all" binaryParser="com.qnx.tools.ide.qde.core.QDEBynaryParser" id="com.qnx.qcc.targetPlatform.739815271" osList="all" superClass="com.qnx.qcc.targetPlatform"/>
+							<builder buildPath="${workspace_loc:/opentyrian/Device-Debug}" id="com.qnx.nto.1133333635" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="com.qnx.nto"/>
+							<tool id="com.qnx.qcc.tool.compiler.79668743" name="QCC Compiler" superClass="com.qnx.qcc.tool.compiler">
+								<option id="com.qnx.qcc.option.compiler.optlevel.38854460" name="Optimization Level" superClass="com.qnx.qcc.option.compiler.optlevel" value="com.qnx.qcc.option.compiler.optlevel.0" valueType="enumerated"/>
+								<option id="com.qnx.qcc.option.compile.debug.2099945802" name="Debug (-g)" superClass="com.qnx.qcc.option.compile.debug" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.includePath.639580906" name="Include Directories (-I)" superClass="com.qnx.qcc.option.compiler.includePath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL_mixer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
+									<listOptionValue builtIn="false" value="&quot;E:\bbndk\target_10_3_1_995\qnx6\usr\include\cpp\c&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;E:\bbndk\target_10_3_1_995\qnx6\usr\include\cpp&quot;"/>
+								</option>
+								<option id="com.qnx.qcc.option.compiler.security.746698979" name="Enhanced Security (-fstack-protector-strong)" superClass="com.qnx.qcc.option.compiler.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.compiler.defines.1259580117" name="Defines (-D)" superClass="com.qnx.qcc.option.compiler.defines" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
+									<listOptionValue builtIn="false" value="_DEBUG"/>
+									<listOptionValue builtIn="false" value="__BLACKBERRY__"/>
+								</option>
+								<option id="com.qnx.qcc.option.compiler.qccoptions.258818862" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions"/>
+								<option id="com.qnx.qcc.option.compiler.ccoptions.979362561" name="Compiler Options (-Wc,)" superClass="com.qnx.qcc.option.compiler.ccoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-std=c99"/>
+								</option>
+								<inputType id="com.qnx.qcc.inputType.compiler.934374565" superClass="com.qnx.qcc.inputType.compiler"/>
+							</tool>
+							<tool id="com.qnx.qcc.tool.assembler.2106863482" name="QCC Assembler" superClass="com.qnx.qcc.tool.assembler">
+								<option id="com.qnx.qcc.option.assembler.debug.1040518608" name="Debug (-g)" superClass="com.qnx.qcc.option.assembler.debug" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.assembler.includePath.1396247716" name="Include Directories (-I)" superClass="com.qnx.qcc.option.assembler.includePath"/>
+								<inputType id="com.qnx.qcc.inputType.assembler.905271715" superClass="com.qnx.qcc.inputType.assembler"/>
+							</tool>
+							<tool id="com.qnx.qcc.tool.linker.575138020" name="QCC Linker" superClass="com.qnx.qcc.tool.linker">
+								<option id="com.qnx.qcc.option.linker.debug.1265653225" name="Debug (-g)" superClass="com.qnx.qcc.option.linker.debug" value="true" valueType="boolean"/>
+                                                                <option id="com.qnx.qcc.option.linker.langcpp.2020859382" name="C++ (-lang-c++)" superClass="com.qnx.qcc.option.linker.langcpp" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.libraryPaths.369190427" name="Library Paths (-L)" superClass="com.qnx.qcc.option.linker.libraryPaths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL/x86/a-g}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SDL_mixer/x86/a-g}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/modplug/x86/a-g}&quot;"/>
+									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/lib"/>
+									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/${CPUVARDIR}/usr/lib"/>
+								</option>
+								<option id="com.qnx.qcc.option.linker.security.85081583" name="Enhanced Security (-Wl,-z,relro -Wl,-z,now)" superClass="com.qnx.qcc.option.linker.security" value="true" valueType="boolean"/>
+								<option id="com.qnx.qcc.option.linker.libraries.1023533768" name="Libraries (-l)" superClass="com.qnx.qcc.option.linker.libraries" valueType="libs">
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="SDL_mixer_g"/>
+									<listOptionValue builtIn="false" value="SDL_g"/>
+									<listOptionValue builtIn="false" value="asound"/>
+									<listOptionValue builtIn="false" value="bps"/>
+									<listOptionValue builtIn="false" value="screen"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="z"/>
+									<listOptionValue builtIn="false" value="m"/>
+									<listOptionValue builtIn="false" value="GLESv2"/>
+									<listOptionValue builtIn="false" value="EGL"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="modplug_g"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="png16"/>
+								</option>
+								<inputType id="com.qnx.qcc.inputType.linker.287263733" superClass="com.qnx.qcc.inputType.linker">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="com.qnx.qcc.tool.archiver.2080278187" name="QCC Archiver" superClass="com.qnx.qcc.tool.archiver"/>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
+				<externalSettings containerId="SDL;" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
+				<externalSettings containerId="SDL_mixer;" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
+				<externalSettings containerId="modplug;" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
+			</storageModule>
+		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="toppler.null.1404921357" name="toppler"/>
@@ -200,8 +271,13 @@
 		<configuration configurationName="Device-Release">
 			<resource resourceType="PROJECT" workspacePath="/toppler"/>
 		</configuration>
+		<configuration configurationName="Simulator">
+			<resource resourceType="PROJECT" workspacePath="/toppler"/>
+		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.debug.561979833">
@@ -210,21 +286,23 @@
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.release.1914504020">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.debug.1126421720.1827759636.1298597312">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.profile.1004333727">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.profile.993704500">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.debug.1550771757">
+		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.profile.coverage.641329963">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.profile.coverage.641329963">
+		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.debug.1550771757">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.qnx.qcc.configuration.exe.profile.coverage.750746842">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.qnx.tools.ide.qde.managedbuilder.core.qccScannerInfo"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

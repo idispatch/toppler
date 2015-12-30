@@ -1,5 +1,5 @@
 /* Tower Toppler - Nebulus
- * Copyright (C) 2000-2006  Andreas Röver
+ * Copyright (C) 2000-2006  Andreas Rï¿½ver
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -31,7 +31,7 @@
 #include <unistd.h>
 
 #include <stdexcept>
-#ifdef __BLACKBERRY__
+#if 0
 #include <eula.h>
 #endif
 
@@ -89,7 +89,7 @@ static void QuitFunction(void) {
 }
 
 int main(int argc, char *argv[]) {
-#ifdef __BLACKBERRY__
+#if 0
     if(!show_hint_dialog()) {
         return 1;
     }

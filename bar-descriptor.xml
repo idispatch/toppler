@@ -2,8 +2,8 @@
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
     <id>com.idispatch.toppler</id>
     <name>Tower Toppler</name>
-    <versionNumber>1.0.1</versionNumber>
-    <buildId>3</buildId>
+    <versionNumber>1.1.0</versionNumber>
+    <buildId>1</buildId>
     <author>Oleg Kosenkov</author>
     <authorId>gYAAgNvOOqSvefTEeSiCjimMZSs</authorId>
     <description>Classic Tower Toppler game port</description>
@@ -11,7 +11,6 @@
         <aspectRatio>landscape</aspectRatio>
         <autoOrients>false</autoOrients>
         <systemChrome>none</systemChrome>
-        <transparent>false</transparent>
     </initialWindow>
     <category>core.games</category>
     <asset path="assets">assets</asset>
@@ -24,6 +23,10 @@
     <configuration name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Release/toppler" entry="true" type="Qnx/Elf">toppler</asset>
+    </configuration>
+    <configuration name="Simulator">
+       <platformArchitecture>x86</platformArchitecture>
+       <asset path="Simulator/toppler" entry="true" type="Qnx/Elf">toppler</asset>
     </configuration>
     <icon>
         <image>toppler-icon.png</image>

@@ -3,6 +3,9 @@
 	<name>toppler</name>
 	<comment></comment>
 	<projects>
+		<project>modplug</project>
+		<project>SDL</project>
+		<project>SDL_mixer</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
