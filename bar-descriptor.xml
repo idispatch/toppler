@@ -15,7 +15,7 @@
     <category>core.games</category>
     <asset path="assets">assets</asset>
     <asset path="toppler-icon.png">toppler-icon.png</asset>
-    <asset path="controls.json">controls.json</asset>
+    <asset path="controls-640x480.json">controls-640x480.json</asset>
     <configuration name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="Device-Debug/toppler" entry="true" type="Qnx/Elf">toppler</asset>
